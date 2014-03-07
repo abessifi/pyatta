@@ -6,7 +6,8 @@ import ConfigParser
 #import ExecuterFormatter
 
 class sessionconfig:
-
+	"""
+	"""
 	shell_api_path = set_config_params('bin','shell_api_path')
 
 	def set_config_params(self,tag,key):
