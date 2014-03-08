@@ -8,6 +8,7 @@ import os
 import logging
 from  VyosSessionConfig import sessionconfig
 
+
 class EmptyName(Exception): pass
 
 class ExecutorFormator():
@@ -23,7 +24,7 @@ class ExecutorFormator():
 
 	def call(self, args, name=""):
                 if len(name) == 0:
-                        raise EmptyName("operation name is required")
+                        raise EmptyName("ERROR: operation name is required !")
 
                 if name=="save":
                         cmd1 = os.path.join(self.vyatta_sbindir,"vyatta-save-config.pl")
@@ -59,13 +60,12 @@ state or the operation format """)
                 self.call([], name="discard")
 
 
-obj = ExecutorFormator()
 
-
-def set(args):
-       	obj.call(args, name="set")
+#obj = ExecutorFormator()
+#def set(args):
+#       	obj.call(args, name="set")
 	
-set(["service", "dns", "forwarding","listen-on", "eth0" ])
-obj.commit()
-obj.show(["service","dns"])
+#set(["service", "dns", "forwarding","listen-on", "eth0" ])
+#obj.commit()
+#obj.show(["service","dns"])
 
