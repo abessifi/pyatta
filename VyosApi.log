@@ -155,3 +155,56 @@ forwarding {
     listen-on eth2
 }
 
+DEBUG:root:
+forwarding {
+    listen-on eth1
+    listen-on eth0
+    listen-on eth2
+    name-server 1.1.1.1
+}
+
+DEBUG:root:
+forwarding {
+    listen-on eth1
+    listen-on eth0
+    listen-on eth2
+    name-server 1.1.1.1
+}
+
+DEBUG:root:
+forwarding {
+    listen-on eth1
+    listen-on eth2
+    name-server 1.1.1.1
+}
+
+DEBUG:root:command in call: /opt/vyatta/sbin/my_set service dhcp-server shared-network-name POOL3 subnet 192.168.4.0/24
+DEBUG:root:command in call: /opt/vyatta/sbin/my_commit 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:
+forwarding {
+    cache-size 150
+    listen-on eth1
+    listen-on eth0
+}
+
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:
+Configuration under specified path is empty
+
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:
+Configuration under specified path is empty
+
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:
+Configuration under specified path is empty
+
