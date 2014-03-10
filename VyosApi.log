@@ -208,3 +208,61 @@ state or the operation format
 DEBUG:root:
 Configuration under specified path is empty
 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:
+Configuration under specified path is empty
+
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:
+Configuration under specified path is empty
+
+DEBUG:root:
+subnet 192.168.4.0/24 {
+    default-router 192.168.4.1
+    dns-server 192.168.4.1
+    start 192.168.4.100 {
+        stop 192.168.4.200
+    }
+}
+
+DEBUG:root:
+subnet 192.168.4.0/24 {
+    default-router 192.168.4.1
+    dns-server 192.168.4.1
+    start 192.168.4.100 {
+        stop 192.168.4.200
+    }
+}
+
+DEBUG:root:
+forwarding {
+    cache-size 150
+    listen-on eth1
+    listen-on eth0
+}
+
+DEBUG:root:
+subnet 192.168.4.0/24 {
+    default-router 192.168.4.1
+    dns-server 192.168.4.1
+    start 192.168.4.100 {
+        stop 192.168.4.200
+    }
+}
+
+DEBUG:root:
+subnet 192.168.4.0/24 {
+    default-router 192.168.4.1
+    dns-server 192.168.4.1
+    start 192.168.4.100 {
+        stop 192.168.4.200
+    }
+}
+
+DEBUG:root:
+Configuration under specified path is empty
+
