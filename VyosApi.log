@@ -266,3 +266,6 @@ subnet 192.168.4.0/24 {
 DEBUG:root:
 Configuration under specified path is empty
 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
