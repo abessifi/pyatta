@@ -320,3 +320,413 @@ state or the operation format
 DEBUG:root:ERROR:  invalid operation 
 check session's 
 state or the operation format 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set nat source rule 123 outbound-interface eth0 /bin/cli-shell-api teardownSession
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set nat source rule 123 source address 192.168.5.0/24 /bin/cli-shell-api teardownSession
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set nat source rule 123 translation address masquerade /bin/cli-shell-api teardownSession
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set nat source rule 123 protocol all /bin/cli-shell-api teardownSession
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set nat source rule 123 source port 1234-3000 /bin/cli-shell-api teardownSession
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_commit  /bin/cli-shell-api teardownSession
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/vyatta-save-config.pl /bin/cli-shell-api teardownSession
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set nat source rule 123 outbound-interface eth0
+/bin/cli-shell-api teardownSession
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set nat source rule 123 source address 192.168.5.0/24
+/bin/cli-shell-api teardownSession
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set nat source rule 123 translation address masquerade
+/bin/cli-shell-api teardownSession
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set nat source rule 123 protocol all
+/bin/cli-shell-api teardownSession
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set nat source rule 123 source port 1234-3000
+/bin/cli-shell-api teardownSession
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_commit 
+/bin/cli-shell-api teardownSession
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/vyatta-save-config.pl
+/bin/cli-shell-api teardownSession
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set nat source rule 123 outbound-interface eth0
+/bin/cli-shell-api teardownSession
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set nat source rule 123 source address 192.168.5.0/24
+/bin/cli-shell-api teardownSession
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set nat source rule 123 translation address masquerade
+/bin/cli-shell-api teardownSession
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set nat source rule 123 protocol all
+/bin/cli-shell-api teardownSession
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set nat source rule 123 source port 1234-3000
+/bin/cli-shell-api teardownSession
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_commit 
+/bin/cli-shell-api teardownSession
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/vyatta-save-config.pl
+/bin/cli-shell-api teardownSession
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set nat source rule 123 outbound-interface eth0
+/bin/cli-shell-api teardownSession
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set nat source rule 123 source address 192.168.5.0/24
+/bin/cli-shell-api teardownSession
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set nat source rule 123 translation address masquerade
+/bin/cli-shell-api teardownSession
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set nat source rule 123 protocol all
+/bin/cli-shell-api teardownSession
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_commit 
+/bin/cli-shell-api teardownSession
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/vyatta-save-config.pl
+/bin/cli-shell-api teardownSession
