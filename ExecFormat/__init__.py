@@ -32,7 +32,7 @@ class ExecutorFormator():
                 else:
                         cmd1 = os.path.join(self.vyatta_sbindir,"my_"+name)+" "+self.join_args(args)
 
-		cmd = self.SessConf.setup_config_session(self.shell_api_path)+cmd1+"\n"+self.shell_api_path+" teardownSession"
+		cmd = self.SessConf.setup_config_session(self.shell_api_path)+cmd1 #+"\n"+self.shell_api_path+" teardownSession"
 		logging.debug("current cmd = \n%s" % cmd)
                 try:
 			subprocess.check_output(cmd, shell=True)

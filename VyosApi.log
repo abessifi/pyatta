@@ -730,3 +730,274 @@ DEBUG:root:current cmd =
                         fi
                 /opt/vyatta/sbin/vyatta-save-config.pl
 /bin/cli-shell-api teardownSession
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set interfaces ethernet eth1   address 192.168.2.1
+/bin/cli-shell-api teardownSession
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set interfaces ethernet eth1   description gateway for .2.0/24
+/bin/cli-shell-api teardownSession
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set interfaces ethernet eth1 vif 20 description VLAN1
+/bin/cli-shell-api teardownSession
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set interfaces ethernet eth1 vif 20 address 192.168.20.1/24
+/bin/cli-shell-api teardownSession
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set interfaces ethernet eth1   address 192.168.2.1
+/bin/cli-shell-api teardownSession
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set interfaces ethernet eth1   description gateway for .2.0/24
+/bin/cli-shell-api teardownSession
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set interfaces ethernet eth1 vif 20 description VLAN1
+/bin/cli-shell-api teardownSession
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set interfaces ethernet eth1 vif 20 address 192.168.20.1/24
+/bin/cli-shell-api teardownSession
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_commit 
+/bin/cli-shell-api teardownSession
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set interfaces ethernet eth1   address 192.168.2.1
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set interfaces ethernet eth1   description gateway for .2.0/24
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set interfaces ethernet eth1 vif 20 description VLAN1
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set interfaces ethernet eth1 vif 20 address 192.168.20.1/24
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_commit 
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set interfaces ethernet eth1   address 192.168.2.1/24
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set interfaces ethernet eth1   description gateway for .2.0/24
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set interfaces ethernet eth1   address 192.168.2.1/24
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set interfaces ethernet eth1   description "gateway for .2.0/24"
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set interfaces ethernet eth2   address 192.168.3.1/24
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set interfaces ethernet eth2   description "gateway for .3.0/24"
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set interfaces ethernet eth2 vif 30 description VLAN3
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set interfaces ethernet eth2 vif 20 address 192.168.30.1/24
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_commit 
