@@ -1001,3 +1001,113 @@ DEBUG:root:current cmd =
                         echo "Something went wrong!"
                         fi
                 /opt/vyatta/sbin/my_commit 
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set service dns forwarding listen-on eth0
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set service dns forwarding listen-on eth1
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set service dns forwarding name-server 208.67.222.123
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set service dns forwarding listen-on eth0
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set service dns forwarding listen-on eth1
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set service dns forwarding name-server 208.67.222.123
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_commit 
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_delete service dns forwarding listen-on eth0
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_delete service dns forwarding name-server 208.67.222.123
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_commit 
