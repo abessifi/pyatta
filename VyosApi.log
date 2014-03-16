@@ -1111,3 +1111,995 @@ DEBUG:root:current cmd =
                         echo "Something went wrong!"
                         fi
                 /opt/vyatta/sbin/my_commit 
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set service dns forwarding listen-on eth0
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set service dns forwarding name-server 208.67.222.123
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_commit 
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 default-router 192.168.2.1
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 dns-server 192.168.2.1
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 start 192.168.2.50 stop 192.168.2.150
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 default-router 192.168.2.1
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 dns-server 192.168.2.1
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 start 192.168.2.50 stop 192.168.2.150
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_commit 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 default-router 192.168.2.1
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 dns-server 192.168.2.1
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 start 192.168.2.50 stop 192.168.2.150
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_commit 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 default-router 192.168.2.1
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 dns-server 192.168.2.1
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 start 192.168.2.50 stop 192.168.2.150
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_commit 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 default-router 192.168.2.1
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 dns-server 192.168.2.1
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 start 192.168.2.50 stop 192.168.2.150
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_commit 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 default-router 192.168.2.1
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 dns-server 192.168.2.1
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 start 192.168.2.50 stop 192.168.2.150
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_commit 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 default-router 192.168.2.1
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 dns-server 192.168.2.1
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 start 192.168.2.50 stop 192.168.2.150
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_commit 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 default-router 192.168.2.1
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 dns-server 192.168.2.1
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 start 192.168.2.50 stop 192.168.2.150
+DEBUG:root:current cmd = 
+
+                        session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                        eval $session_env
+                        /bin/cli-shell-api setupSession
+
+                        /bin/cli-shell-api inSession
+                        if [ $? -ne 0 ]; then
+                        echo "Something went wrong!"
+                        fi
+                /opt/vyatta/sbin/my_commit 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 default-router 192.168.2.1
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 dns-server 192.168.2.1
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 start 192.168.2.50 stop 192.168.2.150
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_commit 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 default-router 192.168.2.1
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 dns-server 192.168.2.1
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 start 192.168.2.50 stop 192.168.2.150
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_commit 
+DEBUG:root:ERROR:  invalid operation 
+check session's 
+state or the operation format 
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 default-router 192.168.2.1
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 dns-server 192.168.2.1
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 start 192.168.2.50 stop 192.168.2.150
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_commit 
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 default-router 192.168.2.1
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 default-router 192.168.2.1
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 dns-server 192.168.2.1
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 start 192.168.2.50 stop 192.168.2.150
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_commit 
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 default-router 192.168.2.1
+DEBUG:root:
+
+Exception:
+
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 dns-server 192.168.2.1
+DEBUG:root:
+
+Exception:
+
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 start 192.168.2.50 stop 192.168.2.150
+DEBUG:root:
+
+Exception:
+
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_commit 
+DEBUG:root:
+
+Exception:
+
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 default-router 192.168.2.1
+DEBUG:root:
+
+Exception:
+ls: cannot access dfgd: No such file or directory
+
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 dns-server 192.168.2.1
+DEBUG:root:
+
+Exception:
+ls: cannot access dfgd: No such file or directory
+
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 start 192.168.2.50 stop 192.168.2.150
+DEBUG:root:
+
+Exception:
+ls: cannot access dfgd: No such file or directory
+
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_commit 
+DEBUG:root:
+
+Exception:
+ls: cannot access dfgd: No such file or directory
+
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 default-router 192.168.2.1
+DEBUG:root:
+
+Exception:
+
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 dns-server 192.168.2.1
+DEBUG:root:
+
+Exception:
+
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 start 192.168.2.50 stop 192.168.2.150
+DEBUG:root:
+
+Exception:
+
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_commit 
+DEBUG:root:
+
+Exception:
+
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 default-router 192.168.2.1
+DEBUG:root:
+
+Exception:
+
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 dns-server 192.168.2.1
+DEBUG:root:
+
+Exception:
+
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 start 192.168.2.50 stop 192.168.2.150
+DEBUG:root:
+
+Exception:
+
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_commit 
+DEBUG:root:
+
+Exception:
+
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 default-router 192.168.2.1
+DEBUG:root:
+
+Exception error:
+
+DEBUG:root:
+
+Exception output:
+
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 dns-server 192.168.2.1
+DEBUG:root:
+
+Exception error:
+
+DEBUG:root:
+
+Exception output:
+
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 start 192.168.2.50 stop 192.168.2.150
+DEBUG:root:
+
+Exception error:
+
+DEBUG:root:
+
+Exception output:
+
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_commit 
+DEBUG:root:
+
+Exception error:
+
+DEBUG:root:
+
+Exception output:
+[ service dhcp-server ]
+DHCP server error: None of the DHCP lease subnets are inside any of the subnets
+configured on broadcast interfaces. At least one DHCP lease subnet must be set
+such that DHCP server listens on a minimum of one broadcast interface
+DHCP server configuration commit aborted due to error(s).
+
+[[service dhcp-server]] failed
+Commit failed
+
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 default-router 192.168.2.1
+DEBUG:root:
+
+Exception output:
+
+DEBUG:root:
+code erreur:0
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 dns-server 192.168.2.1
+DEBUG:root:
+
+Exception output:
+
+DEBUG:root:
+code erreur:0
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 start 192.168.2.50 stop 192.168.2.150
+DEBUG:root:
+
+Exception output:
+
+DEBUG:root:
+code erreur:0
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_commit 
+DEBUG:root:
+
+Exception output:
+[ service dhcp-server ]
+DHCP server error: None of the DHCP lease subnets are inside any of the subnets
+configured on broadcast interfaces. At least one DHCP lease subnet must be set
+such that DHCP server listens on a minimum of one broadcast interface
+DHCP server configuration commit aborted due to error(s).
+
+[[service dhcp-server]] failed
+Commit failed
+
+DEBUG:root:
+code erreur:1
