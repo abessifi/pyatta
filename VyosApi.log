@@ -2103,3 +2103,406 @@ Commit failed
 
 DEBUG:root:
 code erreur:1
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set nat source rule 123 outbound-interface eth0
+DEBUG:root:
+
+Exception output:
+
+DEBUG:root:
+code erreur:0
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set nat source rule 123 source address 192.168.5.0/24
+DEBUG:root:
+
+Exception output:
+
+DEBUG:root:
+code erreur:0
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set nat source rule 123 translation address masquerade
+DEBUG:root:
+
+Exception output:
+
+DEBUG:root:
+code erreur:0
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_commit 
+DEBUG:root:
+
+Exception output:
+
+DEBUG:root:
+code erreur:0
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dns forwarding listen-on eth0
+DEBUG:root:
+
+Exception output:
+
+DEBUG:root:
+code erreur:0
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dns forwarding listen-on eth1
+DEBUG:root:
+
+Exception output:
+
+DEBUG:root:
+code erreur:0
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dns forwarding name-server 208.67.222.123
+DEBUG:root:
+
+Exception output:
+
+DEBUG:root:
+code erreur:0
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_commit 
+DEBUG:root:
+
+Exception output:
+
+DEBUG:root:
+code erreur:0
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 default-router 192.168.2.1
+DEBUG:root:
+
+Exception output:
+
+DEBUG:root:
+code erreur:0
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 dns-server 192.168.2.1
+DEBUG:root:
+
+Exception output:
+
+DEBUG:root:
+code erreur:0
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 start 192.168.2.50 stop 192.168.2.150
+DEBUG:root:
+
+Exception output:
+
+DEBUG:root:
+code erreur:0
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_commit 
+DEBUG:root:
+
+Exception output:
+[ service dhcp-server ]
+DHCP server error: None of the DHCP lease subnets are inside any of the subnets
+configured on broadcast interfaces. At least one DHCP lease subnet must be set
+such that DHCP server listens on a minimum of one broadcast interface
+DHCP server configuration commit aborted due to error(s).
+
+[[service dhcp-server]] failed
+Commit failed
+
+DEBUG:root:
+code erreur:1
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 default-router 192.168.2.1
+DEBUG:root:
+
+Exception output:
+
+DEBUG:root:
+code erreur:0
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 dns-server 192.168.2.1
+DEBUG:root:
+
+Exception output:
+
+DEBUG:root:
+code erreur:0
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service dhcp-server shared-network-name Pool1 subnet 192.168.2.0/24 start 192.168.2.50 stop 192.168.2.150
+DEBUG:root:
+
+Exception output:
+
+DEBUG:root:
+code erreur:0
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_commit 
+DEBUG:root:
+
+Exception output:
+
+DEBUG:root:
+code erreur:0
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service webproxy listen-address 192.168.2.1
+DEBUG:root:
+
+Exception output:
+
+DEBUG:root:
+code erreur:0
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service webproxy url-filtering squidguard local-block facebook.com
+DEBUG:root:
+
+Exception output:
+
+DEBUG:root:
+code erreur:0
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service webproxy listen-address 192.168.2.1
+DEBUG:root:
+
+Exception output:
+
+DEBUG:root:
+code erreur:0
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service webproxy url-filtering squidguard local-block facebook.com
+DEBUG:root:
+
+Exception output:
+
+DEBUG:root:
+code erreur:0
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service webproxy listen-address 192.168.2.1
+DEBUG:root:
+
+Exception output:
+
+DEBUG:root:
+code erreur:0
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_set service webproxy url-filtering squidguard local-block facebook.com
+DEBUG:root:
+
+Exception output:
+
+DEBUG:root:
+code erreur:0
+DEBUG:root:current cmd = 
+
+                session_env=$(/bin/cli-shell-api getSessionEnv $PPID)
+                eval $session_env
+                /bin/cli-shell-api setupSession
+
+                /bin/cli-shell-api inSession
+                if [ $? -ne 0 ]; then
+                    echo "Something went wrong!"
+                fi
+                /opt/vyatta/sbin/my_commit 
+DEBUG:root:
+
+Exception output:
+[ service webproxy ]
+Use of uninitialized value in concatenation (.) or string at /opt/vyatta/sbin/vyatta-update-webproxy.pl line 1150.
+Restarting Squid HTTP Proxy 3.x: squid3.
+
+
+DEBUG:root:
+code erreur:0

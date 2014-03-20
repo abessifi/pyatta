@@ -37,6 +37,6 @@ obj = dnsservice()
 #obj.del_listenon_interface("eth0")
 #obj.del_nameserver("208.67.222.123")
 obj.add_listenon_interface("eth0")
-#obj.add_listenon_interface("eth1")
+obj.add_listenon_interface("eth1")
 obj.add_nameserver("208.67.222.123")
 
