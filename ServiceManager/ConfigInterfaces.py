@@ -36,8 +36,8 @@ class  configinterface(config_opt):
 		self.set_addr_interface(interface,addr,"vif",vlan_id)
 		self.execformat.commit()
 
-obj = configinterface()
 
+obj = configinterface()
 obj.set_addr_interface("eth2","192.168.3.1")
 obj.set_iface_desc("eth2","\"gateway for .3.0/24\"")
 obj.set_vlan_desc("eth2","VLAN3","30")
