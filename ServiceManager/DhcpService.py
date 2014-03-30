@@ -46,9 +46,9 @@ class dhcpservice(config_opt):
         plage=["start",adr_start,"stop",adr_stop]
         self.setup_dhcp_subnet(name,subnet,plage)
         self.exe.commit()
-
+        self.exe.save()
 
 obj=dhcpservice()
-obj.setup_dhcp_default_router("Pool1","192.168.2.0","192.168.2.1")
-obj.setup_dhcp_dns_server("Pool1","192.168.2.0","192.168.2.1")
-obj.set_range_adresses("Pool1","192.168.2.0","192.168.2.50","192.168.2.150")
+obj.setup_dhcp_default_router("Pool2","192.168.3.0","192.168.3.1")
+obj.setup_dhcp_dns_server("Pool2","192.168.3.0","192.168.3.1")
+obj.set_range_adresses("Pool2","192.168.3.0","192.168.3.100","192.168.3.200")
