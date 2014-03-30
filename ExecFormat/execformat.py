@@ -7,13 +7,8 @@ sys.path.append('/home/vyos/vyos-api/project')
 from VyosSessionConfig import configsession as cs
 from VyosSessionConfig import utils
 
-LOG_FILE = utils.get_config_params('log','filename')
-LOG_LEVEL = utils.get_config_params('log','level').upper()
 VYOS_SBIN_DIR = utils.get_config_params('bin','vyos_sbin_dir')
 VYOS_SHELL_API = utils.get_config_params('bin', 'shell_api_path')
-
-# Apply the log level
-logging.basicConfig(filename=LOG_FILE, level=eval('logging.{}'.format(LOG_LEVEL)))
 
 class OperationFailed(Exception): pass
 class OperationNameError(Exception): pass
@@ -51,7 +46,7 @@ class execUtils:
             errcode = proc.returncode
             if errcode:
                 # TODO log %err% output
-                raise OperationFailed('[ERROR] Operation failed !')
+                raise OperationFailed('[ERROR] Operation failed !')    
             return (True, out)
 
     def discover_possible_ops():

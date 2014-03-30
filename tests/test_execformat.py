@@ -62,10 +62,10 @@ def test_set_iface_desc():
     """
     Test if the description of a giving interface is correctly set.
     """
-    args = ['set','interfaces','ethernet','eth5','description','"This is a LAN interface"']
+    args = ['set','interfaces','ethernet','eth3','description','"This is a LAN interface"']
     success, out = execformat.execUtils().execmd(args)
     assert success == True
     sessionCfg.commit()
-    args = ['show','interfaces','ethernet','eth5','description']
+    args = ['show','interfaces','ethernet','eth3','description']
     success, out = execformat.execUtils().execmd(args)
     assert out.split('"')[1] == "This is a LAN interface"
