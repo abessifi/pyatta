@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/home/vyos/vyos-api/bin/python
 
 import os
 import sys
