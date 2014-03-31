@@ -3,6 +3,11 @@
 import subprocess
 import os
 
+class PathError(Exception): pass
+class AddressError(Exception): pass
+class IpformatError(Exception): pass
+class InterfaceError(Exception): pass
+
 class validation():
     def ipvalidation(ipaddr):
         addr_portions = ipaddr.split('.')
@@ -27,6 +32,8 @@ class validation():
        
     def addrvalidation(addr):
         addresses = subprocess.check_output("/sbin/ifconfig |grep 'inet addr'|awk '{print $2}'|sed 's/addr://g'",shell=True)
-        if addr not in addresses:
+        activeaddr=addresses.split('\n')
+        del activeaddr[-1]
+        if addr not in activeaddr:
             return False
         return True

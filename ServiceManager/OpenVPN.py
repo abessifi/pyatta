@@ -1,5 +1,6 @@
 #!../bin/python
-
+"""this class implements the necessary fonctionnalities to setup 
+an openvpn service in both site-to-site and server-client mode"""
 import sys
 sys.path.append('../')
 from ExecFormat import ExecutorFormator
@@ -11,11 +12,12 @@ from subprocess import check_output
 class CipherError(Exception): pass
 class LocalportError(Exception): pass
 class ProtocolError(Exception): pass
-class InterfaceError(Exception): pass
-class IpformatError(Exception): pass
+#class InterfaceError(Exception): pass
+#class IpformatError(Exception): pass
 class KeyfileError(Exception): pass
-class AddressError(Exception): pass
+#class AddressError(Exception): pass
 class ModeError(Exception): pass
+#class PathError(Exception): pass
 IOV="interfaces openvpn"
 
 class openvpn(config_opt):
@@ -32,24 +34,21 @@ class openvpn(config_opt):
     @staticmethod
     def test_iface(iface_num):
         if not validation.ifacevalidation(self.viface+iface_num):
-            raise InterfaceError("[ERROR] invalid interface number")
-            return False
+            raise validate.InterfaceError("[ERROR] invalid interface number")
         return True
     
     """check if a given ip address is into a valid format"""
     @staticmethod
     def test_ip(ipaddr):
         if not validation.ipvalidation(ipaddr):
-            raise IpaddrError("[ERROR] invalid ip address")
-            return False
+            raise validate.IpformatError("[ERROR] invalid ip address")
         return True
 
     """verify if a given path is valid"""
     @staticmethod
     def test_path(path):
         if not validation.pathvalidation(abspath):
-            raise PathError("[ERROR] check your input path file")
-            return False
+            raise validate.PathError("[ERROR] check your input path file")
         return True
 
     """this method allows for shared key generation used to establish site to site connection"""
@@ -80,7 +79,6 @@ class openvpn(config_opt):
         if test_iface(iface_num):
             if mode not in self.mode:
                 raise ModeException("[ERROR] valid mode is required !")
-                return 1
             suffix=["mode",mode]
             self.openvpn_config(iface_num,suffix)
 
@@ -98,7 +96,7 @@ class openvpn(config_opt):
                 suffix=["remote-host",remote_host]
                 self.openvpn_config(iface_num,suffix)
             else:
-                raise AddressError("No such address already configured!")
+                raise validate.AddressError("No such address already configured!")
 
     """this method have to define the right path to reach shared 
     key file on a site-to-site connection"""
@@ -119,7 +117,6 @@ class openvpn(config_opt):
         if test_iface(iface_num):
             if role not in self.role:
                 raise RoleError("[ERROR] unvalid role: possible choice:active, passive")
-                return 1
             suffix=["tls role",role]
             self.openvpn_config(iface_num,suffix)
 
@@ -168,7 +165,6 @@ class openvpn(config_opt):
             if algorithm in self.algo_cipher:
                 suffix.append(algorithm)
             else:
-                suffix.append("aes256")
                 raise CipherError("[ERROR] %s is not a valid ancryption algorithm! aes256 is set as default one" %algorithm)
             self.openvpn_config(iface_num,suffix)
 
@@ -179,7 +175,6 @@ class openvpn(config_opt):
             if str(port).isdigit() and port < 36565:
                 suffix.append(port)
             else:
-                suffix.append("1194")
                 raise LocalportError("[ERROR] port number expected is false 1194 was set by default")
             self.openvpn_config(iface_num,suffix)
 
@@ -190,7 +185,6 @@ class openvpn(config_opt):
             if prot in self.protocol:
                 suffix.append(prot)
             else:
-                suffix.append("udp")
                 raise ProtocolError("[ERROR] %s can not be used as OpenVPN communication protocol! udp was set by default" %prot)
             self.openvpn_config(iface_num,suffix)
 
