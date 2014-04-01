@@ -9,6 +9,7 @@ class IpformatError(Exception): pass
 class InterfaceError(Exception): pass
 
 class validation():
+    @staticmethod
     def ipvalidation(ipaddr):
         addr_portions = ipaddr.split('.')
         if len(addr_portions) != 4:
@@ -21,15 +22,20 @@ class validation():
                 return False
         return True
 
+    @staticmethod
     def ifacevalidation(iface):
-        mounted_ifaces=subprocess.check_output("ls /sys/class/net",shell=True)
+        interfaces=subprocess.check_output("ls /sys/class/net",shell=True)
+        mounted_ifaces = interfaces.split('\n')
+        del mounted_ifaces[-1]
         if iface not in mounted_ifaces:
             return False
         return True
 
+    @staticmethod
     def pathvalidation(path):
         return os.path.exists(path)
        
+    @staticmethod
     def addrvalidation(addr):
         addresses = subprocess.check_output("/sbin/ifconfig |grep 'inet addr'|awk '{print $2}'|sed 's/addr://g'",shell=True)
         activeaddr=addresses.split('\n')

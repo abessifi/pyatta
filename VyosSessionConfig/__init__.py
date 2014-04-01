@@ -6,7 +6,7 @@ class sessionconfig():
 
     def set_config_params(self,tag,key):
         config = ConfigParser.SafeConfigParser()
-        config.readfp(open('../VyosApi.conf'))
+        config.readfp(open('/home/vyos/vyos-api/VyosApi.conf'))
         return config.get(tag,key)
 
     def setup_config_session(self,shell_api_path):
