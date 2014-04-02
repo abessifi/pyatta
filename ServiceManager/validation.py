@@ -1,6 +1,6 @@
 #!/home/vyos/vyos-api/bin/python
 """ this method have to be added to utils module"""
-import subprocess
+from subprocess import check_output,CalledProcessError
 import os
 
 class PathError(Exception): pass
@@ -24,7 +24,11 @@ class validation():
 
     @staticmethod
     def ifacevalidation(iface):
-        interfaces=subprocess.check_output("ls /sys/class/net",shell=True)
+        try:
+            interfaces=check_output("ls /sys/class/net",shell=True)
+        except CalledProcessError as e:
+            print ("[Critical] problem with extracting interfaces ! execution fails with return code %s" % e.returncode)
+            return False
         mounted_ifaces = interfaces.split('\n')
         del mounted_ifaces[-1]
         if iface not in mounted_ifaces:
@@ -37,7 +41,11 @@ class validation():
        
     @staticmethod
     def addrvalidation(addr):
-        addresses = subprocess.check_output("/sbin/ifconfig |grep 'inet addr'|awk '{print $2}'|sed 's/addr://g'",shell=True)
+        try:
+            addresses = check_output("/sbin/ifconfig |grep 'inet addr'|awk '{print $2}'|sed 's/addr://g'",shell=True)
+        except CalledProcessError as e:
+            print ("[Critical] problem with extracting configured interfaces ! execution fails with return code %s" % e.returncode)
+            return False
         activeaddr=addresses.split('\n')
         del activeaddr[-1]
         if addr not in activeaddr:
