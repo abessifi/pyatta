@@ -31,12 +31,12 @@ def test_check_operation_name():
     args = []
     with pytest.raises(execformat.OperationNameError) as e:
         execformat.check_operation_name(args)
-    assert e.value.message == '[ERROR] Operation name required.'
+    assert e.value.message == 'Operation name required.'
 
     args = ['true']
     with pytest.raises(execformat.OperationNameError) as e:
         execformat.check_operation_name(args)
-    assert e.value.message == '[ERROR] Operation name not correct.'
+    assert e.value.message == 'Operation name not correct.'
 
     args = ['set']
     assert execformat.check_operation_name(args) == True
@@ -48,7 +48,7 @@ def test_execmd_missed_args():
     args = ['set']
     with pytest.raises(execformat.OperationFailed) as e:
         execformat.execUtils().execmd(args)
-    assert e.value.message == '[ERROR] Operation failed !'
+    assert e.value.message == 'Operation failed !'
 
 def test_execmd_show():
     """
