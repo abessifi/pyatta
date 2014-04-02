@@ -1,10 +1,13 @@
 import os
 from uuid import uuid4
-from utils import get_config_params, _run, clean_environ
+from utils import get_config_params, _run, clean_environ, logger
 
 VYOS_SHELL_API = get_config_params('bin', 'shell_api_path')
 VYOS_SBIN_DIR = get_config_params('bin', 'vyos_sbin_dir')
 VYOS_SAVE_SCRIPT = 'vyatta-save-config.pl'
+
+# Create/Get the logger object
+#logger = init_logger()
 
 class SessionAlreadyExists(Exception): pass
 class SetupSessionFailed(Exception): pass
@@ -18,7 +21,7 @@ class Session(object):
     _ref = None
     def __new__(cls, *args, **kw):
         if cls._ref is not None:
-            raise SessionAlreadyExists('[WARN] A session exist already !')
+            raise SessionAlreadyExists('A session exist already !')
         cls._ref = super(Session, cls).__new__(cls, *args, **kw)
         return cls._ref
 
@@ -46,13 +49,19 @@ class ConfigSession(Session):
         # Add vyos session environment to system environment. This is not good but actually it seems
         # that is the only way to handle a persistant vyos session after spawning a shell.
         os.environ.update(env)
+        logger.info('Setting up a configuration session for Vyos')
         # Spawn shell and setup vyos config session
         if _run('{} setupSession'.format(VYOS_SHELL_API)):
             # Unset vyos session environment and raise an exception
+            logger.error('Could not create configuration session')
+            logger.info('Cleaning up session environment variables')
             clean_environ(env)
-            raise SetupSessionFailed('[ERROR] Could not create session !')
+            raise SetupSessionFailed('Could not create session !')
         self.session_id = identifier
         self.session_envs = env
+        logger.debug('Session identifier is %s', identifier)
+        logger.debug('Session environment variables: %s', env)
+        logger.info('Configuration session is set up')
         return True
 
     def session_exists(self):
@@ -65,15 +74,24 @@ class ConfigSession(Session):
         """
         End current configuration session.
         """
-        _run('{} teardownSession'.format(VYOS_SHELL_API))
-        clean_environ(self.session_envs)
-        return True
+        if not _run('{} teardownSession'.format(VYOS_SHELL_API)):
+            logger.info('Cleaning up session environment variables')
+            logger.info('Closing Vyos config session')
+            clean_environ(self.session_envs)
+            return True
+
+        logger.error('Failed to teardown current config session')
+        logger.warn('The Vyos config session may still open !')
+        return False
 
     def session_changed(self):
         """
         Returns if Vyos configuration was changed from current session
         """
-        return False if _run('{} sessionChanged'.format(VYOS_SHELL_API)) else True
+        if _run('{} sessionChanged'.format(VYOS_SHELL_API)):
+            return False
+        logger.warn('Vyos configuration was changed from current session')
+        return True
 
     def commit(self):
         """
@@ -81,7 +99,9 @@ class ConfigSession(Session):
         """
         out = _run(os.path.join(VYOS_SBIN_DIR ,'my_commit'), output=True)
         if out == False:
+            logger.error('Commit changes failed')
             raise OperationFailed('[ERROR] Commit changes failed !')
+        logger.info('Changes successfully commited')
         return True
 
     def discard(self):
@@ -99,5 +119,7 @@ class ConfigSession(Session):
         """
         out = _run(os.path.join(VYOS_SBIN_DIR, VYOS_SAVE_SCRIPT), output=True)
         if out == False:
+            logger.error('Saving changes failed')
             raise OperationFailed('[ERROR] Save changes failed !')
-        return out.splitlines()[1]
+        logger.info('%s', out)
+        return True

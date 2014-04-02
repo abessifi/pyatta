@@ -38,7 +38,7 @@ def test_config_parser():
     Test if some config params are correctly set.
     """
     if os.path.isfile('/home/vyos/vyos-api/pyatta.conf'):
-        assert vsc.get_config_params('bin','shell_api_path') == '/bin/cli-shell-api'
+        assert utils.get_config_params('bin','shell_api_path') == '/bin/cli-shell-api'
         
 def test_singleton_session():
     """
@@ -46,7 +46,7 @@ def test_singleton_session():
     """
     with pytest.raises(vsc.SessionAlreadyExists) as e : 
         vsc.ConfigSession()
-    assert e.value.message == '[WARN] A session exist already !'
+    assert e.value.message == 'A session exist already !'
 
 def test_setup_session():
     """
@@ -87,14 +87,13 @@ def test_commit():
     """
     Test if changes are successfully commited
     """
-    utils._run('/opt/vyatta/sbin/my_set interfaces ethernet eth5 description "This is a LAN interface"')
+    out = utils._run('/opt/vyatta/sbin/my_set interfaces ethernet eth3 description "This is a LAN interface"', output=True)
     #with pytest.raises(vsc.OperationFailed) as e:
     #    sessionCfg.commit()
-    #assert 'ERROR' in e.message.value
     assert sessionCfg.commit() == True
 
 def test_save_changes():
     """
     Test if changes are successfully saved in system.
     """
-    assert sessionCfg.save().lower() == 'done'
+    assert sessionCfg.save() == True
