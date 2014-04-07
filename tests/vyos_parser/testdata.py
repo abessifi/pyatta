@@ -163,6 +163,7 @@ data_service ="""
              listen-on eth1
              listen-on eth2
              name-server 208.67.220.123
+             name-server 208.67.222.123
          }
      }
      https {
@@ -246,3 +247,4 @@ if __name__ == '__main__':
 
 
 # vim: et sts=4:ts=4:sw=4
+
