@@ -2,7 +2,7 @@ import sys
 import subprocess
 import os
 
-sys.path.append('/home/vyos/vyos-api/project')
+sys.path.append('/home/vyos/vyos-api/')
 from VyosSessionConfig import configsession as cs
 from VyosSessionConfig import utils
 

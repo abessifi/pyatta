@@ -1,7 +1,7 @@
 #Imports
 import sys
 
-sys.path.append('/home/vyos/vyos-api/project')
+sys.path.append('/home/vyos/vyos-api/')
 from VyosSessionConfig import utils
 
 

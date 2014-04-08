@@ -2,7 +2,7 @@ import pytest
 import os
 import sys
 import uuid
-sys.path.append('/home/vyos/vyos-api/project')
+sys.path.append('/home/vyos/vyos-api/')
 from VyosSessionConfig import configsession as vsc
 from VyosSessionConfig import utils
 
@@ -87,7 +87,7 @@ def test_commit():
     """
     Test if changes are successfully commited
     """
-    out = utils._run('/opt/vyatta/sbin/my_set interfaces ethernet eth3 description "This is a LAN interface"', output=True)
+    out = utils._run('/opt/vyatta/sbin/my_set interfaces ethernet eth0 description "This is a LAN interface"', output=True)
     #with pytest.raises(vsc.OperationFailed) as e:
     #    sessionCfg.commit()
     assert sessionCfg.commit() == True

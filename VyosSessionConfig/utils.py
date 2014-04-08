@@ -4,7 +4,7 @@ import os
 import logging
 
 # In production environment PROJECT_PATH should be /etc/pyatta/
-PROJECT_PATH = "/home/vyos/vyos-api/project"
+PROJECT_PATH = "/home/vyos/vyos-api/"
 CONFIG_FILE_NAME = "pyatta.conf"
 AVAILABLE_LOG_LEVELS = ['DEBUG','INFO','WARN','ERROR','CRITICAL']
 DEFAULT_LOG_LEVEL = 'INFO'

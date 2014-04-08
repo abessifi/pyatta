@@ -52,7 +52,7 @@ def headers(rule):
 headers.ast_name = "Headers"
 
 def body(rule):
-    rule | ("{", [entries],  "}")
+    rule | ("{", [entries], "}")
     rule.astAttrs = {"entries": entries}
 
 body.ast_name = 'Body'
