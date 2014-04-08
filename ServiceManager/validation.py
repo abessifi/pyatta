@@ -7,8 +7,9 @@ class PathError(Exception): pass
 class AddressError(Exception): pass
 class IpformatError(Exception): pass
 class InterfaceError(Exception): pass
-
+class ActionError(Exception): pass
 class validation():
+
     @staticmethod
     def ipvalidation(ipaddr):
         addr_portions = ipaddr.split('.')
@@ -51,3 +52,25 @@ class validation():
         if addr not in activeaddr:
             return False
         return True
+
+    """check if a given interface already exist"""
+    @staticmethod
+    def testiface(iface):
+        if not validation.ifacevalidation(iface):
+            raise InterfaceError("[ERROR] invalid interface")
+        return True
+
+    """check if a given ip address is into a valid format"""
+    @staticmethod
+    def testip(ipaddr):
+        if not validation.ipvalidation(ipaddr):
+            raise IpformatError("[ERROR] invalid ip address")
+        return True
+
+    """verify if a given path is valid"""
+    @staticmethod
+    def testpath(abspath):
+        if not validation.pathvalidation(abspath):
+            raise PathError("[ERROR] check your input path file")
+        return True
+
