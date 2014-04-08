@@ -1,0 +1,46 @@
+Metadata-Version: 1.1
+Name: env
+Version: 0.1.0
+Summary: Environment Variables for Humans
+Home-page: https://github.com/kennethreitz/env
+Author: Kenneth Reitz
+Author-email: me@kennethreitz.com
+License: BSD
+Description: 
+        env.py
+        ~~~~~~
+        
+        Mapping environment variables can be a bit of a pain.
+        
+        Now you can replace this boilerplate::
+        
+            ZENDESK_URL = os.environ['ZENDESK_URL']
+            ZENDESK_USER = os.environ['ZENDESK_USER']
+            ZENDESK_PASS = os.environ['ZENDESK_PASS']
+            ZENDESK_VIEW = os.environ['ZENDESK_VIEW']
+        
+        With a simple call::
+        
+            import env
+        
+        ::
+        
+            >>> zendesk = env.prefix('zendesk_')
+            >>> zendesk
+            {'user': ..., 'pass': ..., 'url': ..., 'view': ...}
+        
+        Or have a bit more control::
+        
+            >>> env.map(user='zendesk_user')
+            {'user': ...}
+        
+        
+        
+Platform: any
+Classifier: Environment :: Web Environment
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Topic :: Internet :: WWW/HTTP :: Dynamic Content
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
