@@ -1,6 +1,4 @@
-*.pyc
-*.log
-bin/
-lib/
-include/
-local/
+ExecFormat/*.pyc
+VyosSessionConfig/*.pyc
+tests/__pycache__/
+tests/*.pyc
