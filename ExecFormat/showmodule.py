@@ -31,35 +31,10 @@ class show_config():
         except OperationFailed, e:
             logger.error(e.message)
 
-    def show_dns(self,keys):
-        pass
-
-    def show_dhcp(self,keys):
-        pass
-
-    def show_nat(self,keys):
+    def customized_show(self,keys):
         try:
-            print reduce(getitem,keys,self.serviceoutput)
-        except KeyError:
+            return reduce(getitem,keys,self.serviceoutput)
+        except KeyError,k:
+            print k.message
             print 'no key available'
-            
-    def show_firewall(self,keys):
-        pass
 
-    def show_openvpn(self,keys):
-        pass
-
-    def show_interfaces(self,keys):
-        pass
-
-    def show_firewall(self,keys):
-        pass
-
-    def show_routing(self,keys):
-        pass
-
-    def show_webfiltering(self,keys):
-        pass
-
-obj = show_config('dns')
-obj.show_nat(['forwarding','listen-on'])
