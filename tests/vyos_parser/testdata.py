@@ -224,21 +224,63 @@ data_system ="""
  }
 """
 
-data_dummy = """
-hello world {
-"hello world"
-hello world {
-world world hello
+# data_dummy = """
+# hello world {
+# "hello world" hello world {
+# 
+# }
+# }"""
 
-}
-}
+data_many_keys = """
+ ethernet eth0 {
+     address dhcp
+     description "This is a LAN interface"
+     duplex auto
+     hw-id 08:00:27:6a:36:4c
+     smp_affinity auto
+     speed auto
+ }
+ ethernet eth1 {
+     address 192.168.2.1/24
+     duplex auto
+     hw-id 08:00:27:c5:b1:f1
+     smp_affinity auto
+     speed auto
+ }
+ ethernet eth2 {
+     address 192.168.3.1/24
+     duplex auto
+     hw-id 08:00:27:62:f8:43
+     smp_affinity auto
+     speed auto
+ }
 """
 
-data_all = [data_empty, data_dummy, data_firewall, data_interfaces, data_nat , data_protocols, data_service, data_system ]  
+data_flat1 = """
+     address 192.168.3.1/24
+     duplex auto
+     hw-id 08:00:27:62:f8:43
+     smp_affinity auto
+     speed auto
+
+"""
+data_flat2 = """
+     auto-sync 1
+     repository community {
+         components main
+         distribution hydrogen
+         password ""
+         url http://packages.vyos.net/vyos
+         username ""
+     }
+
+"""
+
+data_all = [data_many_keys, data_empty, data_firewall, data_interfaces, data_nat , data_protocols, data_service, data_system,data_flat1,data_flat2 ]  
 
 ## test it with some random data ##
 if __name__ == '__main__':
-    from testdata import * # test data
+    # from testdata import * # test data
     for _d in data_all:
         # pprint(decode_string(_d))
         print(decode_string_to_json(_d))

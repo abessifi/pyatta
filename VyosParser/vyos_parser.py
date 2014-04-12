@@ -24,145 +24,137 @@ _any_header_re = r"([a-zA-Z0-9-_.:/'\"$]+)"
 _dbl_quoted_string_re = r'("(?:[^"\n\r\\]|(?:"")|(?:\\x[0-9a-fA-F]+)|(?:\\.))*")'
 
 class HEADER(ReToken):
-    rx = re.compile(_dbl_quoted_string_re + "|" + _any_header_re) #don't change the order
+    rx = re.compile(_dbl_quoted_string_re + "|" + _any_header_re) # don't change the order
 
 def toplevel(rule):
     rule | (units)
     rule.astAttrs = { "units": units }
     rule.pass_single = True
-
 toplevel.ast_name = 'Toplevel'
 
 def units(rule):
-    rule | plus(star(NEWLINE), unit, star(NEWLINE))
+    rule | plus(star(NEWLINE), [unit], star(NEWLINE))
     rule.astAttrs = {"units": [unit]}
-
 units.ast_name = 'Units'
 
 def unit(rule):
-    rule | (headers, body)
-    rule.astAttrs =  { "headers": headers, "body": body }
-
+    rule | _or(dble_header_body , header_header, header_body, single_header)
+    rule.astAttrs = { "t1": header_header, "t2": header_body, "t3": dble_header_body, "t4": single_header }
 unit.ast_name = 'Unit'
 
-def headers(rule):
-    rule | plus(HEADER)
-    rule.astAttrs = {"headers": [HEADER]}
+def single_header(rule):
+    rule | HEADER
+    rule.astAttrs = { "header": HEADER }
+single_header.ast_name = 'SingleHeader'
 
-headers.ast_name = "Headers"
+def header_header(rule):
+    rule | (HEADER, HEADER)
+    # rule | (HEADER, HEADER)
+    rule.astAttrs = { "headers": [HEADER] }
+header_header.ast_name = 'HeaderHeader'
+
+def header_body(rule):
+    rule | (HEADER, body)
+    rule.astAttrs = { "header": HEADER, "body": body }
+header_body.ast_name = 'HeaderBody'
+
+def dble_header_body(rule):
+    rule | (HEADER, HEADER, body)
+    rule.astAttrs = { "headers": [HEADER], "body": body }
+dble_header_body.ast_name = 'DbleHeaderBody'
 
 def body(rule):
-    rule | ("{", [entries],  "}")
-    rule.astAttrs = {"entries": entries}
-
+    rule | ("{", units,  "}")
+    rule.astAttrs = { "units": units }
 body.ast_name = 'Body'
-
-def entries(rule):
-    rule | (star(NEWLINE), star(entry,plus(NEWLINE)))
-    rule.astAttrs = {"entries": [ entry ]}
-
-entries.ast_name = 'Entries'
-
-def entry(rule):
-    rule | (entry_head, [entry_tail])
-    rule.astAttrs = {"entry_head": entry_head, "entry_tail": entry_tail}
-
-entry.ast_name = 'Entry'
-
-def entry_head(rule):
-    rule | plus(HEADER)
-    rule.astAttrs = { "headers": [HEADER] }
-
-entry_head.ast_name = 'EntryHead'
-
-def entry_tail(rule):
-    rule | (body)
-    rule.astAttrs = {"body": body}
-
-entry_tail.ast_name = 'EntryTail'
-
-# TODO
-# Med: this is not perfect but at least functional
 
 grammar = Grammar(start=toplevel,
         tokens=[HEADER, WHITE, NEWLINE, ANY],
         ignore=[WHITE],
         ast_tokens=[STRING])
 
-
 Dict = Translator(grammar)
 ast = grammar.ast_classes
 
-
 @Dict.translates(ast.Toplevel)
-def t_toplevel(node):
+def t_toplevel():
     return Dict.translate(node.units)
 
 @Dict.translates(ast.Units)
 def t_units(node):
-    # return [ Dict.translate(unit) for unit in node.units ]
-    return dict( Dict.translate(unit) for unit in node.units )
+    dic = {}
+    # h1, h2, b = None, None, None
+    for unit in node.units:
+        tu = Dict.translate(unit)
+        typ = tu[0]
+        if typ == "t1": # HeaderHeader
+            k, v = tu[1:]
+            if k in dic:
+                if isinstance(dic[k], list):
+                    dic[k].append(v)
+                else:
+                    dic[k] = [dic[k], v]
+            else:
+                dic[k] = v
+
+        elif typ == "t2": # HeaderBody
+            k, b = tu[1:]
+            if k in dic:
+                if isinstance(dic[k], list):
+                    dic[k].append(b)
+                else:
+                    dic[k] = [dic[k], b]
+            else:
+                dic[k] = b
+
+        elif typ == "t3": #DbleHeaderBody
+            k1, k2, b = tu[1:]
+            h = {k2: b}
+            if k1 in dic:
+                if isinstance(dic[k1], list):
+                    dic[k1].append(h)
+                else:
+                    dic[k1] = [dic[k1], h]
+            else:
+                dic[k1] = h
+
+    return dic
 
 @Dict.translates(ast.Unit)
 def t_unit(node):
-    _headers = Dict.translate(node.headers)
-    _body = Dict.translate(node.body)
-    return (_headers, _body)
+    if node.t1:
+        return Dict.translate(node.t1)
+    elif node.t2:
+        return Dict.translate(node.t2)
+    elif node.t3:
+        return Dict.translate(node.t3)
+    elif node.t4:
+        return Dict.translate(node.t4)
 
-@Dict.translates(ast.Headers)
-def t_headers(node):
-    _headers = []
-    for header in node.headers:
-        _headers.append(Dict.translate(header))
-    return " ".join(_headers)
+@Dict.translates(ast.SingleHeader)
+def t_single_header(node):
+    return ["t1", Dict.translate(node.header), "on"]
+
+@Dict.translates(ast.HeaderHeader)
+def t_header_header(node):
+    h1 = Dict.translate(node.headers[0])
+    h2 = Dict.translate(node.headers[1])
+    return ["t1", h1, h2]
+
+@Dict.translates(ast.HeaderBody)
+def t_header_body(node):
+    h = Dict.translate(node.header)
+    return ["t2", h, Dict.translate(node.body)]
+
+@Dict.translates(ast.DbleHeaderBody)
+def t_dble_header_body(node):
+    h1 = Dict.translate(node.headers[0])
+    h2 = Dict.translate(node.headers[1])
+    return ["t3", h1, h2, Dict.translate(node.body)]
 
 @Dict.translates(ast.Body)
 def t_body(node):
-    return Dict.translate(node.entries)
-
-# TODO
-# Med: optimize this function without sacrificing readability
-
-@Dict.translates(ast.Entries)
-def t_entries(node):
-    dict = {}
-    for entry in node.entries:
-        _x = Dict.translate(entry)
-        if len(_x) == 1:
-            _k, _v = _x[0], "enabled" #some entry have only on header (example ssh { allow-root })
-        else:
-            _k, _v = _x[0:2]
-        if _k in dict:
-            if isinstance(dict[_k], list):
-                dict[_k].append(_v)
-            else:
-                dict[_k] = [dict[_k], _v]
-        else:
-            dict[_k] = _v
-    return dict
-
-@Dict.translates(ast.Entry)
-def t_entry(node):
-    _head = Dict.translate(node.entry_head)
-    _tail = Dict.translate(node.entry_tail)
-    if _tail == None:         # when we have `key value` (no body following)
-        return _head
-    _head = " ".join(_head)   # when we have `key { ... }`
-    return [ _head, _tail ]
-
-@Dict.translates(ast.EntryHead)
-def t_entry_head(node):
-    _headers = []
-    for header in node.headers:
-        _headers.append(Dict.translate(header))
-    return _headers;
-
-@Dict.translates(ast.EntryTail)
-def t_entry_tail(node):
-    if node.body != None:
-        return Dict.translate(node.body)
-    else:
-        return None
+    return Dict.translate(node.units)
 
 @Dict.translates(HEADER)
 def t_HEADER(node):
@@ -184,7 +176,5 @@ def decode_string(string):
 def decode_string_to_json(string):
     """Just a wrapper around decode_string_dict for convenience"""
     return _dict_to_json(_decode_string(string))
-
-
 
 # vim: et sts=4:ts=4:sw=4
