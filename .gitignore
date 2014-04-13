@@ -1,6 +1,3 @@
 *.pyc
 *.log
-bin/
-lib/
-include/
-local/
+tests/__pycache__/
