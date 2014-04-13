@@ -1,6 +1,5 @@
-#!/usr/bin/env python
+#!/home/vyos/vyos-api/bin/python
 
-import os
 import sys
 from pprint import pprint
 
@@ -163,6 +162,7 @@ data_service ="""
              listen-on eth1
              listen-on eth2
              name-server 208.67.220.123
+             name-server 208.67.222.123
          }
      }
      https {
