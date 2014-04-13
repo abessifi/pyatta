@@ -1,4 +1,3 @@
-ExecFromat/*.pyc
-VyosSessionConfig/*.pyc
-VyosParser/*.pyc
+*.pyc
+*.log
 tests/__pycache__/
