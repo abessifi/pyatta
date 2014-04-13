@@ -1,0 +1,8 @@
+*.pyc
+*.log
+bin/
+lib/
+include/
+local/
+
+
