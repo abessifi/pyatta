@@ -1,7 +1,9 @@
 #Imports
 import sys
-
-sys.path.append('/home/vyos/vyos-api/')
+import os
+topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
+topdir = os.path.realpath(topdir)
+sys.path.insert(0, topdir)
 from VyosSessionConfig import utils
 
 

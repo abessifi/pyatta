@@ -1,12 +1,13 @@
-#!../bin/python
+#!/usr/bin/env python
 import sys
-sys.path.append('../')
+import os
+topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
+topdir = os.path.realpath(topdir)
+sys.path.insert(0, topdir)
 from ConfigOpt import config_opt
-from ExecFormat import ExecutorFormator
 SW="service webproxy"
 UF="url-filtering squidguard"
 class webfiltering(config_opt):
-    exe = ExecutorFormator()
 
     def webproxy_config(self,suffix):
         webproxy=[SW]
@@ -28,7 +29,6 @@ class webfiltering(config_opt):
     def set_local_block(self,website):
         block_loc=[UF,"local-block",website]
         self.webproxy_config(block_loc)
-        self.exe.commit()
 
     def set_default_action(self,action):
         if action in ["allow","block"]:
@@ -39,6 +39,8 @@ class webfiltering(config_opt):
         redirect_url=[UF,"redirect-url",url]
         self.webproxy_config(redirect_url)
 
+"""
 obj = webfiltering()
 obj.set_listen_addr("192.168.2.1")
 obj.set_local_block("facebook.com")
+"""

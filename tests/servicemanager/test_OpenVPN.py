@@ -4,7 +4,9 @@
 import pytest
 import sys
 import os
-sys.path.append('/home/vyos/vyos-api/')
+topdir = os.path.dirname(os.path.realpath(__file__)) + "../../.."
+topdir = os.path.realpath(topdir)
+sys.path.insert(0, topdir)
 from ServiceManager import OpenVPN as OV
 from ServiceManager import validation as vld
 
@@ -37,7 +39,7 @@ def test_sharedkey():
         assert os.path.exists('/config/auth/cleee') and os.path.isfile('/config/auth/cleee')==True
 
 def test_openvpn_config():
-    assert vpn.openvpn_config('0',["server","role","passive"]) == "interfaces openvpn vtun0 server role passive"
+    assert vpn.openvpn_config('0',["tls","role","passive"]) == "/opt/vyatta/sbin/my_set interfaces openvpn vtun0 tls role passive"
 
 def test_set_interface():
     with pytest.raises(OV.InterfaceExist) as e :

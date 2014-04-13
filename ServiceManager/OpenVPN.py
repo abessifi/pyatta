@@ -2,8 +2,11 @@
 """this class implements the necessary fonctionnalities to setup 
 an openvpn service in both site-to-site and server-client mode"""
 import sys
-sys.path.append('../')
-from ExecFormat import ExecutorFormator
+import os
+topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
+topdir = os.path.realpath(topdir)
+sys.path.insert(0, topdir)
+
 from ConfigOpt import config_opt
 from RoutingService import routingservice
 import validation as validate
@@ -20,7 +23,6 @@ IOV="interfaces openvpn"
 viface = "vtun"
 
 class openvpn(config_opt):
-    exe = ExecutorFormator()    
     RS = routingservice()
     algo_cipher=["des","3des","bf256","aes128","aes256"]
     protocol=["udp","tcp-passive","tcp-active"]

@@ -1,4 +1,4 @@
-#!/home/vyos/vyos-api/bin/python
+#!/usr/bin/env python
 """ this method have to be added to utils module"""
 from subprocess import check_output,CalledProcessError
 import os

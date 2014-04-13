@@ -1,4 +1,4 @@
-#!../bin/python
+#!/usr/bin/env python
 
 from ConfigOpt import config_opt
 

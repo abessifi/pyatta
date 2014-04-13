@@ -1,13 +1,14 @@
-#!../bin/python
+#!/usr/bin/env python
 import sys
-sys.path.append('../')
+import os
+topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
+topdir = os.path.realpath(topdir)
+sys.path.insert(0, topdir)
 from ConfigOpt import config_opt
-from ExecFormat import ExecutorFormator
 
 SDS = "service dhcp-server shared-network-name"
 
 class dhcpservice(config_opt):
-    exe = ExecutorFormator()
 
     def disable_dhcp(self,name):
         dhcp_params=[SDS,name,"disable"]
@@ -45,10 +46,10 @@ class dhcpservice(config_opt):
     def set_range_adresses (self,name,subnet,adr_start,adr_stop):
         plage=["start",adr_start,"stop",adr_stop]
         self.setup_dhcp_subnet(name,subnet,plage)
-        self.exe.commit()
-        self.exe.save()
 
+"""
 obj=dhcpservice()
 obj.setup_dhcp_default_router("Pool2","192.168.3.0","192.168.3.1")
 obj.setup_dhcp_dns_server("Pool2","192.168.3.0","192.168.3.1")
 obj.set_range_adresses("Pool2","192.168.3.0","192.168.3.100","192.168.3.200")
+"""

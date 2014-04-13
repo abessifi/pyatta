@@ -1,14 +1,15 @@
-#!../bin/python
+#!/usr/bin/env python
 
 import sys
-sys.path.append('/home/vyos/vyos-api/')
+import os
+topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
+topdir = os.path.realpath(topdir)
+sys.path.insert(0, topdir)
 from ConfigOpt import config_opt
-from ExecFormat import ExecutorFormator
 NSR = "nat source rule"
 NDR = "nat destination rule"
 
 class snatservice(config_opt):
-    execformat = ExecutorFormator()
 
     def disable_snat(self,rule_num,prefix=NSR):
         nat_params=[prefix,rule_num,"disable"]
@@ -41,20 +42,16 @@ class snatservice(config_opt):
     def set_snat_translation_adr(self,rule_num,prefix=NSR,trans_adr="masquerade"):
         suffix=[rule_num,"translation address",trans_adr]
         self.set_snat(prefix,suffix)
-        self.execformat.commit()
 
     def set_snat_protocol(self,rule_num,prefix=NSR,prot="all"):
         suffix=[rule_num,"protocol",prot]
         self.set_snat(prefix,suffix)
-        self.execformat.commit()
-		#self.execformat.save()
 		
     def set_snat_src_port(self,rule_num,range_port_name_nbr,label_port="source port",prefix=NSR):
         suffix=[rule_num,label_port,range_port_name_nbr]
         self.set_snat(prefix,suffix)
 
 class dnatservice(snatservice):
-    execformat = ExecutorFormator()
 
     def disable_dnat(self,rule_num):
         self.disable_snat(rule_num,NDR)
@@ -77,8 +74,6 @@ class dnatservice(snatservice):
 
     def set_dnat_translation_adr(self,rule_num,trans_adr):
         self.set_snat_translation_adr(rule_num,NDR,trans_adr)		
-        self.execformat.commit()
-        self.execformat.save()
 
     def set_dnat_protocol(self,rule_num,prot):
         self.set_snat_protocol(rule_num,NDR,prot)		
@@ -89,6 +84,7 @@ class dnatservice(snatservice):
     def set_dnat_trans_port(self):
         pass
 
+"""
 obj = snatservice()
 obj.set_snat_outbound_interface("123","eth0")
 obj.set_source_subnet("123","192.168.5.0")
@@ -96,7 +92,7 @@ obj.set_snat_translation_adr("123")
 #obj.set_snat_protocol("123")
 #obj.set_snat_src_port("123","1234-3000")
 
-"""
+
 obj = dnatservice()
 obj.set_dnat_inbound_interface("21","eth0")
 obj.set_dnat_dst_adr("21","119.252.88.90")

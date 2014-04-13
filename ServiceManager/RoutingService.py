@@ -1,11 +1,9 @@
 #!../bin/python
 
 from ConfigOpt import config_opt
-from ExecFormat import ExecutorFormator
 PS = "protocols static"
 
 class routingservice(config_opt):
-    exe=ExecutorFormator()
     def add_route(self,suffix):
         routing_params=[PS]
         routing_params.extend(suffix)
@@ -32,8 +30,9 @@ class routingservice(config_opt):
 
     def delete_interface_route(self,dst_subnet):
         self.delete_route("interface-route",dst_subnet+"/24")
-
+"""
 obj = routingservice()
 obj.delete_interface_route("192.168.1.0")
 obj.exe.commit()
 obj.exe.save()
+"""
