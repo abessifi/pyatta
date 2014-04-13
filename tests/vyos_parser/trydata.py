@@ -276,7 +276,7 @@ data_flat2 = """
 
 """
 
-data_all = [data_many_keys, data_empty, data_firewall, data_interfaces, data_nat , data_protocols, data_service, data_system,data_flat1,data_flat2 ]  
+data_all = [data_many_keys, data_firewall, data_interfaces, data_nat , data_protocols, data_service, data_system,data_flat1,data_flat2 ]  
 
 ## test it with some random data ##
 if __name__ == '__main__':
