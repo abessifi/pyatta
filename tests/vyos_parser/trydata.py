@@ -12,8 +12,6 @@ from VyosParser.vyos_parser import decode_string, decode_string_to_json
 
 import VyosParser
 
-data_empty = """ emty_unit { 
-}  """
 
 data_firewall = """
  firewall {
