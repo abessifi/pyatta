@@ -256,8 +256,28 @@ data_many_keys = """
      speed auto
  }
 """
-data_all = [data_many_keys, data_empty, data_firewall, data_interfaces, data_nat , data_protocols, data_service, data_system ]  
-# data_all = [data_many_keys]  
+
+data_flat1 = """
+     address 192.168.3.1/24
+     duplex auto
+     hw-id 08:00:27:62:f8:43
+     smp_affinity auto
+     speed auto
+
+"""
+data_flat2 = """
+     auto-sync 1
+     repository community {
+         components main
+         distribution hydrogen
+         password ""
+         url http://packages.vyos.net/vyos
+         username ""
+     }
+
+"""
+
+data_all = [data_many_keys, data_empty, data_firewall, data_interfaces, data_nat , data_protocols, data_service, data_system,data_flat1,data_flat2 ]  
 
 ## test it with some random data ##
 if __name__ == '__main__':
