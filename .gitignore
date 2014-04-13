@@ -1,5 +1,3 @@
-
-ExecFormat/*.pyc
-VyosSessionConfig/*.pyc
+*.pyc
+*.log
 tests/__pycache__/
-tests/*.pyc
