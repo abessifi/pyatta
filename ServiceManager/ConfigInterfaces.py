@@ -1,8 +1,7 @@
-#!../bin/python
+#!/usr/bin/env python
 import sys
 sys.path.append('/home/vyos/vyos-api/')
 from ConfigOpt import config_opt
-from ExecFormat import ExecutorFormator
 import validation as vld
 from validation import valid
 
@@ -25,9 +24,8 @@ class  configinterface(config_opt):
 
     """this method may delete or set an ip address for a particular interface"""
     def addr_interface(self,action,interface,addr,vlan_label="",vlan_id=''):
-        
-            address = [interface,vlan_label,vlan_id,"address",addr+"/24"]
-            self.ethernet_config(action,address)
+        address = [interface,vlan_label,vlan_id,"address",addr+"/24"]
+        self.ethernet_config(action,address)
 
     """this method may delete or set an MAC address for a particular interface"""
     def hw_id(self,action,interface,hwid):
