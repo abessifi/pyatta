@@ -1,6 +1,7 @@
-#!/home/vyos/vyos-api/bin/python
+#!/usr/bin/env python
 
 import sys
+import os
 from pprint import pprint
 
 topdir = os.path.dirname(os.path.realpath(__file__)) + "../../.."
