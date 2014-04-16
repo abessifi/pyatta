@@ -276,10 +276,11 @@ def test_d5():
     assert "ethernet" in h
 
     a = h["ethernet"]
+    assert isinstance(a, dict)
     assert len(a) == 3
-    assert "eth0" in a[0]
-    assert "eth1" in a[1]
-    assert "eth2" in a[2]
+    assert "eth0" in a
+    assert "eth1" in a
+    assert "eth2" in a
     
 d6 = """
  listen-on eth0
