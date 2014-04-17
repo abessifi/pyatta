@@ -109,14 +109,9 @@ def t_units(node):
 
         elif typ == "t3": #DbleHeaderBody
             k1, k2, b = tu[1:]
-            h = {k2: b}
-            if k1 in dic:
-                if isinstance(dic[k1], list):
-                    dic[k1].append(h)
-                else:
-                    dic[k1] = [dic[k1], h]
-            else:
-                dic[k1] = h
+            if not k1 in dic:
+                dic[k1] = {}
+            dic[k1][k2] = b
 
     return dic
 
