@@ -8,6 +8,7 @@ class AddressError(Exception): pass
 class IpformatError(Exception): pass
 class InterfaceError(Exception): pass
 class ActionError(Exception): pass
+
 class validation():
 
     @staticmethod

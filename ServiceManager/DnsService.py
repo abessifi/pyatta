@@ -6,29 +6,33 @@ topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
 topdir = os.path.realpath(topdir)
 sys.path.insert(0, topdir)
 from ConfigOpt import config_opt
+import validation as vld
 SDF="service dns forwarding"
 
 class dnsservice(config_opt):
+    action=['set','delete']
 
-    def dns_config(self,action,suffix):
+    def dns_config(self,action,suffix=[]):
         dns_params=[SDF]
         dns_params.extend(suffix)
         if action == "set":
             self.set(dns_params)
         elif action == "delete":
             self.delete(dns_params)
+        else:
+            raise vld.ActionError('unknown action %s!'%action)
 
-    def add_listenon_interface(self,interface):
-        self.dns_config("set",["listen-on",interface])
+    def listenon_interface(self,action,interface):
+        self.dns_config(action,["listen-on",interface])
+            
+    def nameserver(self,action,nameserver):
+        self.dns_config(action,["name-server",nameserver])
 
-    def del_listenon_interface(self,interface):
-        self.dns_config("delete",["listen-on",interface])
+    def cache_size(self,action,cache):
+        self.dns_config(action,["cache-size",cache])
 
-    def add_nameserver(self,nameserver):
-        self.dns_config("set",["name-server",nameserver])
-
-    def del_nameserver(self,nameserver):
-        self.dns_config("delete",["name-server",nameserver])
+    def del_dns(self):
+        self.dns_config("delete")
 
 """
 obj = dnsservice()
