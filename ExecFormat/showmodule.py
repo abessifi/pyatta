@@ -38,6 +38,3 @@ class show_config():
         except KeyError,k:
             return {k.message:'no such available key'}
 
-#obj=show_config('nat')
-#pprint(obj.serviceoutput)
-#pprint(obj.customized_show(['source','rule']))
