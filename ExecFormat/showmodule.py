@@ -1,6 +1,6 @@
 #!/home/vyos/vyos-api/bin/python
 import sys
-sys.path.append('/home/vyos/vyos-api/')
+sys.path.append('/home/vyos/vyos-api/project/')
 from execformat import execUtils as executor
 from VyosSessionConfig.configsession import ConfigSession as cs
 from VyosSessionConfig.utils import logger
@@ -37,4 +37,3 @@ class show_config():
         except KeyError,k:
             print k.message
             print 'no key available'
-
