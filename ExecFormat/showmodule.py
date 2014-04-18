@@ -15,6 +15,7 @@ class show_config():
     exe=executor()
     _args=['show']
     serviceoutput=""
+    
     def __init__(self,service):
         self.serviceoutput=self.show_all(service)
         

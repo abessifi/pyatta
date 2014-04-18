@@ -6,10 +6,9 @@ topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
 topdir = os.path.realpath(topdir)
 sys.path.insert(0, topdir)
 from dns_handler import dns_handler, dns_option_handler
-from base_setup import auth, app, token_gen
+from base_setup import auth, app, token_gen, db
 from session_handler import session_handler
 from user_handler import UserListAPI, UserAPI
-
 from VyosSessionConfig import utils
 from flask.views import MethodView
 from flask.ext.restful import Api
@@ -22,7 +21,7 @@ app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 
 #extensions
 api = Api(app)
-
+#add resources
 api.add_resource(session_handler,'/v1.0/session/<action>')
 api.add_resource(dns_handler, '/v1.0/service/dns/forwarding')
 api.add_resource(token_gen,'/v1.0/token')
