@@ -7,6 +7,9 @@ sys.path.insert(0, topdir)
 from flask.ext.restful import Resource
 from base_setup import auth
 from VyosSessionConfig import configsession
+
+"""this class provides services such as setup,teardown 
+session and moreover commit,discard and save changes"""
 class session_handler(Resource):
     cs=configsession.ConfigSession()
     decorators=[auth.login_required]

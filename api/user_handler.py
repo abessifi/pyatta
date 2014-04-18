@@ -11,9 +11,11 @@ user_fields = {
     'uri':fields.Url('user')
 }
 
+"""this class shows users and may delete or add new other ones """
 class UserListAPI(Resource):
     decorators = [auth.login_required]
 
+    """this constructor defines parser for incoming users requests """
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
         self.reqparse.add_argument('username', type=str, required=True, help='No username provided', location='json')
@@ -22,9 +24,11 @@ class UserListAPI(Resource):
         self.reqparse.add_argument('superuser', type=int, required=True,help='No superuser privilege provided', location='json')
         super(UserListAPI, self).__init__()
 
+    """this method returns informations concerning existing users"""
     def get(self):
         return { 'users': map(lambda t: marshal(t, user_fields), User.query.all()) }
 
+    """this method allows the creation of new users"""
     def post(self):
         args = self.reqparse.parse_args()
         if User.query.filter_by(username=args['username']).first() is not None:
@@ -37,9 +41,9 @@ class UserListAPI(Resource):
         db.session.commit()
         return { 'user': marshal(user, user_fields) }, 201
 
+"""this class implements the get, edition and delete of a specific user"""
 class UserAPI(Resource):
     decorators = [auth.login_required]
-
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
         self.reqparse.add_argument('username', type = str, location = 'json')
@@ -47,12 +51,14 @@ class UserAPI(Resource):
         self.reqparse.add_argument('email', type = str , location = 'json')
         super(UserAPI, self).__init__()
 
+    """this method returns user informations for a given id"""
     def get(self, id):
         user = User.query.get(id)
         if not user:
             abort(404)
         return { 'user': marshal(user, user_fields) }
 
+    """this method edit existing informations of a particular user"""
     def put(self, id):
         user = User.query.get(id)
         if not user:
@@ -62,11 +68,13 @@ class UserAPI(Resource):
             args['password']=pwd_context.encrypt(args['password'])
         for cle in ['username','password','email']:
             if args[cle]:
+                #get new updated informations and set it to the appropriate record
                 user=User.query.filter_by(id=id).update({cle:args[cle]})
         db.session.commit()
-        return {'done':'done'}, 200
+        return {'user':'edited successfully!'}, 200
         #return { 'user': marshal(user, user_fields) }
 
+    """this method may delete an existing user"""
     def delete(self, id):
         user = User.query.get(id)
         if not user:
