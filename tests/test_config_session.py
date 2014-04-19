@@ -71,7 +71,7 @@ def test_commit():
     """
     Test if changes are successfully commited
     """
-    out = utils._run('/opt/vyatta/sbin/my_set interfaces ethernet eth3 description "This is a LAN interface"', output=True)
+    out = utils._run('/opt/vyatta/sbin/my_set interfaces ethernet eth2 description "This is a LAN interface"', output=True)
     #with pytest.raises(vsc.OperationFailed) as e:
     #    session.commit()
     assert session.commit() == True
