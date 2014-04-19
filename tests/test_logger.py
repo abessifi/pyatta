@@ -2,18 +2,7 @@
 import sys
 
 sys.path.append('/home/vyos/vyos-api/project')
-from VyosSessionConfig import utils
-
-
-def setup_module(module):
-    """
-    """
-    pass
-
-def teardow_module(module):
-    """
-    """
-    pass
+from vyos_session import utils
 
 def test_filehandle():
     """

@@ -1,4 +1,4 @@
-ExecFormat/*.pyc
-VyosSessionConfig/*.pyc
+execformat/*.pyc
+vyos_session/*.pyc
 tests/__pycache__/
 tests/*.pyc
