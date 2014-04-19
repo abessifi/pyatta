@@ -2,8 +2,6 @@
 import sys
 from vyos_session import utils
 
-print sys.path
-
 def test_filehandle():
     """
     Check if log file exists. Create it if not.
