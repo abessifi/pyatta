@@ -1,4 +1,6 @@
 import pytest
+import sys
+sys.path.append('/home/vyos/vyos-api/project')
 from execformat.executor import session, check_operation_name, execUtils, OperationNameError, OperationFailed
 from vyos_session.configsession import SessionNotExists
 
