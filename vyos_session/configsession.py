@@ -12,6 +12,7 @@ VYOS_SAVE_SCRIPT = 'vyatta-save-config.pl'
 class SessionAlreadyExists(Exception): pass
 class SetupSessionFailed(Exception): pass
 class OperationFailed(Exception): pass
+class SessionNotExists(Exception): pass
 
 class Session(object):
     """
