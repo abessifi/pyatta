@@ -1,9 +1,9 @@
-#!/home/vyos/vyos-api/bin/python
+#!/usr/bin/env python
 import sys
 import os
 topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
 topdir = os.path.realpath(topdir)
-sys.path.insert(0, topdir)
+#sys.path.insert(0, topdir)
 from execformat import execUtils as executor
 from VyosSessionConfig.utils import logger
 from VyosParser import vyos_parser as vparser

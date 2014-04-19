@@ -5,18 +5,22 @@ import os
 topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
 topdir = os.path.realpath(topdir)
 sys.path.insert(0, topdir)
-from ExecFormat.execformat import execUtils
+from ExecFormat.execformat import execUtils, OperationFailed
 class config_opt():
     exe=execUtils()
 
     def set(self, args):
-        #self.CS.setup_config_session()
         args.insert(0,'set')
-        self.exe.execmd(args) 
-        #self.CS.teardown_config_session()
+        try:
+            self.exe.execmd(args)
+            return True
+        except OperationFailed, e:
+            return False
 
     def delete(self, args):
-        #self.CS.setup_config_session()
         args.insert(0,'delete')
-        self.exe.execmd(args)
-        #self.CS.teardown_config_session()
+        try:
+            self.exe.execmd(args)
+            return True
+        except OperationFailed, e:
+            return False

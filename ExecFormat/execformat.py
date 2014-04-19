@@ -1,8 +1,9 @@
+#!/usr/bin/env python
 import sys
 import subprocess
 import os
 
-sys.path.append('/home/vyos/vyos-api/')
+sys.path.append('/home/vyos/vyos-api/project/')
 from VyosSessionConfig import configsession as cs
 from VyosSessionConfig import utils
 
@@ -15,9 +16,7 @@ class OperationFailed(Exception): pass
 class OperationNameError(Exception): pass
 
 def check_operation_name(args):
-    """
-    Check if operation/command name is correct.
-    """
+    """ Check if operation/command name is correct. """
     if len(args) == 0:
         logger.error('Operation name required')
         raise OperationNameError('Operation name required.')
@@ -26,11 +25,9 @@ def check_operation_name(args):
         raise OperationNameError('Operation name not correct.')
     return True
 
-class execUtils:
-    """
-    Executes possible operations in a Vyos configure session.
-    """
+class execUtils():
 
+    """ Executes possible operations in a Vyos configure session."""
     def execmd(self, args):
         """
         Performs execution of allowed config operations ['show','set','delete']

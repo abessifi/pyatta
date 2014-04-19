@@ -1,4 +1,5 @@
-#!../bin/python
+#!/usr/bin/env python
+
 """this class implements the necessary fonctionnalities to setup 
 an openvpn service in both site-to-site and server-client mode"""
 import sys
@@ -20,7 +21,6 @@ class KeyfileError(Exception): pass
 class ModeError(Exception): pass
 class InterfaceExist(Exception): pass
 IOV="interfaces openvpn"
-viface = "vtun"
 
 class openvpn(config_opt):
     RS = routingservice()
@@ -41,50 +41,54 @@ class openvpn(config_opt):
             return False
 
     """this method have to restructure any command line and pass it to the executor"""
-    def openvpn_config(self,iface_num,suffix=[]):
-        openvpn_params=[IOV,viface+iface_num]
+    def openvpn_config(self,iface,action,suffix=[]):
+        openvpn_params=[IOV,iface]
         openvpn_params.extend(suffix)
-        self.set(openvpn_params)
-        return " ".join(openvpn_params)
+        if action=='set':
+	    return self.set(openvpn_params)
+        elif action=='delete':
+            return self.delete(openvpn_params)
+        else:
+            return 'unknown operation!',action
 
     """this method grant a new virtual interface to 
     endpoint participant in openvpn connection"""
-    def set_interface_vpn(self,iface_num):
-        if vld.testiface(viface+iface_num):
+    def set_interface_vpn(self,iface):
+        if vld.testiface(iface):
             raise InterfaceExist("[WORNING] interface already exist")
-        self.openvpn_config(iface_num)        
-        return True
+        return self.openvpn_config(iface,action)
+        #return True
 
     """this method accord a local address for openvpn interface in site-to-site mode"""
-    def set_endpoint_local_vaddr(self,iface_num,local_vaddr):
-        if vld.testiface(viface+iface_num) and vld.testip(local_vaddr):
+    def endpoint_local_vaddr(self,action,iface,local_vaddr):
+        if vld.testiface(iface) and vld.testip(local_vaddr):
             suffix=["local-address",local_vaddr]
-            self.openvpn_config(iface_num,suffix)
-            return True
+            return self.openvpn_config(iface,action,suffix)
+            #return True
 
     """this method allow openvpn endpoints to act on a specific mode"""
-    def set_vpn_mode(self,iface_num,mode):
-        if vld.testiface(viface+iface_num):
+    def vpn_mode(self,action,iface,mode):
+        if vld.testiface(iface):
             if mode not in self.mode:
                 raise ModeError("[ERROR] valid mode is required !")
             suffix=["mode",mode]
-            self.openvpn_config(iface_num,suffix)
-            return True            
+            return self.openvpn_config(iface,action,suffix)
+            #return True
 
     """this method accord a local address for openvpn interface in site-to-site mode"""
-    def set_endpoint_remote_vaddr(self,iface_num,remote_vaddr):
-        if vld.testiface(viface+iface_num) and vld.testip(remote_vaddr):
+    def endpoint_remote_vaddr(self,action,iface,remote_vaddr):
+        if vld.testiface(iface) and vld.testip(remote_vaddr):
             suffix=["remote-address",remote_vaddr]
-            self.openvpn_config(iface_num,suffix)
+            return self.openvpn_config(iface,action,suffix)
 
     """this method is used in both site-to-site and client-server mode,
         and let the passive endpoint to know the physical address of the active one"""
-    def define_remotelocal_host(self,iface_num,pos,host):
-        if vld.testiface(viface+iface_num):
+    def define_remotelocal_host(self,action,iface,pos,host):
+        if vld.testiface(iface):
             if (pos == 'local' and vld.addrvalidation(host)) or pos == 'remote':
                 suffix=[pos+"-host",host]
-                self.openvpn_config(iface_num,suffix)
-                return True
+                return self.openvpn_config(iface,action,suffix)
+                #return True
             elif pos not in ['remote','local']:
                 return "[ERROR] unvalid host position"
             else:
@@ -92,105 +96,103 @@ class openvpn(config_opt):
 
     """this method have to define the right path to reach shared 
     key file on a site-to-site connection"""
-    def sharedkey_file_path(self,iface_num,path):
-        if vld.testiface(viface+iface_num):
+    def sharedkey_file_path(self,action,iface,path):
+        if vld.testiface(iface):
             if vld.testpath(path):                
                 suffix=["shared-secret-key-file",path]
-                self.openvpn_config(iface_num,suffix)
-                return True
-
+                return self.openvpn_config(iface,action,suffix)
+                #return True
+    #look at action handler in RoutingService.py
     """this method create the static route to access the remote 
     subnet via the openvpn tunnel in a site-to-site mode"""
-    def set_access_route_vpn(self,iface_num,dst_subnet):
-        if vld.testiface(viface+iface_num) and vld.testip(dst_subnet):
-            self.RS.set_interface_route(dst_subnet,viface+iface_num)
+    def access_route_vpn(self,action,iface,dst_subnet):
+        if vld.testiface(iface) and vld.testip(dst_subnet):
+            self.RS.set_interface_route(dst_subnet,iface)
             return True
-            
+
     """this method specify a specific role (passive,active) for an endpoint in tls mode"""
-    def set_tls_role(self,iface_num,role):
-        if vld.testiface(viface+iface_num):
+    def tls_role(self,action,iface,role):
+        if vld.testiface(iface):
             if role not in self.role:
                 raise RoleError("[ERROR] unvalid role: possible choice:active, passive")
             suffix=["tls role",role]
-            self.openvpn_config(iface_num,suffix)
-            return True
+            return self.openvpn_config(iface,action,suffix)
+            #return True
 
     """this method specify the locations of all files used 
     to establish a vpn connection in client-server mode"""
-    def define_files(self,iface_num,typefile,abspath):
-        if vld.testiface(viface+iface_num):
+    def define_files(self,action,iface,typefile,abspath):
+        if vld.testiface(iface):
             if typefile not in self.keyfiles:
                 raise KeyfileError("[ERROR] unvalid keyfile type!")
             elif vld.testpath(abspath):
                 suffix=["tls",typefile+"-file",abspath]
-                self.openvpn_config(iface_num,suffix)
-                return True
+                return self.openvpn_config(iface,action,suffix)
+                #return True
 
     """this method has the ability to delete an openvpn 
     interface with its appropriate configuration """
-    def del_vpn_config(self,iface_num,suffix=[]):
-        if vld.testiface(viface+iface_num):
-            openvpn_params=[IOV+iface_num]
-            openvpn_params.extend(suffix)
-            self.delete(openvpn_params)
+    def del_vpn_config(self,iface):
+        if vld.testiface(iface):
+            return self.delete('delete',[IOV,iface])
 
     """in client-server mode, this method is able to 
     specify the subnet for the openvpn tunnel """
-    def set_server_range_addr(self,iface_num,subnet):
-        if vld.testiface(viface+iface_num) and vld.testip(subnet):
+    def server_range_addr(self,action,iface,subnet):
+        if vld.testiface(iface) and vld.testip(subnet):
             suffix=["server subnet",subnet+"/24"]
-            self.openvpn_config(iface_num,suffix)
+            return self.openvpn_config(iface,action,suffix)
 
     """this method set a route on the server that will be pushed 
     to all clients during the connection establishment"""
-    def push_root_subnet(self,iface_num,subnet):
-        if vld.testiface(viface+iface_num) and vld.testip(subnet):
+    def push_root_subnet(self,action,iface,subnet):
+        if vld.testiface(iface) and vld.testip(subnet):
             suffix=["server push-route",subnet+"/24"]
-            self.openvpn_config(iface_num,suffix)
+            return self.openvpn_config(iface,action,suffix)
 
     """as far as the previous method,this on set a route on the server that 
     will be pushed to all clients during the connection establishment"""
-    def push_root_nameserver(self,iface_num,nameserver):
-        if vld.testiface(viface+iface_num) and vld.testip(nameserver):
+    def push_root_nameserver(self,action,iface,nameserver):
+        if vld.testiface(iface) and vld.testip(nameserver):
             suffix=["server name-server",nameserver]
-            self.openvpn_config(iface_num,suffix)
+            return self.openvpn_config(iface,action,suffix)
 
     """setup the data encryption algorithm"""
-    def set_encryption_algorithm(self,iface_num,algorithm):
-        if vld.testiface(viface+iface_num):
+    def encryption_algorithm(self,action,iface,algorithm):
+        if vld.testiface(iface):
             if algorithm in self.algo_cipher:
                 suffix=["encryption",algorithm]               
-                self.openvpn_config(iface_num,suffix)
-                return True
+                return self.openvpn_config(iface,action,suffix)
+                #return True
             else:
                 raise CipherError("[ERROR] %s is not a valid ancryption algorithm!" %algorithm)
 
     """define the local port number in the server to accept remote connctions"""
-    def set_local_port(self,iface_num,port):
-        if vld.testiface(viface+iface_num):
+    def local_port(self,action,iface,port):
+        if vld.testiface(iface):
             if str(port).isdigit() and (1024 < int(port) < 36565):
                 suffix=["local-port",port]
             else:
                 raise LocalportError("[ERROR] port number expected is false, 1194 is recommanded")
-            self.openvpn_config(iface_num,suffix)
-            return True
+            return self.openvpn_config(iface,action,suffix)
+            #return True
     
     """specify the openvpn communication protocol"""
-    def communication_protocol(self,iface_num,prot):
-        if vld.testiface(viface+iface_num):
+    def communication_protocol(self,action,iface,prot):
+        if vld.testiface(iface):
             if prot in self.protocol:
                 suffix=["protocol"]
                 suffix.append(prot)
             else:
                 raise ProtocolError("[ERROR] %s can not be used as OpenVPN communication protocol! udp was set by default" %prot)
-            self.openvpn_config(iface_num,suffix)
+            return self.openvpn_config(iface,action,suffix)
 
     """this method allow the user to add openvpn options that 
     are not supported by the vyatta configuration yet"""
-    def set_additional_options(self,iface_num,options):
-        if vld.testiface(viface+iface_num):
+    def additional_options(self,action,iface,options):
+        if vld.testiface(iface):
             suffix = ["openvpn-option",options]
-            self.openvpn_config(iface_num,suffix)
+            return self.openvpn_config(iface,action,suffix)
 
 
 """
