@@ -1,8 +1,8 @@
 #Imports
 import sys
-
-sys.path.append('/home/vyos/vyos-api/project')
 from vyos_session import utils
+
+print sys.path
 
 def test_filehandle():
     """
