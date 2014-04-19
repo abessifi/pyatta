@@ -10,13 +10,17 @@ class config_opt():
     exe=execUtils()
 
     def set(self, args):
-        #self.CS.setup_config_session()
         args.insert(0,'set')
-        self.exe.execmd(args) 
-        #self.CS.teardown_config_session()
+        try:
+            self.exe.execmd(args)
+            return True
+        except OperationFailed,e:
+            return e.message 
 
     def delete(self, args):
-        #self.CS.setup_config_session()
         args.insert(0,'delete')
-        self.exe.execmd(args)
-        #self.CS.teardown_config_session()
+        try:
+            self.exe.execmd(args)
+            return True
+        except OperationFailed,e:
+            return e.message

@@ -10,7 +10,6 @@ import validation as vld
 SDF="service dns forwarding"
 
 class dnsservice(config_opt):
-    action=['set','delete']
 
     def dns_config(self,action,suffix=[]):
         dns_params=[SDF]
