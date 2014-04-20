@@ -6,7 +6,6 @@ import os
 topdir = os.path.dirname(os.path.realpath(__file__)) + "../../.."
 topdir = os.path.realpath(topdir)
 sys.path.insert(0, topdir)
-from ExecFormat import execformat as exe
 from VyosSessionConfig import configsession as vsc
 from ServiceManager import OpenVPN as OV
 from ServiceManager import validation as vld

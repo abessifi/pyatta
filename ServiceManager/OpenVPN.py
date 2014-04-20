@@ -45,7 +45,7 @@ class openvpn(config_opt):
         openvpn_params=[IOV,iface]
         openvpn_params.extend(suffix)
         if action=='set':
-	    return self.set(openvpn_params)
+            return  self.set(openvpn_params)
         elif action=='delete':
             return self.delete(openvpn_params)
         else:
@@ -57,14 +57,12 @@ class openvpn(config_opt):
         if vld.testiface(iface):
             raise InterfaceExist("[WORNING] interface already exist")
         return self.openvpn_config(iface,action)
-        #return True
 
     """this method accord a local address for openvpn interface in site-to-site mode"""
     def endpoint_local_vaddr(self,action,iface,local_vaddr):
         if vld.testiface(iface) and vld.testip(local_vaddr):
             suffix=["local-address",local_vaddr]
             return self.openvpn_config(iface,action,suffix)
-            #return True
 
     """this method allow openvpn endpoints to act on a specific mode"""
     def vpn_mode(self,action,iface,mode):
@@ -73,7 +71,6 @@ class openvpn(config_opt):
                 raise ModeError("[ERROR] valid mode is required !")
             suffix=["mode",mode]
             return self.openvpn_config(iface,action,suffix)
-            #return True
 
     """this method accord a local address for openvpn interface in site-to-site mode"""
     def endpoint_remote_vaddr(self,action,iface,remote_vaddr):
@@ -88,7 +85,6 @@ class openvpn(config_opt):
             if (pos == 'local' and vld.addrvalidation(host)) or pos == 'remote':
                 suffix=[pos+"-host",host]
                 return self.openvpn_config(iface,action,suffix)
-                #return True
             elif pos not in ['remote','local']:
                 return "[ERROR] unvalid host position"
             else:
@@ -101,7 +97,7 @@ class openvpn(config_opt):
             if vld.testpath(path):                
                 suffix=["shared-secret-key-file",path]
                 return self.openvpn_config(iface,action,suffix)
-                #return True
+
     #look at action handler in RoutingService.py
     """this method create the static route to access the remote 
     subnet via the openvpn tunnel in a site-to-site mode"""
@@ -117,7 +113,6 @@ class openvpn(config_opt):
                 raise RoleError("[ERROR] unvalid role: possible choice:active, passive")
             suffix=["tls role",role]
             return self.openvpn_config(iface,action,suffix)
-            #return True
 
     """this method specify the locations of all files used 
     to establish a vpn connection in client-server mode"""
@@ -128,7 +123,6 @@ class openvpn(config_opt):
             elif vld.testpath(abspath):
                 suffix=["tls",typefile+"-file",abspath]
                 return self.openvpn_config(iface,action,suffix)
-                #return True
 
     """this method has the ability to delete an openvpn 
     interface with its appropriate configuration """
@@ -163,7 +157,6 @@ class openvpn(config_opt):
             if algorithm in self.algo_cipher:
                 suffix=["encryption",algorithm]               
                 return self.openvpn_config(iface,action,suffix)
-                #return True
             else:
                 raise CipherError("[ERROR] %s is not a valid ancryption algorithm!" %algorithm)
 
@@ -175,7 +168,6 @@ class openvpn(config_opt):
             else:
                 raise LocalportError("[ERROR] port number expected is false, 1194 is recommanded")
             return self.openvpn_config(iface,action,suffix)
-            #return True
     
     """specify the openvpn communication protocol"""
     def communication_protocol(self,action,iface,prot):
