@@ -4,10 +4,15 @@ import subprocess
 import os
 
 sys.path.append('/home/vyos/vyos-api/project/')
-from VyosSessionConfig import configsession as cs
-from VyosSessionConfig import utils
+from vyos_session.configsession import ConfigSession, SessionNotExists, SetupSessionFailed 
+from vyos_session import utils
 
 logger = utils.logger
+
+try:
+    session = ConfigSession()
+except SessionAlreadyExists:
+    logger.error('A session exist already !')
 
 VYOS_SBIN_DIR = utils.get_config_params('bin','vyos_sbin_dir')
 VYOS_SHELL_API = utils.get_config_params('bin', 'shell_api_path')
@@ -43,6 +48,8 @@ class execUtils():
             # if Popen(args, shell=True, ...) => Execution fails
             # if Popen(args, ...) => OSError: [Errno 2] No such file or directory
             # if args = ['/bin/cli-shell-api','showCfg', ...] and Popen(args, ...) that works but actually we keep using ' '.join(args).
+            if not session.session_exists():
+                raise SessionNotExists('Configure session do not exists')
             proc = subprocess.Popen(' '.join(args), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             # wait for the process to terminate and get stdout/stderr outputs
             out, err = proc.communicate()

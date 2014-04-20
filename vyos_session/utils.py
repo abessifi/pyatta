@@ -3,8 +3,8 @@ import subprocess
 import os
 import logging
 
-# In production environment PROJECT_PATH should be /etc/pyatta/
-PROJECT_PATH = "/home/vyos/vyos-api/project/"
+# In production environment CONFIG_DIR should be /etc/pyatta/
+CONFIG_DIR = "/home/vyos/vyos-api/project"
 CONFIG_FILE_NAME = "pyatta.conf"
 AVAILABLE_LOG_LEVELS = ['DEBUG','INFO','WARN','ERROR','CRITICAL']
 DEFAULT_LOG_LEVEL = 'INFO'
@@ -14,7 +14,7 @@ def get_config_params(section, key):
     To get specific parameters valuers from config file 
     """
     config = ConfigParser.SafeConfigParser()
-    config.readfp(open(os.path.join(PROJECT_PATH, CONFIG_FILE_NAME)))
+    config.readfp(open(os.path.join(CONFIG_DIR, CONFIG_FILE_NAME)))
     return config.get(section, key)
 
 def get_log_level():

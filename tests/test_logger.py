@@ -1,21 +1,6 @@
-#Imports
 import sys
-import os
-topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
-topdir = os.path.realpath(topdir)
-sys.path.insert(0, topdir)
-from VyosSessionConfig import utils
-
-
-def setup_module(module):
-    """
-    """
-    pass
-
-def teardow_module(module):
-    """
-    """
-    pass
+sys.path.append('/home/vyos/vyos-api/project')
+from vyos_session import utils
 
 def test_filehandle():
     """
