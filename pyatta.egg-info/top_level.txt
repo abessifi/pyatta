@@ -1,2 +1,0 @@
-execformat
-vyos_session
