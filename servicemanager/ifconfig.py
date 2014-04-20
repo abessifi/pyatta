@@ -4,13 +4,13 @@ import os
 topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
 topdir = os.path.realpath(topdir)
 sys.path.insert(0, topdir)
-from ConfigOpt import config_opt
+from operations import configOpts
 import validation as vld
 
 IE = "interfaces ethernet"
 
 """this class has to configure ethernet interfaces"""
-class  configinterface(config_opt):
+class  ifConfig(configOpts):
     orient=["in","out","local"]
 
     """this method allows you to setup or delete a specific configuration option"""

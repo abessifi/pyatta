@@ -5,11 +5,11 @@ import os
 topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
 topdir = os.path.realpath(topdir)
 sys.path.insert(0, topdir)
-from ConfigOpt import config_opt
+from operations import configOpts
 NSR = "nat source rule"
 NDR = "nat destination rule"
 
-class snatservice(config_opt):
+class snatHandler(configOpts):
 
     def disable_snat(self,rule_num,prefix=NSR):
         nat_params=[prefix,rule_num,"disable"]
@@ -51,7 +51,7 @@ class snatservice(config_opt):
         suffix=[rule_num,label_port,range_port_name_nbr]
         self.set_snat(prefix,suffix)
 
-class dnatservice(snatservice):
+class dnatHandler(snatHandler):
 
     def disable_dnat(self,rule_num):
         self.disable_snat(rule_num,NDR)

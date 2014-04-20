@@ -5,11 +5,11 @@ import os
 topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
 topdir = os.path.realpath(topdir)
 sys.path.insert(0, topdir)
-from ConfigOpt import config_opt
+from operations import configOpts
 import validation as vld
 SDF="service dns forwarding"
 
-class dnsservice(config_opt):
+class dnsHandler(configOpts):
 
     def dns_config(self,action,suffix=[]):
         dns_params=[SDF]
@@ -24,7 +24,7 @@ class dnsservice(config_opt):
     def listenon_interface(self,action,interface):
         self.dns_config(action,["listen-on",interface])
             
-    def nameserver(self,action,nameserver):
+    def name_server(self,action,nameserver):
         self.dns_config(action,["name-server",nameserver])
 
     def cache_size(self,action,cache):

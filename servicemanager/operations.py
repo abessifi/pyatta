@@ -6,7 +6,7 @@ topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
 topdir = os.path.realpath(topdir)
 sys.path.insert(0, topdir)
 from ExecFormat.execformat import execUtils, OperationFailed
-class config_opt():
+class configOpts():
     exe=execUtils()
 
     def set(self, args):

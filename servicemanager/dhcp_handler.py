@@ -4,11 +4,11 @@ import os
 topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
 topdir = os.path.realpath(topdir)
 sys.path.insert(0, topdir)
-from ConfigOpt import config_opt
+from operations import configOpts
 
 SDS = "service dhcp-server shared-network-name"
 
-class dhcpservice(config_opt):
+class dhcpHandler(configOpts):
 
     def disable_dhcp(self,name):
         dhcp_params=[SDS,name,"disable"]

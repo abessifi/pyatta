@@ -8,8 +8,8 @@ topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
 topdir = os.path.realpath(topdir)
 sys.path.insert(0, topdir)
 
-from ConfigOpt import config_opt
-from RoutingService import routingservice
+from operations import configOpts
+from routing_handler import routingHandler
 import validation as validate
 from validation import validation as vld
 from subprocess import check_output,CalledProcessError
@@ -22,14 +22,13 @@ class ModeError(Exception): pass
 class InterfaceExist(Exception): pass
 IOV="interfaces openvpn"
 
-class openvpn(config_opt):
-    RS = routingservice()
+class ovpHandler(configOpts):
+    RS = routingHandler()
     algo_cipher=["des","3des","bf256","aes128","aes256"]
     protocol=["udp","tcp-passive","tcp-active"]
     keyfiles=["ca-cert","cert","dh","key"]
     role=["active","passive"]
     mode=["server","client","site-to-site"]
-#    vld = validate.validation()
 
     @staticmethod
     def shared_keygen(sharedkeyname):

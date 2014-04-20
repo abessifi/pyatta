@@ -91,5 +91,3 @@ def clean_environ(env):
     """
     for key in env.keys():
         if os.environ.get('key'): del os.environ[key]
-
-

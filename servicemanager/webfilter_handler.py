@@ -4,10 +4,11 @@ import os
 topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
 topdir = os.path.realpath(topdir)
 sys.path.insert(0, topdir)
-from ConfigOpt import config_opt
+from operations import configOpts
+
 SW="service webproxy"
 UF="url-filtering squidguard"
-class webfiltering(config_opt):
+class webFilterHandler(configOpts):
 
     def webproxy_config(self,suffix):
         webproxy=[SW]

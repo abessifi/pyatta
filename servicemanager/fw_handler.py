@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
-from ConfigOpt import config_opt
+from operations import configOpts
 
 FWN = "firewall name"
 ZPZ = "zone-policy zone"
-class fwservice(config_opt):
+class fwHandler(configOpts):
 	actions=["drop","reject","accept","inspect"]
 	state=["established","invalid","related"]	
 	availability=["enable","disable"]

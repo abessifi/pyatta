@@ -1,9 +1,9 @@
 #!../bin/python
 
-from ConfigOpt import config_opt
+from operations import configOpts
 PS = "protocols static"
 
-class routingservice(config_opt):
+class routingHandler(config_opt):
     def add_route(self,suffix):
         routing_params=[PS]
         routing_params.extend(suffix)
