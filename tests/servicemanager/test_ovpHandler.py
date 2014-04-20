@@ -6,30 +6,25 @@ import os
 topdir = os.path.dirname(os.path.realpath(__file__)) + "../../.."
 topdir = os.path.realpath(topdir)
 sys.path.insert(0, topdir)
-from VyosSessionConfig import configsession as vsc
-from ServiceManager import OpenVPN as OV
-from ServiceManager import validation as vld
+from execformat.executor import session
+from vyos_session import configsession as vsc
+from servicemanager import ovp_handler as OV
+from servicemanager import validation as vld
 
-vpn = OV.openvpn()
+vpn = OV.ovpHandler()
 valid=vld.validation()
-
-sessionCfg = None
 
 def setup_module(module):
     """
     Set up a config session
     """
-    global sessionCfg
-    sessionCfg = vsc.ConfigSession()
-    sessionCfg.setup_config_session()
+    session.setup_config_session()
 
 def teardown_module(module):
     """
     Teardown created config session
     """
-    global sessionCfg
-    sessionCfg.teardown_config_session()
-    del sessionCfg
+    session.teardown_config_session()
 
 def test_ipaddrvalidation():
     Erraddr = ["123.123.123","456.234.123.123","sfd.213.d.23"]

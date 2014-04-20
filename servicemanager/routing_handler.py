@@ -3,7 +3,7 @@
 from operations import configOpts
 PS = "protocols static"
 
-class routingHandler(config_opt):
+class routingHandler(configOpts):
     def add_route(self,suffix):
         routing_params=[PS]
         routing_params.extend(suffix)
