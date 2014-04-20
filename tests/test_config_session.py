@@ -1,8 +1,6 @@
 import pytest
 import os
 import uuid
-import sys
-sys.path.append('/home/vyos/vyos-api/project')
 from vyos_session.configsession import ConfigSession, SessionAlreadyExists
 from vyos_session import utils
 from execformat.executor import session

@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: pyatta
+Version: 0.1.dev-r5581b
+Summary: REST API for vyatta/vyos router OS.
+Home-page: http://github.com/vaytess/pyatta
+Author: Mootez Bessifi, Mohamed Abidi, Ahmed Bessifi
+Author-email: ahmed.bessifi@gmail.com
+License: GPLv3
+Description: A python REST API to configure and manage vyatta/vyos router.
+Platform: Linux

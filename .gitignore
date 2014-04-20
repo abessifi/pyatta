@@ -1,3 +1,5 @@
+.tox/
+*.pyc
 execformat/*.pyc
 vyos_session/*.pyc
 tests/__pycache__/
