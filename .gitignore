@@ -1,7 +1,7 @@
 .tox/
 *.pyc
 pyatta.egg-info/
+api/*.pyc
 execformat/*.pyc
 vyos_session/*.pyc
 tests/__pycache__/
-tests/*.pyc
