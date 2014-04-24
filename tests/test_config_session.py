@@ -49,6 +49,14 @@ def test_setup_session():
     #    session.setup_config_session()
     #assert e.value.message == 'Could not create session !'
 
+def test_not_in_session():
+    """
+    Assert that teardown_sesstion() fails whether session dosn't exist
+    """
+    assert session.teardown_config_session()
+    assert not session.teardown_config_session()
+    assert session.setup_config_session() == True    
+
 def test_inSession():
     """
     Test if current session is available.
