@@ -84,6 +84,13 @@ def test_commit():
     #    session.commit()
     assert session.commit() == True
 
+def test_commit_requiring_output():
+    """
+    Assert that none string returned value is not splitted as string
+    """
+    out = utils._run('/opt/vyatta/sbin/my_set interfaces ethernet foobar description "This is a LAN interface"', output=True)
+    assert session.commit() == True
+
 def test_save_changes():
     """
     Test if changes are successfully saved in system.

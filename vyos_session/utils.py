@@ -74,7 +74,7 @@ def _run(cmd, output=False):
             logger.debug('exec command: %s', cmd)
             out = subprocess.check_output(cmd, shell=True)
         except subprocess.CalledProcessError:
-            out = False
+            return False
         logger.debug('command output: %s', out)
         return ' '.join(out.splitlines())
     try:
