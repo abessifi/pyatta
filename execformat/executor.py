@@ -16,6 +16,7 @@ VYOS_SHELL_API = utils.get_config_params('bin', 'shell_api_path')
 
 class OperationFailed(Exception): pass
 class OperationNameError(Exception): pass
+class ConfigPathNotCorrect(Exception): pass
 
 def check_operation_name(args):
     """
@@ -46,7 +47,7 @@ class execUtils:
             logger.info('Perform operation "%s"' % operation_name)
             if self.args[0] == 'show': self.args[0] = '{} showCfg'.format(VYOS_SHELL_API)
             else: self.args[0] = os.path.join(VYOS_SBIN_DIR, 'my_{}'.format(self.args[0]))
-            logger.debug('exec command: %s' % ' '.join(self.args))
+            logger.debug('exec command: "%s"' % ' '.join(self.args))
             # NOTE:
             # if Popen(self.args, shell=True, ...) => Execution fails
             # if Popen(self.args, ...) => OSError: [Errno 2] No such file or directory
@@ -67,6 +68,25 @@ class execUtils:
             logger.debug('%s' % ' '.join(out.splitlines()))
             logger.info('Executing "%s" operation OK' % operation_name)
             return (True, out)
+
+    def check_cmd_args(self):
+        """
+        Check that config path is correct before performing execmd()
+        """
+        logger.info('Check specified configuration path existance')
+        config_path = ' '.join(self.args[1:])
+        logger.info('config path: "%s"' % config_path)
+        cmd = '{} exists {}'.format(VYOS_SHELL_API, config_path)
+        logger.debug('exec command: "%s"' % cmd)
+        proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        out, err = proc.communicate()
+        errcode = proc.returncode
+        logger.debug('command return code: %s' % errcode)
+        if errcode:
+            logger.error('Configuration path is not correct')
+            raise ConfigPathNotCorrect('Configuration path is not correct')
+        logger.info('Configuration path is correct')
+        return True
 
     def discover_possible_ops():
         """

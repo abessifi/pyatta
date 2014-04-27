@@ -71,18 +71,18 @@ def _run(cmd, output=False):
     """
     if output:
         try:
-            logger.debug('exec command: %s', cmd)
+            logger.debug('exec command: "%s"', cmd)
             out = subprocess.check_output(cmd, shell=True)
         except subprocess.CalledProcessError:
             return False
         logger.debug('command output: %s', out)
         return ' '.join(out.splitlines())
     try:
-        logger.debug('exec command: %s', cmd)
+        logger.debug('exec command: "%s"', cmd)
         out = subprocess.check_call(cmd, shell=True) # returns 0 for True
     except subprocess.CalledProcessError:
         out = 1 # returns 1 for False
-    logger.debug('command output: %s', out)
+    logger.debug('command return code: %s', out)
     return out
 
 def clean_environ(env):
