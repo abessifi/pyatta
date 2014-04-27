@@ -33,25 +33,27 @@ class execUtils:
     """
     Executes possible operations in a Vyos configure session.
     """
+    def __init__(self, args):
+        self.args = args
 
-    def execmd(self, args):
+    def execmd(self):
         """
         Performs execution of allowed config operations ['show','set','delete']
         """
-        if check_operation_name(args):
+        if check_operation_name(self.args):
             # prepare executable file to be called
-            operation_name = args[0]
+            operation_name = self.args[0]
             logger.info('Perform operation "%s"' % operation_name)
-            if args[0] == 'show': args[0] = '{} showCfg'.format(VYOS_SHELL_API)
-            else: args[0] = os.path.join(VYOS_SBIN_DIR, 'my_{}'.format(args[0]))
-            logger.debug('exec command: %s' % ' '.join(args))
+            if self.args[0] == 'show': self.args[0] = '{} showCfg'.format(VYOS_SHELL_API)
+            else: self.args[0] = os.path.join(VYOS_SBIN_DIR, 'my_{}'.format(self.args[0]))
+            logger.debug('exec command: %s' % ' '.join(self.args))
             # NOTE:
-            # if Popen(args, shell=True, ...) => Execution fails
-            # if Popen(args, ...) => OSError: [Errno 2] No such file or directory
-            # if args = ['/bin/cli-shell-api','showCfg', ...] and Popen(args, ...) that works but actually we keep using ' '.join(args).
+            # if Popen(self.args, shell=True, ...) => Execution fails
+            # if Popen(self.args, ...) => OSError: [Errno 2] No such file or directory
+            # if self.args = ['/bin/cli-shell-api','showCfg', ...] and Popen(self.args, ...) that works but actually we keep using ' '.join(self.args).
             if not session.session_exists():
                 raise SessionNotExists('Configure session do not exists')
-            proc = subprocess.Popen(' '.join(args), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            proc = subprocess.Popen(' '.join(self.args), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             # wait for the process to terminate and get stdout/stderr outputs
             out, err = proc.communicate()
             errcode = proc.returncode

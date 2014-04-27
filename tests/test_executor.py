@@ -40,7 +40,8 @@ def test_execmd_out_of_session():
     session.teardown_config_session()
     #execmd would fail. Otherwise, there is a bug :p
     with pytest.raises(SessionNotExists) as e:
-        execUtils().execmd(args)
+        handler = execUtils(args)
+        handler.execmd()
     assert e.value.message == 'Configure session do not exists'
     #resetup session to continue executing remaining tests 
     session.setup_config_session()
@@ -51,7 +52,8 @@ def test_execmd_missed_args():
     """
     args = ['set']
     with pytest.raises(OperationFailed) as e:
-        execUtils().execmd(args)
+        handler = execUtils(args)
+        handler.execmd()
     assert e.value.message == 'Operation failed !'
 
 def test_execmd_show():
@@ -59,7 +61,8 @@ def test_execmd_show():
     Test if show command is correctely executed.
     """
     args = ['show','nat','source']
-    success, out = execUtils().execmd(args)
+    handler = execUtils(args)
+    success, out = handler.execmd()
     assert success == True
 
 def test_set_iface_desc():
@@ -67,9 +70,12 @@ def test_set_iface_desc():
     Test if the description of a giving interface is correctly set.
     """
     args = ['set','interfaces','ethernet','eth2','description','"This is a LAN interface"']
-    success, out = execUtils().execmd(args)
+    handler = execUtils(list(args))
+    success, out = handler.execmd()
     assert success == True
     session.commit()
     args = ['show','interfaces','ethernet','eth2','description']
-    success, out = execUtils().execmd(args)
+    handler = execUtils(list(args))
+    success, out = handler.execmd()
+    assert args[0] == 'show'
     assert out.split('"')[1] == "This is a LAN interface"
