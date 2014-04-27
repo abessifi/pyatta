@@ -93,7 +93,7 @@ class ovpServiceOptions(Resource):
         self.reqparse.add_argument('local_host', type = str, location = 'json')
         self.reqparse.add_argument('route_vpn', type = str, location = 'json')
         self.reqparse.add_argument('encrypt_algo', type = str, location = 'json')
-        self.reqparse.add_argument('local_port', type = str, location = 'json')
+        self.reqparse.add_argument('local_port', type = int, location = 'json')
         self.reqparse.add_argument('communic_prot', type = str, location = 'json')
         self.reqparse.add_argument('additional_options', type = str, location = 'json')
         super(ovpServiceOptions, self).__init__()

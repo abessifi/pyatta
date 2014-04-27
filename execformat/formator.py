@@ -4,23 +4,15 @@ import os
 topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
 topdir = os.path.realpath(topdir)
 sys.path.insert(0, topdir)
-from executor import session, OperationFailed,execUtils as executor
+from executor import OperationFailed, execUtils as executor
 from vyos_session.utils import logger
 from vyosparser import vyos_parser as vparser
-from pprint import pprint
-from operator import getitem
 
 class ServiceError(Exception): pass
-
 args=['show']
 
 class showConfig():
     exe=executor()
-    serviceoutput=""
-    
-    #def __init__(self):
-        #session.setup_config_session()
-        #self.serviceoutput=self.show_all(service)
         
     def formator(self,options):
         service = options[0]
@@ -42,15 +34,5 @@ class showConfig():
             return False
         if execstate==True:
             return vparser.decode_string(output)
-        #session.teardown_config_session()
 
 
-    """
-    def customized_show(self,keys):
-        try:
-            return reduce(getitem,keys,self.serviceoutput)
-        except KeyError,k:
-            return {k.message:'no such available key'}
-    """
-#obj=showConfig()
-#print obj.formator(['firewall','name33','svs'])
