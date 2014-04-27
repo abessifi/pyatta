@@ -1,5 +1,5 @@
 import pytest
-from execformat.executor import session, check_operation_name, execUtils, OperationNameError, OperationFailed
+from execformat.executor import session, check_operation_name, execUtils, OperationNameError, OperationFailed, ConfigPathNotCorrect
 from vyos_session.configsession import SessionNotExists
 
 def setup_module(module):
@@ -79,3 +79,18 @@ def test_set_iface_desc():
     success, out = handler.execmd()
     assert args[0] == 'show'
     assert out.split('"')[1] == "This is a LAN interface"
+
+def test_check_cmd_args():
+    """
+    Test if config path is correctly checked
+    """
+    #Config path is correct
+    args = ['show','interfaces','ethernet','eth2','description']
+    handler = execUtils(list(args))
+    assert handler.check_cmd_args() == True
+    #Config path not correct
+    args = ['show','foo', 'bar']
+    with pytest.raises(ConfigPathNotCorrect) as e:
+        handler = execUtils(list(args))
+        handler.check_cmd_args()
+    assert e.value.message == 'Configuration path is not correct'
