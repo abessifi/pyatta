@@ -15,23 +15,23 @@ class dnsHandler(configOpts):
         dns_params=[SDF]
         dns_params.extend(suffix)
         if action == "set":
-            self.set(dns_params)
+            return self.set(dns_params)
         elif action == "delete":
-            self.delete(dns_params)
+            return self.delete(dns_params)
         else:
             raise vld.ActionError('unknown action %s!'%action)
 
     def listenon_interface(self,action,interface):
-        self.dns_config(action,["listen-on",interface])
+        return self.dns_config(action,["listen-on",interface])
             
     def name_server(self,action,nameserver):
-        self.dns_config(action,["name-server",nameserver])
+        return self.dns_config(action,["name-server",nameserver])
 
     def cache_size(self,action,cache):
-        self.dns_config(action,["cache-size",cache])
+        return self.dns_config(action,["cache-size",cache])
 
     def del_dns(self):
-        self.dns_config("delete")
+        return self.dns_config("delete")
 
 """
 obj = dnsservice()

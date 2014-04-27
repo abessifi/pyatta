@@ -49,7 +49,7 @@ class execUtils():
             # if Popen(args, ...) => OSError: [Errno 2] No such file or directory
             # if args = ['/bin/cli-shell-api','showCfg', ...] and Popen(args, ...) that works but actually we keep using ' '.join(args).
             if not session.session_exists():
-                raise SessionNotExists('Configure session do not exists')
+                raise SessionNotExists('Configure session does not exists')
             proc = subprocess.Popen(' '.join(args), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             # wait for the process to terminate and get stdout/stderr outputs
             out, err = proc.communicate()
