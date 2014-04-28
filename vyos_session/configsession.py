@@ -75,6 +75,10 @@ class ConfigSession(Session):
         """
         End current configuration session.
         """
+        if not self.session_exists():
+            logger.warn('Teardown failed. No session available !')
+            return False
+
         if not _run('{} teardownSession'.format(VYOS_SHELL_API)):
             logger.info('Cleaning up session environment variables')
             logger.info('Closing Vyos config session')

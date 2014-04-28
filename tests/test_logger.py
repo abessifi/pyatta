@@ -1,5 +1,8 @@
 import sys
-sys.path.append('/home/vyos/vyos-api/project')
+import os
+topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
+topdir = os.path.realpath(topdir)
+sys.path.insert(0, topdir)
 from vyos_session import utils
 
 def test_filehandle():

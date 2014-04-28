@@ -12,11 +12,10 @@ class ServiceError(Exception): pass
 args=['show']
 
 class showConfig():
-    exe=executor()
         
     def formator(self,options):
         service = options[0]
-        
+        exe=executor(args)
         if service in ['protocols','nat','interfaces','firewall']:
            args.extend(options)
         elif service in ['dns','dhcp-server','ssh','webproxy']:
@@ -28,7 +27,7 @@ class showConfig():
             #if not exe.checkcmd(' '.join(args)):
              #   logger.error("%s: given args does not match with existing configs!"%args)
               #  return False
-	        execstate,output=self.exe.execmd(args)
+	        execstate,output=exe.execmd()
         except OperationFailed, e:
             logger.error(e.message)
             return False

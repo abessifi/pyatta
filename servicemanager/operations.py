@@ -8,21 +8,22 @@ sys.path.insert(0, topdir)
 from execformat.executor import execUtils, OperationFailed
 from vyos_session.utils import logger
 class configOpts():
-    exe=execUtils()
 
     def set(self, args):
+        exe=execUtils(args)
         args.insert(0,'set')
         try:
-            self.exe.execmd(args)
+            exe.execmd()
             return True
         except OperationFailed, e:
             logger.error(e.message)
             return False
 
     def delete(self, args):
+        exe=execUtils(args)
         args.insert(0,'delete')
         try:
-            self.exe.execmd(args)
+            exe.execmd()
             return True
         except OperationFailed, e:
             logger.error(e.message)

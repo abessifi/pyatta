@@ -19,6 +19,7 @@ VYOS_SHELL_API = utils.get_config_params('bin', 'shell_api_path')
 
 class OperationFailed(Exception): pass
 class OperationNameError(Exception): pass
+class ConfigPathNotCorrect(Exception): pass
 
 def check_operation_name(args):
     """ Check if operation/command name is correct. """
@@ -30,27 +31,29 @@ def check_operation_name(args):
         raise OperationNameError('Operation name not correct.')
     return True
 
-class execUtils():
-
+class execUtils:
     """ Executes possible operations in a Vyos configure session."""
-    def execmd(self, args):
+    def __init__(self, args):
+        self.args = args
+
+    def execmd(self):
         """
         Performs execution of allowed config operations ['show','set','delete']
         """
-        if check_operation_name(args):
+        if check_operation_name(self.args):
             # prepare executable file to be called
-            operation_name = args[0]
+            operation_name = self.args[0]
             logger.info('Perform operation "%s"' % operation_name)
-            if args[0] == 'show': args[0] = '{} showCfg'.format(VYOS_SHELL_API)
-            else: args[0] = os.path.join(VYOS_SBIN_DIR, 'my_{}'.format(args[0]))
-            logger.debug('exec command: %s' % ' '.join(args))
+            if self.args[0] == 'show': self.args[0] = '{} showCfg'.format(VYOS_SHELL_API)
+            else: self.args[0] = os.path.join(VYOS_SBIN_DIR, 'my_{}'.format(self.args[0]))
+            logger.debug('exec command: "%s"' % ' '.join(self.args))
             # NOTE:
-            # if Popen(args, shell=True, ...) => Execution fails
-            # if Popen(args, ...) => OSError: [Errno 2] No such file or directory
-            # if args = ['/bin/cli-shell-api','showCfg', ...] and Popen(args, ...) that works but actually we keep using ' '.join(args).
+            # if Popen(self.args, shell=True, ...) => Execution fails
+            # if Popen(self.args, ...) => OSError: [Errno 2] No such file or directory
+            # if self.args = ['/bin/cli-shell-api','showCfg', ...] and Popen(self.args, ...) that works but actually we keep using ' '.join(self.args).
             if not session.session_exists():
-                raise SessionNotExists('Configure session does not exists')
-            proc = subprocess.Popen(' '.join(args), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                raise SessionNotExists('Configure session do not exists')
+            proc = subprocess.Popen(' '.join(self.args), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             # wait for the process to terminate and get stdout/stderr outputs
             out, err = proc.communicate()
             errcode = proc.returncode
@@ -64,6 +67,25 @@ class execUtils():
             logger.debug('%s' % ' '.join(out.splitlines()))
             logger.info('Executing "%s" operation OK' % operation_name)
             return (True, out)
+
+    def check_cmd_args(self):
+        """
+        Check that config path is correct before performing execmd()
+        """
+        logger.info('Check specified configuration path existance')
+        config_path = ' '.join(self.args[1:])
+        logger.info('config path: "%s"' % config_path)
+        cmd = '{} exists {}'.format(VYOS_SHELL_API, config_path)
+        logger.debug('exec command: "%s"' % cmd)
+        proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        out, err = proc.communicate()
+        errcode = proc.returncode
+        logger.debug('command return code: %s' % errcode)
+        if errcode:
+            logger.error('Configuration path is not correct')
+            raise ConfigPathNotCorrect('Configuration path is not correct')
+        logger.info('Configuration path is correct')
+        return True
 
     def discover_possible_ops():
         """

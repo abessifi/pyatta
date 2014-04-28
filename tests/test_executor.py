@@ -1,7 +1,10 @@
 import pytest
 import sys
-sys.path.append('/home/vyos/vyos-api/project')
-from execformat.executor import session, check_operation_name, execUtils, OperationNameError, OperationFailed
+import os
+topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
+topdir = os.path.realpath(topdir)
+sys.path.insert(0, topdir)
+from execformat.executor import session, check_operation_name, execUtils, OperationNameError, OperationFailed, ConfigPathNotCorrect
 from vyos_session.configsession import SessionNotExists
 
 def setup_module(module):
@@ -42,7 +45,8 @@ def test_execmd_out_of_session():
     session.teardown_config_session()
     #execmd would fail. Otherwise, there is a bug :p
     with pytest.raises(SessionNotExists) as e:
-        execUtils().execmd(args)
+        handler = execUtils(args)
+        handler.execmd()
     assert e.value.message == 'Configure session do not exists'
     #resetup session to continue executing remaining tests 
     session.setup_config_session()
@@ -53,7 +57,8 @@ def test_execmd_missed_args():
     """
     args = ['set']
     with pytest.raises(OperationFailed) as e:
-        execUtils().execmd(args)
+        handler = execUtils(args)
+        handler.execmd()
     assert e.value.message == 'Operation failed !'
 
 def test_execmd_show():
@@ -61,7 +66,8 @@ def test_execmd_show():
     Test if show command is correctely executed.
     """
     args = ['show','nat','source']
-    success, out = execUtils().execmd(args)
+    handler = execUtils(args)
+    success, out = handler.execmd()
     assert success == True
 
 def test_set_iface_desc():
@@ -69,9 +75,27 @@ def test_set_iface_desc():
     Test if the description of a giving interface is correctly set.
     """
     args = ['set','interfaces','ethernet','eth2','description','"This is a LAN interface"']
-    success, out = execUtils().execmd(args)
+    handler = execUtils(list(args))
+    success, out = handler.execmd()
     assert success == True
     session.commit()
     args = ['show','interfaces','ethernet','eth2','description']
-    success, out = execUtils().execmd(args)
+    handler = execUtils(list(args))
+    success, out = handler.execmd()
+    assert args[0] == 'show'
     assert out.split('"')[1] == "This is a LAN interface"
+
+def test_check_cmd_args():
+    """
+    Test if config path is correctly checked
+    """
+    #Config path is correct
+    args = ['show','interfaces','ethernet','eth2','description']
+    handler = execUtils(list(args))
+    assert handler.check_cmd_args() == True
+    #Config path not correct
+    args = ['show','foo', 'bar']
+    with pytest.raises(ConfigPathNotCorrect) as e:
+        handler = execUtils(list(args))
+        handler.check_cmd_args()
+    assert e.value.message == 'Configuration path is not correct'
