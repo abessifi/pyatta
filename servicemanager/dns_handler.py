@@ -5,8 +5,9 @@ import os
 topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
 topdir = os.path.realpath(topdir)
 sys.path.insert(0, topdir)
+from vyos_session.utils import logger
 from operations import configOpts
-import validation as vld
+from validation import ActionError, validation as vld
 SDF="service dns forwarding"
 
 class dnsHandler(configOpts):
@@ -19,15 +20,23 @@ class dnsHandler(configOpts):
         elif action == "delete":
             return self.delete(dns_params)
         else:
-            raise vld.ActionError('unknown action %s!'%action)
+            logger.error('unknown action %s!'%action)
+            raise ActionError('unknown action %s!'%action)
 
     def listenon_interface(self,action,interface):
+        if not vld.testiface(interface):
+            return False
         return self.dns_config(action,["listen-on",interface])
             
     def name_server(self,action,nameserver):
+        if not vld.testip(nameserver):
+            return False
         return self.dns_config(action,["name-server",nameserver])
 
     def cache_size(self,action,cache):
+        if not str(cache).isdigit():
+            logger.error("provided entry %s as cache size is note valid"%cache)
+            return False
         return self.dns_config(action,["cache-size",cache])
 
     def del_dns(self):

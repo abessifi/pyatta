@@ -55,14 +55,14 @@ class ovpService(Resource):
                 return {'Bad Request':'request is missing required options [local_vaddr,remote_vaddr,remote_host] to be set'}, 400
             if not self.ovp.endpoint_local_remote_vaddr('set','local',args['interface'],args['local_vaddr']):
                 return {'Bad request':'setting %s failed! checking log is recommanded!'%args['local_vaddr']},400
-            elif not self.ovp.endpoint_local_remote_vaddr('set','remote',args['interface'],args['remote_vaddr']):
+            if not self.ovp.endpoint_local_remote_vaddr('set','remote',args['interface'],args['remote_vaddr']):
                 return {'Bad request':'setting %s failed! checking log is recommanded!'%args['remote_vaddr']},400
-            elif not self.ovp.define_local_remote_host('set',args['interface'],'remote',args['remote_host']):
+            if not self.ovp.define_local_remote_host('set',args['interface'],'remote',args['remote_host']):
                 return {'Error':'setting %s failed! checking log is recommanded!'%args['remote_host']},400
         elif args['mode']=='server':
             if not 'push_vsubnet' in keys:
                 return {'Bad Request':'request is missing required options to be set'}, 400
-            elif not self.ovp.server_range_addr('set',args['interface'],args['push_vsubnet']):
+            if not self.ovp.server_range_addr('set',args['interface'],args['push_vsubnet']):
                 return {'Error':'setting %s failed!'%args['push_vsubnet']},400
         if 'sharedkey_path' in keys:
             if 'sharedkey_gen' in keys:
@@ -70,7 +70,7 @@ class ovpService(Resource):
                     return{'warning':'generation pre shared secret failed! see logfile!'}, 403
             if not self.ovp.sharedkey_file_path('set',args['interface'],args['sharedkey_path']):
                 return {'error':'setting pre shared secret failed! consulting logfile is recommanded!'},400
-        elif 'keyfiles_path' in args:
+        if 'keyfiles_path' in args:
             if 'role' not in keys and args['mode']=='site-to-site':
                 return {'Error':'in site-to-site mode you have to specify the endpoint role'}, 400
             
@@ -122,28 +122,28 @@ class ovpServiceOptions(Resource):
                     return {'Error':'Sth wrong has been occured with %s, see logfile'%args['local_host']}, 403
             except AddressError,err:
                 return {'Error':err.message}, 403
-        elif 'route_vpn' in args:
+        if 'route_vpn' in args:
             if not self.ovp.access_route_vpn(action,interface,args['route_vpn']):
                 return {'Error':'Sth wrong has been occured with static route, see logfile'}, 403
-        elif 'encrypt_algo' in args:
+        if 'encrypt_algo' in args:
             try:
                 if not self.ovp.encryption_algorithm(action,interface,args['encrypt_algo']):
                     return {'error':'Operation failed with %s as incryption algo! see logfile'%args['encrypt_algo']}, 403
             except CipherError,e:
                 return {'Error':'%s: %s '%(args['encrypt_algo'],e.message)},403
-        elif 'local_port' in args:
+        if 'local_port' in args:
             try:
                 if not self.ovp.local_port(action,interface,args['local_port']):
                     return {'error':'Operation failed with %s as local port! see logfile'%args['local_port']}, 403
             except LocalportError,e:
                 return {'Error':'%s:Invalid port!'%args['local_port']}, 403
-        elif 'communic_prot' in args:
+        if 'communic_prot' in args:
             try:
                 if not self.ovp.local_port(action,interface,args['communic_prot']):
                     return {'error':'Operation failed with %s as communication protocol! see logfile'%args['communic_prot']}, 403  
             except ProtocolError,e:
                 return {'Error':'%s:Invalid communication protocol!'%args['communic_prot']}, 403
-        elif 'additional_options' in args:
+        if 'additional_options' in args:
             self.ovp.additional_options(self,action,interface,args['additional_options'])
         else:
             abort(400)
