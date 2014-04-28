@@ -88,8 +88,21 @@ class execUtils:
         logger.info('Configuration path is correct')
         return True
 
-    def discover_possible_ops():
+    def get_possible_options(self):
         """
-        Returns possible config path that corresponds to an allowed operation
+        Returns list of nodes under specified configuration path
         """
-        pass
+        config_path = ' '.join(self.args[1:])
+        logger.info('Get possible options of config path "%s"' % config_path)
+        cmd = '{} listNodes {}'.format(VYOS_SHELL_API, config_path)
+        logger.debug('exec command: "%s"' % cmd)
+        proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        out, err = proc.communicate()
+        errcode = proc.returncode
+        logger.debug('command return code: %s' % errcode)
+        if not out:
+            logger.info('No more options for the specified config path')
+            return False
+        options = out.split(' ')
+        logger.debug('List of options : "%s"' % options)
+        return options
