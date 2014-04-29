@@ -3,6 +3,7 @@ import subprocess
 import os
 from vyos_session.configsession import ConfigSession, SessionNotExists, SetupSessionFailed 
 from vyos_session import utils
+import shlex
 
 logger = utils.logger
 
@@ -92,6 +93,12 @@ class execUtils:
         """
         Returns list of nodes under specified configuration path
         """
+        out = []
+        try:
+            self.check_cmd_args() # check config path validation
+        except ConfigPathNotCorrect:
+            return False, out # config path is not correct
+
         config_path = ' '.join(self.args[1:])
         logger.info('Get possible options of config path "%s"' % config_path)
         cmd = '{} listNodes {}'.format(VYOS_SHELL_API, config_path)
@@ -102,7 +109,7 @@ class execUtils:
         logger.debug('command return code: %s' % errcode)
         if not out:
             logger.info('No more options for the specified config path')
-            return False
-        options = out.split(' ')
+            return True, out
+        options = shlex.split(out)
         logger.debug('List of options : "%s"' % options)
-        return options
+        return True, options

@@ -102,9 +102,15 @@ def test_show_list_nodes():
     #Config path with more options
     args = ['show','interfaces','ethernet']
     handler = execUtils(list(args))
-    assert "'eth2'" in handler.get_possible_options()
-    ##TODO test correct config path but without possible options
+    success, options = handler.get_possible_options()
+    assert success and len(options)
+    #Config path without possible options
+    args = ['show','interfaces','ethernet','eth2','description']
+    handler = execUtils(list(args))
+    success, options = handler.get_possible_options()
+    assert success and not len(options)
     #Config path is not correct
     args = ['show','foo']
     handler = execUtils(list(args))
-    assert not handler.get_possible_options()
+    success, options = handler.get_possible_options()
+    assert not success and not len(options)
