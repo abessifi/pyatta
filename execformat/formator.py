@@ -9,12 +9,12 @@ from vyos_session.utils import logger
 from vyosparser import vyos_parser as vparser
 
 class ServiceError(Exception): pass
-args=['show']
 
 class showConfig():
-        
     def formator(self,options):
+        args=['show']
         service = options[0]
+        logger.debug("=====>>>>>> args before executor call = %s"%args)
         if service in ['protocols','nat','interfaces','firewall']:
            args.extend(options)
         elif service in ['dns','dhcp-server','ssh','webproxy']:
@@ -27,7 +27,8 @@ class showConfig():
             #if not exe.checkcmd(' '.join(args)):
              #   logger.error("%s: given args does not match with existing configs!"%args)
               #  return False
-	        execstate,output=exe.execmd()
+            execstate,output=exe.execmd()
+            logger.debug("=====>>>>>> args after executor call = %s"%args)
         except OperationFailed, e:
             logger.error(e.message)
             return False

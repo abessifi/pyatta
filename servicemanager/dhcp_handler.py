@@ -5,47 +5,39 @@ topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
 topdir = os.path.realpath(topdir)
 sys.path.insert(0, topdir)
 from operations import configOpts
+from validation import validation as vld
 
 SDS = "service dhcp-server shared-network-name"
 
 class dhcpHandler(configOpts):
 
-    def disable_dhcp(self,name):
-        dhcp_params=[SDS,name,"disable"]
-        self.set(dhcp_params)
+    def dhcp_status(self,action,name):
+        self.dhcp_config(action,[name,"disable"])
 
-    def enable_dhcp(self,name):
-        dhcp_params=[SDS,name,"enable"]
-        self.set(dhcp_params)
+    def dhcp_config(self,action,suffix=[]):
+        dhcp_params=[SDS]
+        dhcp_params.extend(suffix)
+        if action == 'delete':
+            return self.delete(dhcp_params)
+        return self.set(dhcp_params)
 
-    def del_dhcp_config(self,name,suffix=[]):
-        dhcp_params=[SDS,name]
-        dhcp_params.extend((suffix))
-        self.delete(dhcp_params)
-
-    def del_dhcp_default_router(self,name,subnet,defrouter):
-        suffix=["subnet",subnet,"default-router",defrouter]
-        self.del_dhcp_config(name,suffix)
-
-
-    def del_dhcp_dns_server(self,name,subnet,dnsserver):
-        suffix=["subnet",subnet,"dns-server",dnsserver]
-        self.del_dhcp_config(name,suffix)
-
-    def setup_dhcp_subnet(self,name,subnet,suffix=[]):
-        dhcp_params=[SDS,name,"subnet",subnet+"/24"]
-        dhcp_params.extend((suffix))
-        self.set(dhcp_params)
-
-    def setup_dhcp_default_router(self,name,subnet,defrouter):
-        self.setup_dhcp_subnet(name,subnet,["default-router",defrouter])
-
-    def setup_dhcp_dns_server(self,name,subnet,dnsserver):
-        self.setup_dhcp_subnet(name,subnet,["dns-server",dnsserver])
+    def dhcp_dnsserver_default_router(self,action,service,name,subnet,addr):
+        if service == 'default_router':
+            suffix=["default-router",addr]
+        elif service == "dns_server":
+            suffix=["dns-server",addr]
+        self.dhcp_subnet(action,name,subnet,suffix)
+    
+    def dhcp_subnet(self,action,name,subnet,suffix=[]):
+        dhcp_params=[name,"subnet",subnet+"/24"]
+        dhcp_params.extend(suffix)
+        self.dhcp_config(action,dhcp_params)
 
     def set_range_adresses (self,name,subnet,adr_start,adr_stop):
-        plage=["start",adr_start,"stop",adr_stop]
-        self.setup_dhcp_subnet(name,subnet,plage)
+        range=["start",adr_start,"stop",adr_stop]
+        self.dhcp_subnet('set',name,subnet,range)
+
+
 
 """
 obj=dhcpservice()
