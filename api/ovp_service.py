@@ -105,6 +105,7 @@ class ovpServiceOptions(Resource):
             return {'Error':'request must include a list of keys that leads to a customized show!'}, 400
         show_elements=['interfaces','openvpn',interface]
         show_elements.extend(request.json['show_elem'])
+        #here we have to check if the given view elements are correct or not before executing show cmd!
         output=show.formator(show_elements)
         if not output:
             return {'Error':'show operation failed! see logfile for more infos!'}, 400

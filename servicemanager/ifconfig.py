@@ -4,13 +4,17 @@ import os
 topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
 topdir = os.path.realpath(topdir)
 sys.path.insert(0, topdir)
+from vyos_session.utils import logger
 from operations import configOpts
-import validation as vld
+from validation import ActionError,  validation as vld
+from execformat.formator import showConfig
+from execformat.executor import session
+from pprint import pprint
 
 IE = "interfaces ethernet"
-
+show=showConfig()
 """this class has to configure ethernet interfaces"""
-class  ifConfig(configOpts):
+class ifConfig(configOpts):
     orient=["in","out","local"]
 
     """this method allows you to setup or delete a specific configuration option"""
@@ -18,19 +22,31 @@ class  ifConfig(configOpts):
         iface_config=[IE]
         iface_config.extend(suffix)
         if action=="set":
-            self.set(iface_config)
+            return self.set(iface_config)
         elif action=="delete":
-            self.delete(iface_config)
+            return self.delete(iface_config)
         else:
-            raise vld.ActionError("[Critical] unrecognized action!")
+            raise ActionError("[Critical] unrecognized action!")
 
+    def check_firewall_name(self,firewall):
+        fw_config=show.formator(['firewall'])
+        fw_names=fw_config['name'].keys()
+        if firewall not in fw_names:
+            logger.error("%s way not match with any of the existing firewall\'s name!"%firewall)
+            return False
+        return True
+        
     """this method may delete or set an ip address for a particular interface"""
     def addr_interface(self,action,interface,addr,vlan_label="",vlan_id=''):
+        if  not vld.testip(addr):
+            return False
         address = [interface,vlan_label,vlan_id,"address",addr+"/24"]
         self.ethernet_config(action,address)
 
     """this method may delete or set an MAC address for a particular interface"""
     def hw_id(self,action,interface,hwid):
+        if not vld.testiface(interface):
+            return False
         hw= [interface,"hw-id",hwid]
         self.ethernet_config(action,hw)
 
@@ -41,12 +57,12 @@ class  ifConfig(configOpts):
 
     """to set firewall rules for a specific interface, use the next method"""
     def firewall_to_iface(self,action,interface,orient,fwname):
-        firewall=[interface,"firewall"]
-        if action == 'set':
-            if orient in self.orient:
-                firewall.extend([orient,"name",fwname])
-            else:
-                return "unrecognized orientation!" 
+        if orient not in self.orient:
+            logger.error("%s: unrecognized orientation!"%orient)
+            return False
+        if not check_firewall_name(fwname):
+            return False
+        firewall=([interface,"firewall",orient,"name",fwname])
         self.ethernet_config(action,firewall)
 
     """try this method for adding descriptions to vlan sub interface"""
@@ -54,13 +70,17 @@ class  ifConfig(configOpts):
         self.iface_desc(action,interface,desc,"vif",vlan_id)
 
     """this method set an address for a vlan sub interface"""
-    def vlan_addr(self,action,interface,addr,vlan_id):                  
+    def vlan_addr(self,action,interface,addr,vlan_id):
         self.addr_interface(interface,addr,"vif",vlan_id)
 
     """this method can delete a vlan configuration on a particular interface"""
-    def del_vlan(self,interface,vlan_id):
-        vlan = [interface,'vif',vlan_id]
+    def del_vlan(self,interface, vlan_id):
+        if not str(vlan_id).digit():
+            logger.error("%s:this given id can not be used as vlan id!"%vlan_id)
+            return False
+        vlan_fw = [interface,'vif',vlan_id]
         self.ethernet_config('delete',vlan)
+
 
 """
 obj = configinterface()

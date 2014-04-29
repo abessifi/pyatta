@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from flask import abort, jsonify
+from flask import abort
 from flask.ext.restful import Resource, reqparse
 import os
 import sys
@@ -74,9 +74,10 @@ class dnsService(Resource):
  
     """this method allows the delete of possible dns configs"""
     def delete(self):
-        if not self.dns_manager('delete'):
-            return{'Error':'some problems appeared! delete failed!'}, 403
-        return {'Info':'dns config element was deleted successfully!'}, 200
+        return self.dns_manager('delete')
+            #return{'Error':'some problems appeared! delete failed!'}, 403
+        #return {'Info':'dns config element was deleted successfully!'}, 200
+
 
 """this class allows specific gets of dns options"""
 class dnsOptionService(Resource):
