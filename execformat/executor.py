@@ -3,9 +3,11 @@ import subprocess
 import os
 from vyos_session.configsession import ConfigSession, SessionNotExists, SetupSessionFailed 
 from vyos_session import utils
+import logging
 import shlex
 
-logger = utils.logger
+logger = logging.getLogger(__name__)
+utils.init_logger(logger)
 
 try:
     session = ConfigSession()

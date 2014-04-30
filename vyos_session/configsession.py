@@ -1,6 +1,10 @@
 import os
 from uuid import uuid4
-from utils import get_config_params, _run, clean_environ, logger
+from utils import get_config_params, _run, clean_environ, init_logger
+import logging
+
+logger = logging.getLogger(__name__)
+init_logger(logger)
 
 VYOS_SHELL_API = get_config_params('bin', 'shell_api_path')
 VYOS_SBIN_DIR = get_config_params('bin', 'vyos_sbin_dir')
