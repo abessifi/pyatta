@@ -112,11 +112,13 @@ class ovpServiceOptions(Resource):
         return output
     
     def optional_config_ovp(self,action,interface):
+        if not vld.testiface(interface):
+            return {'Error':'%s does not exist!'%interface}, 400
         args = dict((k,v) for k, v in self.reqparse.parse_args().iteritems() if v)
         if not args and action=='delete':
             if not self.ovp.del_vpn_config(interface):
                 return {'Error':'Operation failed! see logfile for more infos!'},400
-            return {'Info':'config under %s was deleted ssuccessfully!'%interface}, 200
+            return {'Info':'config under %s was deleted successfully!'%interface}, 200
         if 'local_host' in args:
             try:
                 if not self.ovp.define_local_remote_host(action,interface,'local',args['local_host']):
@@ -150,14 +152,10 @@ class ovpServiceOptions(Resource):
             abort(400)
         if action == 'set':
             return {'Info':'Specified configs has been added to the current config successfully!'}, 201
-        return {'Info':'Specified configs has been deleted from the current config successfully!'}, 201
+        return {'Info':'Specified configs has been deleted from the current config successfully!'}, 200
 
     def put(self,interface):
-        if not vld.testiface(interface):
-            return {'Error':'%s does not exist!'%interface}, 400
         return self.optional_config_ovp('set',interface)
 
     def delete(self,interface):
-        if not vld.testiface(interface):
-            return {'Error':'%s does not exist!'%interface}, 400
         return self.optional_config_ovp('delete',interface)

@@ -16,7 +16,7 @@ from user_handler import UserListAPI, UserAPI
 from ovp_service import ovpService, ovpServiceOptions
 from ifconfig_service import ethernetIfaces, ifconfigService
 from routing_service import routingService, showRoutingElement
-
+from dhcp_service import dhcpMainServices, dhcpSuppServices
 #initialization
 app.config['SECRET_KEY'] = utils.get_config_params('api_auth','secret_key')
 app.config['SQLALCHEMY_DATABASE_URI'] = utils.get_config_params('api_auth','db_uri')
@@ -37,7 +37,8 @@ api.add_resource(ethernetIfaces,'/v1.0/services/interfaces/ethernet')
 api.add_resource(ifconfigService,'/v1.0/services/interfaces/ethernet/<interface>')
 api.add_resource(routingService,'/v1.0/services/routing')
 api.add_resource(showRoutingElement,'/v1.0/services/routing/<option>')
-
+api.add_resource(dhcpMainServices,'/v1.0/services/dhcp')
+api.add_resource(dhcpSuppServices,'/v1.0/services/dhcp/<name>')
 if __name__ == '__main__':
     if not os.path.exists('/var/lib/pyatta/db.sqlite'):
         db.create_all()

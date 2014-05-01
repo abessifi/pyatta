@@ -29,8 +29,7 @@ class ifConfig(configOpts):
             raise ActionError("[Critical] unrecognized action!")
 
     def check_firewall_name(self,firewall):
-        fw_config=show.formator(['firewall'])
-        fw_names=fw_config['name'].keys()
+        fw_names=show.formator(['firewall'])['name'].keys()
         if firewall not in fw_names:
             logger.error("%s way not match with any of the existing firewall\'s name!"%firewall)
             return False
