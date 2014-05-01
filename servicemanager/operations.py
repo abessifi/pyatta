@@ -2,11 +2,15 @@
     
 import sys
 import os
+import logging
 topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
 topdir = os.path.realpath(topdir)
 sys.path.insert(0, topdir)
 from execformat.executor import execUtils, OperationFailed
-from vyos_session.utils import logger
+from vyos_session import utils 
+
+logger = logging.getLogger(__name__)
+utils.init_logger(logger)
 
 class configOpts():
 

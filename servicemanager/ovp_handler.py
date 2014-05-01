@@ -4,11 +4,12 @@
 an openvpn service in both site-to-site and server-client mode"""
 import sys
 import os
+import logging
 topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
 topdir = os.path.realpath(topdir)
 sys.path.insert(0, topdir)
 
-from vyos_session.utils import logger
+from vyos_session import utils
 from operations import configOpts
 from routing_handler import routingHandler
 import validation as validate
@@ -22,7 +23,10 @@ class FileError(Exception): pass
 class ModeError(Exception): pass
 class RoleError(Exception): pass
 class InterfaceExist(Exception): pass
+
 IOV="interfaces openvpn"
+logger = logging.getLogger(__name__)
+utils.init_logger(logger)
 
 class ovpHandler(configOpts):
     RS = routingHandler()

@@ -67,12 +67,12 @@ class dhcpSuppServices(Resource):
         if 'dhcp_status' in args:
             if not dhcp.dhcp_status(action,name):
                 return {'Error':'Setting new dhcp permission failed! see logfile!'}, 403
-        if 'default_router' in args:
-            if not dhcp.dhcp_dnsserver_default_router(action,'default_router',name,args['default_router']):
-                return {'error':'Operation failed with default router manip'}, 403
         if 'dns_server' in args:
             if not dhcp.dhcp_dnsserver_default_router(action,'dns_server',name,args['dns_server']):
                 return {'error':'Operation failed with dns server manip'}, 403
+        if 'default_router' in args:
+            if not dhcp.dhcp_dnsserver_default_router(action,'default_router',name,args['default_router']):
+                return {'error':'Operation failed with default router manip'}, 403
         if action == 'set':
             return {'Info':'Specified configs has been added to the current config successfully!'}, 201
         return {'Info':'Specified configs has been deleted from the current config successfully!'}, 200

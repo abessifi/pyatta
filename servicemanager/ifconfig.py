@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 import sys
 import os
+import logging
 topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
 topdir = os.path.realpath(topdir)
 sys.path.insert(0, topdir)
-from vyos_session.utils import logger
+from vyos_session import utils
 from operations import configOpts
 from validation import ActionError,  validation as vld
 from execformat.formator import showConfig
@@ -13,6 +14,9 @@ from pprint import pprint
 
 IE = "interfaces ethernet"
 show=showConfig()
+logger = logging.getLogger(__name__)
+utils.init_logger(logger)
+
 """this class has to configure ethernet interfaces"""
 class ifConfig(configOpts):
     orient=["in","out","local"]

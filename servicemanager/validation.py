@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 import os
 import sys
+import logging
 topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
 topdir = os.path.realpath(topdir)
 sys.path.insert(0, topdir)
 """ this method have to be added to utils module"""
 from subprocess import check_output,CalledProcessError
-from vyos_session.utils import logger
+from vyos_session import utils
 from vyosparser import vyos_parser as vparser
 from execformat.formator import showConfig
 #from execformat.executor import session
@@ -17,6 +18,8 @@ class IpformatError(Exception): pass
 class InterfaceError(Exception): pass
 class ActionError(Exception): pass
 show= showConfig()
+logger= logging.getLogger(__name__)
+utils.init_logger(logger)
 
 class validation():
     """check if a given ip address is into a valid format"""

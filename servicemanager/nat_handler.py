@@ -2,10 +2,11 @@
 
 import sys
 import os
+import logging
 topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
 topdir = os.path.realpath(topdir)
 sys.path.insert(0, topdir)
-from vyos_session.utils import logger
+from vyos_session import utils
 from servicemanager.validation import validation as vld
 from operations import configOpts
 from execformat.formator import showConfig
@@ -14,6 +15,8 @@ from pprint import pprint
 
 NSR = "nat source rule"
 NDR = "nat destination rule"
+logger = logging.getLogger(__name__)
+utils.init_logger(logger)
 
 class natHandler(configOpts):
     type=['source','destination']
@@ -30,22 +33,22 @@ class natHandler(configOpts):
 
     def nat_config(self,action,type,suffix):
         nat_params=[NSR]+suffix if type=='source' else [NDR]+suffix
-        self.set(nat_params) if action=='set' else self.delete(nat_params)
+        return self.set(nat_params) if action=='set' else self.delete(nat_params)
 
     def del_nat_rule(self,type,rule_num):
-        self.nat_config('delete',type,[rule_num])
+        return self.nat_config('delete',type,[rule_num])
 
     def nat_status(self,action,type,rule_num):
         status=[rule_num,"disable"]
-        self.nat_config(action,type,status)
+        return self.nat_config(action,type,status)
 
-    def nat_interfaces(self,action,type,rule_num,iface_orient,iface):
-        if not iface_orient in ['inbound-interface','outbound-interface']:
-            logger.error("%s: unknown such interface orientation!"%iface_orient)
+    def nat_interfaces(self,action,type,rule_num,iface):
+        if not vld.testiface(iface):
+            logger.error("%s: no such interface name!"%iface)
             return False
         iface_orient = "inbound-interface" if type=="destination" else "outbound-interface"
         interface=[rule_num,iface_orient,iface]
-        self.nat_config(action,type,interface)
+        return self.nat_config(action,type,interface)
 
     def nat_filter_addr_port(self,action,type,rule_num,orient,addr_port):
         if not orient in self.type:
@@ -58,7 +61,7 @@ class natHandler(configOpts):
         else:
             logger.error("%s: unknown type either it is an ip address or a port number in filtering operation!"%addr_port)
             return False
-        self.nat_config(action,type,suffix)
+        return self.nat_config(action,type,suffix)
 
     def nat_translation_addr_port(self,action,type,rule_num,trans_addr_port):
         if vld.testip(trans_addr_port):
@@ -68,11 +71,11 @@ class natHandler(configOpts):
         else:
             logger.error("%s: unknown type either it is an ip address or a port number in translation operation!"%addr_port)
             return False
-        self.nat_config(action,type,suffix)
+        return self.nat_config(action,type,suffix)
 
     def nat_protocol(self,action,type,rule_num,prot="all"):
         suffix=[rule_num,"protocol",prot]
-        self.nat_config(action,type,suffix)
+        return self.nat_config(action,type,suffix)
 
 """
 session.setup_config_session()
