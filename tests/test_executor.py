@@ -99,3 +99,23 @@ def test_check_cmd_args():
         handler = execUtils(list(args))
         handler.check_cmd_args()
     assert e.value.message == 'Configuration path is not correct'
+
+def test_show_list_nodes():
+    """
+    Check if a list of nodes under specified configuration path is correctly returned
+    """
+    #Config path with more options
+    args = ['show','interfaces','ethernet']
+    handler = execUtils(list(args))
+    success, options = handler.get_possible_options()
+    assert success and len(options)
+    #Config path without possible options
+    args = ['show','interfaces','ethernet','eth2','description']
+    handler = execUtils(list(args))
+    success, options = handler.get_possible_options()
+    assert success and not len(options)
+    #Config path is not correct
+    args = ['show','foo']
+    handler = execUtils(list(args))
+    success, options = handler.get_possible_options()
+    assert not success and not len(options)
