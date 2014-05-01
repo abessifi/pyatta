@@ -9,6 +9,8 @@ CONFIG_FILE_NAME = "pyatta.conf"
 AVAILABLE_LOG_LEVELS = ['DEBUG','INFO','WARN','ERROR','CRITICAL']
 DEFAULT_LOG_LEVEL = 'INFO'
 
+logger = logging.getLogger(__name__)
+
 def get_config_params(section, key):
     """
     To get specific parameters valuers from config file 
@@ -48,12 +50,11 @@ def get_log_filehandler():
     fh.setLevel(eval('logging.{}'.format(get_log_level())))
     return fh
 
-def init_logger():
+def init_logger(logger):
     """
     Initialize logger object for logging application's activities to a specific file.
     """
     # create logger
-    logger = logging.getLogger(__name__)
     logger.setLevel(eval('logging.{}'.format(get_log_level())))
     # create formatter and add it to the handlers
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -61,9 +62,6 @@ def init_logger():
     file_handler.setFormatter(formatter)
     # add the handlers to the logger
     logger.addHandler(file_handler)
-    return logger
-
-logger = init_logger()
 
 def _run(cmd, output=False):
     """
@@ -92,4 +90,5 @@ def clean_environ(env):
     for key in env.keys():
         if os.environ.get('key'): del os.environ[key]
 
-
+#initilize the logger for this module
+init_logger(logger)
