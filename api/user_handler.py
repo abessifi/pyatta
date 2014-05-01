@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 
 from flask import abort
-from flask.ext.restful import Resource,reqparse,fields,marshal
+from flask.ext.restful import Resource, reqparse, fields, marshal
 from sqlalchemy import update
-from base_setup import auth,db,User
+from base_setup import auth, db, User
+
 user_fields = {
     'username':fields.String,
     'email':fields.String,
@@ -11,12 +12,16 @@ user_fields = {
     'uri':fields.Url('user')
 }
 
-"""this class shows users and may delete or add new other ones """
 class UserListAPI(Resource):
+    """
+    This class shows users and may delete or add new others
+    """
     decorators = [auth.login_required]
 
-    """this constructor defines parser for incoming users requests """
     def __init__(self):
+        """
+        This constructor defines parser for incoming users requests
+        """
         self.reqparse = reqparse.RequestParser()
         self.reqparse.add_argument('username', type=str, required=True, help='No username provided', location='json')
         self.reqparse.add_argument('password', type=str, required=True,help='No password provided', location='json')
@@ -24,12 +29,16 @@ class UserListAPI(Resource):
         self.reqparse.add_argument('superuser', type=int, required=True,help='No superuser privilege provided', location='json')
         super(UserListAPI, self).__init__()
 
-    """this method returns informations concerning existing users"""
     def get(self):
+        """
+        This method returns informations concerning existing users
+        """
         return { 'users': map(lambda t: marshal(t, user_fields), User.query.all()) }
 
-    """this method allows the creation of new users"""
     def post(self):
+        """
+        This method allows the creation of new users
+        """
         args = self.reqparse.parse_args()
         if User.query.filter_by(username=args['username']).first() is not None:
             return {'error':'username name already allocated!'}, 400
@@ -41,8 +50,10 @@ class UserListAPI(Resource):
         db.session.commit()
         return { 'user': marshal(user, user_fields) }, 201
 
-"""this class implements the get, edition and delete of a specific user"""
 class UserAPI(Resource):
+    """
+    This class implements the get, edit and delete methods of a specific user
+    """
     decorators = [auth.login_required]
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
@@ -51,15 +62,19 @@ class UserAPI(Resource):
         self.reqparse.add_argument('email', type = str , location = 'json')
         super(UserAPI, self).__init__()
 
-    """this method returns user informations for a given id"""
     def get(self, id):
+        """
+        This method returns user informations for a given id
+        """
         user = User.query.get(id)
         if not user:
             abort(404)
         return { 'user': marshal(user, user_fields) }
 
-    """this method edit existing informations of a particular user"""
     def put(self, id):
+        """
+        This method edit existing informations of a particular user
+        """
         user = User.query.get(id)
         if not user:
             abort(404)
@@ -74,8 +89,10 @@ class UserAPI(Resource):
         return {'user':'edited successfully!'}, 200
         #return { 'user': marshal(user, user_fields) }
 
-    """this method may delete an existing user"""
     def delete(self, id):
+        """
+        This method may delete an existing user
+        """
         user = User.query.get(id)
         if not user:
             abort(404)

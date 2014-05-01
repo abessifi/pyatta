@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import os
 from flask import Flask,jsonify,make_response,g
 from flask.ext.httpauth import HTTPBasicAuth
 from flask.ext.restful import Resource
@@ -6,14 +7,55 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from passlib.apps import custom_app_context as pwd_context
 from itsdangerous import (TimedJSONWebSignatureSerializer
                           as Serializer, BadSignature, SignatureExpired)
+from vyos_session import utils
+import logging
 
-app = Flask('auth')
+logger = logging.getLogger(__name__)
+utils.init_logger(logger)
+
+#initialization
+app = Flask('pyatta')
 auth = HTTPBasicAuth()
 db = SQLAlchemy(app)
 
-"""this class provides the database schema even 
-other methods needed for authentication"""
+app.config.update(
+    DEBUG = bool(utils.get_config_params('api','debug')),
+    SECRET_KEY = utils.get_config_params('api_auth','secret_key'),
+)
+
+def check_db_config():
+    """
+    Check Database configuration
+    """
+    db_driver = utils.get_config_params('sql','driver')
+    db_uri = utils.get_config_params('sql','db_uri')
+    logger.debug('Database driver : "%s"' % db_driver)
+    logger.debug('Database URI : "%s"' % db_uri)
+
+    if db_driver == 'sqlite':
+        slash_postion = db_uri.find(':///')
+        if slash_postion == -1:
+            logger.error('Incorrect Database URI.')
+            return False
+        if not db_uri[:slash_postion] == 'sqlite':
+            logger.error('Database driver not supported')
+            return False
+        if not os.path.isfile(db_uri[slash_postion+4:]):
+            logger.error('SQLite database file not found')
+            return False
+        app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
+        if bool(utils.get_config_params('sql','commit_on_teardown')):
+            app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
+        logger.info('Database configuration is OK')
+        return True
+    logger.error('Database driver not supported')
+    return False
+
 class User(db.Model):
+    """
+    This class provides the database schema even 
+    other methods needed for authentication
+    """
     error_msg=""
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -22,30 +64,42 @@ class User(db.Model):
     email = db.Column(db.String(30))
     superuser=db.Column(db.Boolean, nullable=False)
 
-    """this method returns the hash of one password given as a parameter"""
     def hash_password(self, password):
+        """
+        This method returns the hash of one password given as a parameter
+        """
         self.password = pwd_context.encrypt(password)
 
-    """this is a setter for email information"""
     def set_email(self,email=""):
+        """
+        This is a setter for email information
+        """
         self.email=email
 
-    """this is a setter for superuser status"""
     def set_superuser(self,su):
+        """
+        This is a setter for superuser status
+        """
         self.superuser=su
 
-    """this method checks if the password provided as input is valid"""
     def verify_password(self, password):
+        """
+        This method checks if the password provided as input is valid
+        """
         return pwd_context.verify(password, self.password)
     
-    """this method generates a temporary token needed for authentication"""
     def generate_auth_token(self, expiration=600):
+        """
+        This method generates a temporary token needed for authentication
+        """
         s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
         return s.dumps({'id': self.id})
 
-    """this method check if a given token still valid or not"""
     @staticmethod
     def verify_auth_token(token):
+        """
+        This method check if a given token still valid or not
+        """
         s = Serializer(app.config['SECRET_KEY'])
         try:
             data = s.loads(token)
@@ -56,15 +110,19 @@ class User(db.Model):
         user = User.query.get(data['id'])
         return user
 
-"""this method handle error that returns with code 403 """
 @auth.error_handler
 def unauthorized():
-    return make_response(jsonify( { 'error': 'unauthorized access!','reason':User.error_msg } ), 403)
+    """
+    This method handles error returned with code 403
+    """
     # return 403 instead of 401 to prevent browsers from displaying the default auth dialog
+    return make_response(jsonify( { 'error': 'unauthorized access!','reason':User.error_msg } ), 403)
 
-"""this method is invoked when a request was sent and contains authentication elements"""
 @auth.verify_password
 def verify_password(username_or_token, password):
+    """
+    This method is invoked when a request was sent and contains authentication elements
+    """
     # first try to authenticate by token
     if password=='unused':
         user = User.verify_auth_token(username_or_token)
@@ -81,8 +139,10 @@ def verify_password(username_or_token, password):
     g.user = user
     return True
 
-"""this class allows temporary token generation"""
 class token_gen(Resource):
+    """
+    This class allows temporary token generation
+    """
     decorators = [auth.login_required]
 
     def get(self):

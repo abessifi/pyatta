@@ -49,6 +49,14 @@ def test_setup_session():
     #    session.setup_config_session()
     #assert e.value.message == 'Could not create session !'
 
+def test_not_in_session():
+    """
+    Assert that teardown_sesstion() fails whether session dosn't exist
+    """
+    assert session.teardown_config_session()
+    assert not session.teardown_config_session()
+    assert session.setup_config_session() == True    
+
 def test_inSession():
     """
     Test if current session is available.
@@ -74,6 +82,13 @@ def test_commit():
     out = utils._run('/opt/vyatta/sbin/my_set interfaces ethernet eth2 description "This is a LAN interface"', output=True)
     #with pytest.raises(vsc.OperationFailed) as e:
     #    session.commit()
+    assert session.commit() == True
+
+def test_commit_requiring_output():
+    """
+    Assert that none string returned value is not splitted as string
+    """
+    out = utils._run('/opt/vyatta/sbin/my_set interfaces ethernet foobar description "This is a LAN interface"', output=True)
     assert session.commit() == True
 
 def test_save_changes():

@@ -1,4 +1,5 @@
 from vyos_session import utils
+import logging
 
 def test_filehandle():
     """
@@ -10,8 +11,10 @@ def test_init_logger():
     """
     Assert that multiple calls of init_logger() return the same logger object.
     """
-    logger1 = utils.init_logger()
-    logger2 = utils.init_logger()
+    logger1 = logging.getLogger()
+    utils.init_logger(logger1)
+    logger2 = logging.getLogger()
+    utils.init_logger(logger2)
     assert logger1 == logger2
 
 def test_loglevel():
