@@ -10,7 +10,7 @@ from subprocess import check_output,CalledProcessError
 from vyos_session import utils
 from vyosparser import vyos_parser as vparser
 from execformat.formator import showConfig
-#from execformat.executor import session
+from execformat.executor import session
 
 class PathError(Exception): pass
 class AddressError(Exception): pass
@@ -50,6 +50,7 @@ class validation():
             logger.error("%s: the mentioned interfaces doesn't match with any existing one!"%iface)
             return False
         return True
+
     """verify if a given path is valid"""
     @staticmethod
     def testpath(path):
@@ -72,6 +73,7 @@ class validation():
             logger.error("%s: the inputed address doesn't match with any existing one!"%addr)
             return False
         return True
+
 """
 session.setup_config_session()
 print validation.testiface('eth0')
@@ -79,3 +81,4 @@ print validation.testiface('blaa')
 print validation.testiface('vtun0')
 session.teardown_config_session()
 """
+

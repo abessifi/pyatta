@@ -9,10 +9,12 @@ from vyos_session import utils
 from operations import configOpts
 from validation import ActionError,  validation as vld
 from execformat.formator import showConfig
+from fw_handler import fwHandler
 from execformat.executor import session
 from pprint import pprint
 
 IE = "interfaces ethernet"
+fw=fwHandler()
 show=showConfig()
 logger = logging.getLogger(__name__)
 utils.init_logger(logger)
@@ -32,13 +34,6 @@ class ifConfig(configOpts):
         else:
             raise ActionError("[Critical] unrecognized action!")
 
-    def check_firewall_name(self,firewall):
-        fw_names=show.formator(['firewall'])['name'].keys()
-        if firewall not in fw_names:
-            logger.error("%s way not match with any of the existing firewall\'s name!"%firewall)
-            return False
-        return True
-        
     """this method may delete or set an ip address for a particular interface"""
     def addr_interface(self,action,interface,addr,vlan_label="",vlan_id=''):
         if  not vld.testip(addr):
@@ -63,7 +58,7 @@ class ifConfig(configOpts):
         if orient not in self.orient:
             logger.error("%s: unrecognized orientation!"%orient)
             return False
-        if not check_firewall_name(fwname):
+        if not fw.check_firewall_name(fwname):
             return False
         firewall=([interface,"firewall",orient,"name",fwname])
         self.ethernet_config(action,firewall)
