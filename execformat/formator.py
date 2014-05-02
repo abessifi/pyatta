@@ -15,7 +15,7 @@ class showConfig():
         args=['show']
         service = options[0]
         logger.debug("=====>>>>>> args before executor call = %s"%args)
-        if service in ['protocols','nat','interfaces','firewall']:
+        if service in ['protocols','nat','interfaces','firewall','zone-policy']:
            args.extend(options)
         elif service in ['dns','dhcp-server','ssh','webproxy']:
             options.insert(0,'service')
@@ -33,6 +33,6 @@ class showConfig():
             logger.error(e.message)
             return False
         if execstate==True:
-            return vparser.decode_string(output)
-
-
+            out = vparser.decode_string(output)
+            logger.info("<<<==== formator output ====>>>  %s"%out)
+            return out

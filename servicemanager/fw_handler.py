@@ -1,66 +1,166 @@
 #!/usr/bin/env python
 
+import sys
+import os
+import logging
+topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
+topdir = os.path.realpath(topdir)
+sys.path.insert(0, topdir)
+from vyos_session import utils
+from servicemanager.validation import validation as vld
 from operations import configOpts
+from execformat.formator import showConfig
+from execformat.executor import session
 
+logger = logging.getLogger(__name__)
+utils.init_logger(logger)
+show=showConfig()
 FWN = "firewall name"
 ZPZ = "zone-policy zone"
+
 class fwHandler(configOpts):
-	actions=["drop","reject","accept","inspect"]
-	state=["established","invalid","related"]	
-	availability=["enable","disable"]
+    orientation=['source','destination']
+    actions=["drop","reject","accept","inspect"]
+    states=["established","invalid","related"]	
+    availability=["enable","disable"]
 
-	def firewall_config(self,name,suffix):
-		firewall=[FWN,name,"rule"]
-		firewall.extend(suffix)
-		self.set(firewall)
+    def check_firewall_zone(self,zone):
+        zone_names=show.formator(['zone-policy'])['zone'].keys()
+        if zone not in zone_names:
+            logger.error("%s may not match with any of the existing zone\'s name!"%zone)
+            return False
+        return True
 
-	def zone_config(self,suffix):
-		zone=[ZPZ]
-		zone.extend(suffix)
-		self.set(zone)
+    def check_firewall_name(self,firewall):
+        fw_names=show.formator(['firewall'])['name'].keys()
+        if firewall not in fw_names:
+            logger.error("%s may not match with any of the existing firewall\'s name!"%firewall)
+            return False
+        return True
 
-	def set_zone_desc(self,zone_name,desc):
-		description = [zone_name,"description",desc]
-		self.zone_config(description)
+    def check_rule_from_fw_name(self,fw_name,rule):
+        rules=show.formator(['firewall'])['name'][fw_name]['rule'].keys()
+        if rule not in rules:
+            logger.error("given rule number %s under firewall name %s is not valid!"%(rule,fw_name))
+            return False
+        return True
 
-	def set_zone_interface(self,zone_name,iface):
-		interface = [zone_name,"interface",iface]
-		self.zone_config(interface)
+    def firewall_config(self,action,name,suffix=[]):
+        firewall=[FWN,name,"rule"]
+        firewall.extend(suffix)
+        if action=='set':
+            return self.set(firewall)
+        else:
+            return self.delete(firewall)
 
-	def setup_fw_on_zone(self,zone_src,zone_dst,firewall):
-		fw_on_zone=[zone_src,"from",zone_dst,"name",firewall]		
-		self.zone_config(fw_on_zone)
+    def zone_config(self,action,suffix):
+        zone=[ZPZ]
+        zone.extend(suffix)
+        if action=='set':
+            return self.set(zone)
+        else:
+            return self.delete(zone)
 
-	def set_default_action(self,name,rule_num,action):
-		if action in self.actions:
-			set_action[rule_num,"action",action]		
-			self.firewall_config(name,set_action)
-	
-	def set_rule_state(self,name,rule_num,state,allow):
-		if state in self.states and allow in self.availability:
-			set_state[rule_num,"state",state,allow]
-			self.firewall_config(name,set_state)
+    def del_firewall(self,fw_name,rule_num=""):
+        del_params=[FWN,fw_name]
+        if rule_num:
+            del_params.extend(['rule',rule_num])
+        return self.delete(del_params)
 
-	def set_protocol(self,name,rule_num,prot):
-		protocol=[rule_num,"protocol",prot]
-		self.firewall_config(name,protocol)
+    def set_zone_desc(self,action,zone_name,desc):
+        description = [zone_name,"description",desc]
+        return self.zone_config(action,description)
+
+    def set_zone_interface(self,action,zone_name,iface):
+        if not vld.testiface(iface):
+            logger.error("the following interface %s does not exists!"%iface)
+            return False
+        interface = [zone_name,"interface",iface]
+        return self.zone_config(action,interface)
+
+    def setup_fw_on_zone(self,action,zone_src,zone_dst,firewall=""):
+        if not self.check_firewall_zone(zone_src) or not self.check_firewall_zone(zone_dst):
+            logger.error("zone source or destination does not exists!")
+            return False
+        if not self.check_firewall_name(firewall):
+            logger.error("%s: mentioned firewall name does not exists!"%firewall)
+            return False
+        fw_on_zone=[zone_src,"from",zone_dst]
+        if firewall:
+            fw_on_zone.extend(["firewall name",firewall])		
+        return self.zone_config(action,fw_on_zone)
+
+    def default_action(self,action,name,rule_num,reaction):
+        if not reaction in self.actions:
+            logger.error("%s: unexpected value for action!"%reaction)
+            return False
+        set_action=[rule_num,"action",reaction]		
+        return self.firewall_config(action,name,set_action)
+
+    def rule_state(self,action,name,rule_num,state,allow):
+        if not state in self.states:
+            logger.error("%s is not a valid value"%state)
+            return False
+        elif not  allow in self.availability:
+            logger.error("%s: unknown such action! possible values: enable/disable!"%allow)
+            return False
+        set_state=[rule_num,"state",state,allow]
+        return self.firewall_config(action,name,set_state)
+
+    def protocol(self,action,name,rule_num,prot):
+        protocol=[rule_num,"protocol",prot]
+        return self.firewall_config(action,name,protocol)
 			
-	def set_dest_port(self,name,rule_num,portlist,orient="destination"):
-		port=[rule_num,orient,"port",portlist]
-		self.firewall_config(name,port)
+    def src_dst_addr_port(self,action,name,rule_num,orient,addr="",portlist=[]):
+        if not orient in self.orientation:
+            logger.error("%s: invalid orientation! possible choices: source/destination"%orient)
+            return False
+        filter_params=[rule_num,orient]
+        if addr and vld.testip(addr):
+            filter_params.extend(['address',addr])
+        elif portlist:
+            for port in portlist:
+                if not str(port).isdigit():
+                    logger.error("%s: this is not a valid port number!"%port)
+                    return False
+            join_port=','.join(str(x) for x in portlist)
+            filter_params.extend(['port',join_port])
+        else:
+            logger.error("non deterministic status!")
+            return False
+        return self.firewall_config(action,name,filter_params)
+
+    def rule_ability(self,action,name,rule_num,status):
+        if not status in self.availability:
+            logger.error("%s not a valid state!"%status)
+            return False
+        rule_status=[rule_num,status]
+        return self.firewall_config(name,action,rule_status)
 
 
-	def set_dest_addr(self,name,rule_num,addr_subnet,orient="destination"):
-		addr=[rule_num,orient,"address",addr_subnet]
-		self.firewall_config(name,addr)
+"""
+session.setup_config_session()
+obj=fwHandler()
+#obj.set_zone_desc('set','test_zone1','\"this is a zone set for testing fw_handler core\"')
+#obj.set_zone_interface('set','test_zone1','eth2')
+#obj.set_zone_interface('set','test_zone1','qdvsd')
+#obj.default_action('set','test_firewall1','1234','accept')
+#obj.default_action('set','test_firewall1','1234','blaaaaa')
+#obj.rule_state('set','test_firewall1','1234','established','enable')
+obj.protocol('set','test_firewall1','1234','tcp')
+obj.src_dst_addr_port('set','test_firewall1','1234','destination',addr='192.168.2.1')
+obj.src_dst_addr_port('set','test_firewall1','1234','source',portlist=[22,443,25,21])
 
- 	def set_src_port(self,name,rule_num,portlist):
-		self.set_dest_port(name,rule_num,portlist,"source")
-
-        def set_src_addr(self,name,rule_num,addr_subnet):
-		self.set_dest_addr(name,rule_num,addr_subnet,"source")
-
-	def rule_state(self,name,rule_num,status):
-		if status in availability:
-			rule_status=[rule_num,status]
-			self.firewall_config(name,rule_status)
+session.commit()
+#obj.setup_fw_on_zone(action,'mootez','test_zone1','blaa')
+#obj.setup_fw_on_zone(action,'mootez','blaaaa','test_firewall1')
+obj.setup_fw_on_zone('set','ahmed','mootez','outTLS')
+#obj.setup_fw_on_zone('delete','mootez','test_zone1')
+#obj.del_firewall('test_firewall1')
+#print obj.check_firewall_name('test_firewall')
+#print obj.check_firewall_name('test_firewallsv')
+#obj.check_firewall_name('INvtun0')
+#print obj.check_firewall_zone('mootez')
+session.commit()
+session.teardown_config_session()
+"""
