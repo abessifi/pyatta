@@ -95,6 +95,7 @@ class execUtils:
         logger.info('Configuration path is correct')
         return True
 
+    #TODO this methode is not well done..it is working but not well done :(
     def get_possible_options(self):
         """
         Returns list of nodes under specified configuration path

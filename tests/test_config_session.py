@@ -91,10 +91,16 @@ def test_commit():
 
 def test_commit_requiring_output():
     """
-    Assert that none string returned value is not splitted as string
+    Test commit action
     """
+    # Assert that 'none string' returned value is not splitted as string
     out = utils._run('/opt/vyatta/sbin/my_set interfaces ethernet foobar description "This is a LAN interface"', output=True)
     assert session.commit() == True
+    
+    # Assert that some messages are returned whether a commit fail
+    utils._run('/opt/vyatta/sbin/my_set zone-policy zone my-zone description "some description"')
+    success, err = utils._run('/opt/vyatta/sbin/my_commit', output=True)
+    assert  success == False and len(err)
 
 def test_save_changes():
     """

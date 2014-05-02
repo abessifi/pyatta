@@ -71,8 +71,10 @@ def _run(cmd, output=False):
         try:
             logger.debug('exec command: "%s"', cmd)
             out = subprocess.check_output(cmd, shell=True)
-        except subprocess.CalledProcessError:
-            return False
+        except subprocess.CalledProcessError as e:
+            err = e.output.splitlines()
+            if len(err): logger.debug('exec error: %s' % err) # print vyos error message in log
+            return False, err
         logger.debug('command output: %s', out)
         return ' '.join(out.splitlines())
     try:
