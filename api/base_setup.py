@@ -9,11 +9,13 @@ from itsdangerous import (TimedJSONWebSignatureSerializer
                           as Serializer, BadSignature, SignatureExpired)
 from vyos_session import utils
 import logging
+from logging.handlers import RotatingFileHandler
 
 logger = logging.getLogger(__name__)
 utils.init_logger(logger)
 
-#initialization
+## initialization ##
+
 app = Flask('pyatta')
 auth = HTTPBasicAuth()
 db = SQLAlchemy(app)
@@ -22,6 +24,15 @@ app.config.update(
     DEBUG = bool(utils.get_config_params('api','debug')),
     SECRET_KEY = utils.get_config_params('api_auth','secret_key'),
 )
+
+# Logging api activities to a file instead of stdout (default)
+# to see the log messages emitted by Werkzeug.
+# TODO : test log file existance
+handler = RotatingFileHandler('/var/log/pyatta/pyatta_api.log', maxBytes=10000, backupCount=1)
+handler.setLevel(logging.INFO)
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.DEBUG)
+log.addHandler(handler)
 
 def check_db_config():
     """

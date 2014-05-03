@@ -13,8 +13,9 @@ from vyos_session import utils
 from flask.views import MethodView
 from flask.ext.restful import Api
 import logging
+from logging.handlers import RotatingFileHandler
 
-logger = logging.getLogger('pyatta')
+logger = logging.getLogger('__name__')
 utils.init_logger(logger)
 
 api = Api(app)
@@ -27,11 +28,13 @@ api.add_resource(token_gen,'/v1.0/token')
 api.add_resource(UserListAPI, '/v1.0/users')
 api.add_resource(UserAPI, '/v1.0/users/<int:id>', endpoint = 'user')
 
-if __name__ == '__main__':
 
+if __name__ == '__main__':
+    
+    logger.info('Starting Flask web server..')
     if not check_db_config() :
         logger.error('No database detected. Please check the configuration file !') 
         sys.exit(1)
-
+    
     db.create_all()
     app.run()
