@@ -3,8 +3,13 @@ import subprocess
 import os
 import logging
 
+<<<<<<< HEAD:vyos_session/utils.py
 # In production environment CONFIG_DIR should be /etc/pyatta/
 CONFIG_DIR = "/home/vyos/vyos-api/project"
+=======
+# In production environment PROJECT_PATH should be /etc/pyatta/
+PROJECT_PATH = "/home/vyos/vyos-api/project/"
+>>>>>>> acc81edb4bdcfadc92dc13b692ee0ee97c8045a2:VyosSessionConfig/utils.py
 CONFIG_FILE_NAME = "pyatta.conf"
 AVAILABLE_LOG_LEVELS = ['DEBUG','INFO','WARN','ERROR','CRITICAL']
 DEFAULT_LOG_LEVEL = 'INFO'

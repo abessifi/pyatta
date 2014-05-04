@@ -1,9 +1,19 @@
 import pytest
 import os
 import uuid
+<<<<<<< HEAD
 from vyos_session.configsession import ConfigSession, SessionAlreadyExists
 from vyos_session import utils
 from execformat.executor import session
+=======
+topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
+topdir = os.path.realpath(topdir)
+sys.path.insert(0, topdir)
+from VyosSessionConfig import configsession as vsc
+from VyosSessionConfig import utils
+
+sessionCfg = None
+>>>>>>> acc81edb4bdcfadc92dc13b692ee0ee97c8045a2
 
 def setup_module(module):
     """
@@ -79,7 +89,11 @@ def test_commit():
     """
     Test if changes are successfully commited
     """
+<<<<<<< HEAD
     out = utils._run('/opt/vyatta/sbin/my_set interfaces ethernet eth2 description "This is a LAN interface"', output=True)
+=======
+    out = utils._run('/opt/vyatta/sbin/my_set interfaces ethernet eth0 description "This is a LAN interface"', output=True)
+>>>>>>> acc81edb4bdcfadc92dc13b692ee0ee97c8045a2
     #with pytest.raises(vsc.OperationFailed) as e:
     #    session.commit()
     assert session.commit() == True
