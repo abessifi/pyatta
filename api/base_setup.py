@@ -65,15 +65,15 @@ def check_db_config():
 
 class User(db.Model):
     """
-    This class provides the database schema even 
-    other methods needed for authentication
+    This class provides the database schema whereas 
+    other methods are needed for authentication
     """
     error_msg=""
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(32), index=True)
+    username = db.Column(db.String(32), unique=True)
     password = db.Column(db.String(64))
-    email = db.Column(db.String(30))
+    email = db.Column(db.String(32), unique=True)
     superuser=db.Column(db.Boolean, nullable=False)
 
     def hash_password(self, password):

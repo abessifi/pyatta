@@ -6,18 +6,22 @@ topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
 topdir = os.path.realpath(topdir)
 sys.path.insert(0, topdir)
 
-from base_setup import auth, app, token_gen, db, check_db_config
+from base_setup import auth, app, token_gen, db, check_db_config, User
 #from session_handler import session_handler
 from user_handler import UserListAPI, UserAPI
 from vyos_session import utils
-from flask import abort
 from flask.views import MethodView
-from flask.ext.restful import Api
+from flask.ext.restful import Api, marshal, fields
 import logging
-from logging.handlers import RotatingFileHandler
 
 logger = logging.getLogger('pyatta')
 utils.init_logger(logger)
+
+user_fields = {
+    'username':fields.String,
+    'email':fields.String,
+    'superuser':fields.Boolean,
+}
 
 ## Create the API ##
 
@@ -38,6 +42,11 @@ if __name__ == '__main__':
         sys.exit(1)
     
     db.create_all() # setup/connect database
+    user = User(username='ahmed.bessifi', password='vaytess', email='ahmed.bessifi@home', superuser='0')
+    db.session.add(user)
+    db.session.commit()
+    users = { 'users': map(lambda t: marshal(t, user_fields), User.query.all()) }
+    logger.info(users)
 
     if app.debug:
         logger.info('Starting web server in debug mode..')
