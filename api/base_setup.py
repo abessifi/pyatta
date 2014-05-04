@@ -28,6 +28,7 @@ app.config.update(
 # Logging api activities to a file instead of stdout (default)
 # to see the log messages emitted by Werkzeug.
 # TODO : test log file existance
+# NOTE : this will not be valide in production environment because the log will be managed by apache server
 handler = RotatingFileHandler('/var/log/pyatta/pyatta_api.log', maxBytes=10000, backupCount=1)
 handler.setLevel(logging.INFO)
 log = logging.getLogger('werkzeug')
