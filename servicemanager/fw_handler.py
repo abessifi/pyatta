@@ -20,11 +20,11 @@ ZPZ = "zone-policy zone"
 
 class fwHandler(configOpts):
     orientation=['source','destination']
-    actions=["drop","reject","accept","inspect"]
+    actions=["drop","reject","accept"]
     states=["established","invalid","related"]	
     availability=["enable","disable"]
 
-    def check_firewall_zone(self,zone):
+    def check_zone_name(self,zone):
         zone_names=show.formator(['zone-policy'])['zone'].keys()
         if zone not in zone_names:
             logger.error("%s may not match with any of the existing zone\'s name!"%zone)
@@ -46,12 +46,21 @@ class fwHandler(configOpts):
         return True
 
     def firewall_config(self,action,name,suffix=[]):
-        firewall=[FWN,name,"rule"]
-        firewall.extend(suffix)
+        if not suffix:
+            firewall=[FWN,name]
+        else:
+            firewall=[FWN,name,"rule"]
+            firewall.extend(suffix)
         if action=='set':
             return self.set(firewall)
         else:
             return self.delete(firewall)
+
+    def default_action(self,action,name,reaction):
+        if not reaction in self.actions:
+            logger.error("%s: unexpected value for action!"%reaction)
+            return False
+        return self.firewall_config(action,name,['default-action',reaction])
 
     def zone_config(self,action,suffix):
         zone=[ZPZ]
@@ -61,44 +70,50 @@ class fwHandler(configOpts):
         else:
             return self.delete(zone)
 
+    def del_zone(self,zone_name):
+        if not self.check_zone_name(zone_name):
+            logger.error("mentioned zone %s to delete is not defined!"%zone_name)
+            return False
+        return self.delete([ZPZ,zone_name])
+        
     def del_firewall(self,fw_name,rule_num=""):
         del_params=[FWN,fw_name]
         if rule_num:
             del_params.extend(['rule',rule_num])
         return self.delete(del_params)
 
-    def set_zone_desc(self,action,zone_name,desc):
+    def zone_desc(self,action,zone_name,desc):
         description = [zone_name,"description",desc]
         return self.zone_config(action,description)
 
-    def set_zone_interface(self,action,zone_name,iface):
+    def zone_interface(self,action,zone_name,iface):
         if not vld.testiface(iface):
-            logger.error("the following interface %s does not exists!"%iface)
+            logger.error("the following interface %s does not exist!"%iface)
             return False
         interface = [zone_name,"interface",iface]
         return self.zone_config(action,interface)
 
-    def setup_fw_on_zone(self,action,zone_src,zone_dst,firewall=""):
-        if not self.check_firewall_zone(zone_src) or not self.check_firewall_zone(zone_dst):
-            logger.error("zone source or destination does not exists!")
+    def setup_fw_on_zone(self,action,zone_dst,zone_src,firewall=""):
+        if not self.check_zone_name(zone_src):
+            logger.error("zone source does not exist!")
             return False
         if not self.check_firewall_name(firewall):
-            logger.error("%s: mentioned firewall name does not exists!"%firewall)
+            logger.error("%s: mentioned firewall name does not exist!"%firewall)
             return False
-        fw_on_zone=[zone_src,"from",zone_dst]
+        fw_on_zone=[zone_dst,"from",zone_src]
         if firewall:
             fw_on_zone.extend(["firewall name",firewall])		
         return self.zone_config(action,fw_on_zone)
 
-    def default_action(self,action,name,rule_num,reaction):
+    def rule_default_action(self,action,name,rule_num,reaction):
         if not reaction in self.actions:
             logger.error("%s: unexpected value for action!"%reaction)
             return False
-        set_action=[rule_num,"action",reaction]		
+        set_action=[rule_num,"action",reaction]
         return self.firewall_config(action,name,set_action)
 
     def rule_state(self,action,name,rule_num,state,allow):
-        if not state in self.states:
+        if not state in self.states:    #related,established,invalid
             logger.error("%s is not a valid value"%state)
             return False
         elif not  allow in self.availability:
