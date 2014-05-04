@@ -18,6 +18,7 @@ from ifconfig_service import ethernetIfaces, ifconfigService
 from routing_service import routingService, showRoutingElement
 from dhcp_service import dhcpMainServices, dhcpSuppServices
 from nat_service import natMainSetup, natSuppServices 
+from firewall_service import zoneMainSetup, zoneServices
 #initialization
 app.config['SECRET_KEY'] = utils.get_config_params('api_auth','secret_key')
 app.config['SQLALCHEMY_DATABASE_URI'] = utils.get_config_params('api_auth','db_uri')
@@ -42,6 +43,8 @@ api.add_resource(dhcpMainServices,'/v1.0/services/dhcp')
 api.add_resource(dhcpSuppServices,'/v1.0/services/dhcp/<name>')
 api.add_resource(natMainSetup,'/v1.0/services/nat')
 api.add_resource(natSuppServices,'/v1.0/services/nat/<type_rule_option>')
+api.add_resource(zoneMainSetup,'/v1.0/services/firewall/zone')
+api.add_resource(zoneServices,'/v1.0/services/firewall/zone/<zone_name>')
 if __name__ == '__main__':
     if not os.path.exists('/var/lib/pyatta/db.sqlite'):
         db.create_all()
