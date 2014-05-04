@@ -1,4 +1,9 @@
 import pytest
+import sys
+import os
+topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
+topdir = os.path.realpath(topdir)
+sys.path.insert(0, topdir)
 from execformat.executor import session, check_operation_name, execUtils, OperationNameError, OperationFailed, ConfigPathNotCorrect
 from vyos_session.configsession import SessionNotExists
 

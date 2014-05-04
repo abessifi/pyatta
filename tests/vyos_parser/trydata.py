@@ -9,9 +9,9 @@ topdir = os.path.dirname(os.path.realpath(__file__)) + "../../.."
 topdir = os.path.realpath(topdir)
 sys.path.insert(0, topdir)
 
-from VyosParser.vyos_parser import decode_string, decode_string_to_json
+from vyosparser.vyos_parser import decode_string, decode_string_to_json
 
-import VyosParser
+import vyosparser
 
 
 data_firewall = """

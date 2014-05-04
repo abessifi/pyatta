@@ -2,6 +2,8 @@
 import sys
 import subprocess
 import os
+
+sys.path.append('/home/vyos/vyos-api/project/')
 from vyos_session.configsession import ConfigSession, SessionNotExists, SetupSessionFailed 
 from vyos_session import utils
 import logging
@@ -46,9 +48,7 @@ def _runner(command):
     return out, err, proc.returncode
 
 class execUtils:
-    """
-    Executes possible operations in a Vyos configure session.
-    """
+    """ Executes possible operations in a Vyos configure session."""
     def __init__(self, args):
         self.args = args
 
@@ -95,6 +95,7 @@ class execUtils:
         logger.info('Configuration path is correct')
         return True
 
+    #TODO this methode is not well done..it is working but not well done :(
     def get_possible_options(self):
         """
         Returns list of nodes under specified configuration path

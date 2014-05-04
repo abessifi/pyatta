@@ -1,26 +1,5 @@
-<<<<<<< HEAD
 from vyos_session import utils
 import logging
-=======
-#Imports
-import sys
-import os
-topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
-topdir = os.path.realpath(topdir)
-sys.path.insert(0, topdir)
-from VyosSessionConfig import utils
-
-
-def setup_module(module):
-    """
-    """
-    pass
-
-def teardow_module(module):
-    """
-    """
-    pass
->>>>>>> acc81edb4bdcfadc92dc13b692ee0ee97c8045a2
 
 def test_filehandle():
     """
