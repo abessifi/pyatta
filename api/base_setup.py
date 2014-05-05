@@ -2,6 +2,7 @@
 import os
 from flask import Flask,jsonify,make_response,g
 from flask.ext.httpauth import HTTPBasicAuth
+from sqlalchemy.orm import validates
 from flask.ext.restful import Resource
 from flask.ext.sqlalchemy import SQLAlchemy
 from passlib.apps import custom_app_context as pwd_context
@@ -77,6 +78,20 @@ class User(db.Model):
     email = db.Column(db.String(32), unique=True)
     superuser=db.Column(db.Boolean, nullable=False)
 
+    @validates('username')
+    def validate_username(self, key, username):
+        assert len(username) > 5
+        return username
+    
+    
+    
+    def __init__(self, username, password, email, superuser):
+        self.username = username
+        self.password = password
+        self.email = email
+        self.superuser = superuser
+
+    
     def hash_password(self, password):
         """
         This method returns the hash of one password given as a parameter

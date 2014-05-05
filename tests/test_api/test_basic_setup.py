@@ -64,7 +64,9 @@ def test_db_create_user():
     """
     User.query.delete()
     assert len(User.query.all()) == 0
-    user = User(username='foo', password='bar', email='foo@bar', superuser='0')
+    try:    
+        user = User(username='foo', password='bar', email='foo@bar', superuser='0')
+    except AssertionError:
     db.session.add(user)
     db.session.commit()
     assert len(User.query.all()) == 1
