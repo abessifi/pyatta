@@ -103,7 +103,6 @@ class User(db.Model):
         self.email = email
         self.superuser = superuser
 
-    
     def hash_password(self, password):
         """
         This method returns the hash of one password given as a parameter
@@ -115,7 +114,7 @@ class User(db.Model):
         This is a setter for email information
         """
         self.email=email
-
+    
     def set_superuser(self,su):
         """
         This is a setter for superuser status

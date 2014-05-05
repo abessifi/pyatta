@@ -58,7 +58,18 @@ def test_db_config():
     """
     assert bs.check_db_config()
 
-def test_db_create_user():
+def test_user_password():
+    """
+    Check if the user pass is correctely hashed
+    """
+    user = User(username='foobar', password='foo.bar', email='foo@bar.baz', superuser='0')
+    password = 'foo.bar'
+    user.hash_password(password)
+    assert user.password != password # assert that the pass is hashed
+    assert user.verify_password(password) # assert that the pass hash is correct (authentication)
+
+
+def test_user_model():
     """
     Test user creation 
     """
