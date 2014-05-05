@@ -64,10 +64,21 @@ def test_db_create_user():
     """
     User.query.delete()
     assert len(User.query.all()) == 0
-    try:    
-        user = User(username='foo', password='bar', email='foo@bar', superuser='0')
-    except AssertionError:
+    
+    # test usename validation
+    with pytest.raises(bs.UserAttributeNotValide) as e:
+        user = User(username='foo', password='foo.bar', email='foo.bar', superuser='0')
+        db.session.add(user)
+        db.session.commit()
+    assert e.value.message == 'username not valide'
+    # test email validation
+    with pytest.raises(bs.UserAttributeNotValide) as e:
+        user = User(username='foo.bar', password='foo.bar', email='foo.bar', superuser='0')
+        db.session.add(user)
+        db.session.commit()
+    assert e.value.message == 'email not valide'
+    # assert user creation
+    user = User(username='foo.bar', password='foo.bar', email='foo@bar.baz', superuser='0')
     db.session.add(user)
     db.session.commit()
     assert len(User.query.all()) == 1
-

@@ -11,6 +11,7 @@ from itsdangerous import (TimedJSONWebSignatureSerializer
 from vyos_session import utils
 import logging
 from logging.handlers import RotatingFileHandler
+import re
 
 logger = logging.getLogger(__name__)
 utils.init_logger(logger)
@@ -64,6 +65,8 @@ def check_db_config():
     logger.error('Database driver not supported')
     return False
 
+class UserAttributeNotValide(Exception): pass
+
 class User(db.Model):
     """
     This class provides the database schema whereas 
@@ -80,11 +83,15 @@ class User(db.Model):
 
     @validates('username')
     def validate_username(self, key, username):
-        assert len(username) > 5
+        if len(username) < 5 : raise UserAttributeNotValide('username not valide')
         return username
     
-    
-    
+    @validates('email')
+    def validate_email(self, key, email):
+        pattern = '[\.\w]{1,}[@]\w+[.]\w+'
+        if not re.match(pattern, email): raise UserAttributeNotValide('email not valide')
+        return email
+
     def __init__(self, username, password, email, superuser):
         self.username = username
         self.password = password
