@@ -81,16 +81,21 @@ class User(db.Model):
     email = db.Column(db.String(32), unique=True)
     superuser=db.Column(db.Boolean, nullable=False)
 
-    @validates('username')
-    def validate_username(self, key, username):
-        if len(username) < 5 : raise UserAttributeNotValide('username not valide')
-        return username
-    
-    @validates('email')
-    def validate_email(self, key, email):
-        pattern = '[\.\w]{1,}[@]\w+[.]\w+'
-        if not re.match(pattern, email): raise UserAttributeNotValide('email not valide')
-        return email
+    @validates('username', 'email', 'password')
+    def validate_user_attributes(self, key, attribute):
+        if key == 'username':
+            if len(attribute) < 5 : raise UserAttributeNotValide('username not valide')
+        if key == 'password':
+            if len(attribute) < 5 or attribute == self.username :
+                raise UserAttributeNotValide('password not valide')
+        if key == 'email':
+            pattern = '[\.\w]{1,}[@]\w+[.]\w+'
+            if not re.match(pattern, attribute): raise UserAttributeNotValide('email not valide')
+        if key == 'superuser':
+            if attribute not in ['0','1']: raise UserAttributeNotValide('superuser value not valide')
+        return attribute
+
+    @validates('password')
 
     def __init__(self, username, password, email, superuser):
         self.username = username

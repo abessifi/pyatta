@@ -76,9 +76,9 @@ def test_db_create_user():
         user = User(username='foo.bar', password='foo.bar', email='foo.bar', superuser='0')
         db.session.add(user)
         db.session.commit()
-    assert e.value.message == 'email not valide'
+    assert e.value.message == 'email not valide' or e.value.message == 'password not valide'
     # assert user creation
-    user = User(username='foo.bar', password='foo.bar', email='foo@bar.baz', superuser='0')
+    user = User(username='foo.bar', password='foobar', email='foo@bar.baz', superuser='0')
     db.session.add(user)
     db.session.commit()
     assert len(User.query.all()) == 1
