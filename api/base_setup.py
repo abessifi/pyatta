@@ -76,10 +76,10 @@ class User(db.Model):
     __tablename__ = 'users'
     
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(32), unique=True)
-    password = db.Column(db.String(64))
-    email = db.Column(db.String(32), unique=True)
-    superuser=db.Column(db.Boolean, nullable=False)
+    username = db.Column(db.String(32), nullable=False, unique=True)
+    password = db.Column(db.String(64), nullable=False)
+    email = db.Column(db.String(32), nullable=False, unique=True)
+    superuser=db.Column(db.Boolean, nullable=False, default=0)
 
     @validates('username', 'email', 'password', 'superuser')
     def validate_user_attributes(self, key, attribute):
@@ -88,36 +88,13 @@ class User(db.Model):
         if key == 'password':
             if len(attribute) < 5 or attribute == self.username :
                 raise UserAttributeNotValide('password not valide')
+            attribute = pwd_context.encrypt(attribute)
         if key == 'email':
             pattern = '[\.\w]{1,}[@]\w+[.]\w+'
             if not re.match(pattern, attribute): raise UserAttributeNotValide('email not valide')
         if key == 'superuser':
             if attribute not in ['0','1']: raise UserAttributeNotValide('superuser value not valide')
         return attribute
-
-    def __init__(self, username, password, email, superuser):
-        self.username = username
-        self.password = password
-        self.email = email
-        self.superuser = superuser
-
-    def hash_password(self, password):
-        """
-        This method returns the hash of one password given as a parameter
-        """
-        self.password = pwd_context.encrypt(password)
-
-    def set_email(self,email=""):
-        """
-        This is a setter for email information
-        """
-        self.email=email
-    
-    def set_superuser(self,su):
-        """
-        This is a setter for superuser status
-        """
-        self.superuser=su
 
     def verify_password(self, password):
         """
@@ -140,10 +117,10 @@ class User(db.Model):
         s = Serializer(app.config['SECRET_KEY'])
         try:
             data = s.loads(token)
-        except SignatureExpired:
-            return None    # valid token, but expired
-        except BadSignature:
-            return None    # invalid token
+        except (SignatureExpired, BadSignature):
+            # SignatureExpired => valid token, but expired
+            # BadSignature => invalid token
+            return False
         user = User.query.get(data['id'])
         return user
 

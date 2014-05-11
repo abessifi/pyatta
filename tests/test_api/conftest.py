@@ -1,9 +1,10 @@
 import pytest
 from sqlalchemy.schema import MetaData, DropConstraint
-from api.base_setup import app, db
+from api.base_setup import app, db, check_db_config
 
 @pytest.fixture(scope='session')
 def application(request):
+    check_db_config()
     return app
 
 @pytest.fixture(scope='session', autouse=True)
