@@ -81,7 +81,7 @@ class User(db.Model):
     email = db.Column(db.String(32), unique=True)
     superuser=db.Column(db.Boolean, nullable=False)
 
-    @validates('username', 'email', 'password')
+    @validates('username', 'email', 'password', 'superuser')
     def validate_user_attributes(self, key, attribute):
         if key == 'username':
             if len(attribute) < 5 : raise UserAttributeNotValide('username not valide')
@@ -94,8 +94,6 @@ class User(db.Model):
         if key == 'superuser':
             if attribute not in ['0','1']: raise UserAttributeNotValide('superuser value not valide')
         return attribute
-
-    @validates('password')
 
     def __init__(self, username, password, email, superuser):
         self.username = username

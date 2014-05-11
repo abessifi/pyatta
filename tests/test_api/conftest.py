@@ -1,5 +1,5 @@
-from sqlalchemy.schema import MetaData, DropConstraint
 import pytest
+from sqlalchemy.schema import MetaData, DropConstraint
 from api.base_setup import app, db
 
 @pytest.fixture(scope='session')
@@ -9,12 +9,12 @@ def application(request):
 @pytest.fixture(scope='session', autouse=True)
 def setup_db(request, application):
     # Clear out any existing tables
-    metadata = MetaData(db.engine)
-    metadata.reflect()
-    for table in metadata.tables.values():
-        for fk in table.foreign_keys:
-            db.engine.execute(DropConstraint(fk.constraint))
-    metadata.drop_all()
+    #metadata = MetaData(db.engine)
+    #metadata.reflect()
+    #for table in metadata.tables.values():
+    #    for fk in table.foreign_keys:
+    #        db.engine.execute(DropConstraint(fk.constraint))
+    #metadata.drop_all()
 
     # Create the tables based on the current model
     db.create_all()
