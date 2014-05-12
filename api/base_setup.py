@@ -27,6 +27,8 @@ app.config.update(
     SECRET_KEY = utils.get_config_params('api_auth','secret_key'),
 )
 
+
+
 # Logging api activities to a file instead of stdout (default)
 # to see the log messages emitted by Werkzeug.
 # TODO : test log file existance
@@ -163,3 +165,7 @@ class token_gen(Resource):
         #this token will be valid for 60 seconds
         token = g.user.generate_auth_token(60)    
         return {'token': token.decode('ascii'), 'duration': 60}, 201
+
+@app.errorhandler(404)
+def not_found(error):
+    return jsonify({'error':'resource not found'}), 404

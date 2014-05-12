@@ -12,7 +12,7 @@ user_fields = {
     'uri':fields.Url('user')
 }
 
-class UserListAPI(Resource):
+class UsersResource(Resource):
     """
     This class shows users and may delete or add new others
     """
@@ -27,7 +27,7 @@ class UserListAPI(Resource):
         self.reqparse.add_argument('password', type=str, required=True,help='No password provided', location='json')
         self.reqparse.add_argument('email', type=str, default="", location='json')
         self.reqparse.add_argument('superuser', type=int, required=True,help='No superuser privilege provided', location='json')
-        super(UserListAPI, self).__init__()
+        super(UsersResource, self).__init__()
 
     def get(self):
         """
@@ -50,7 +50,7 @@ class UserListAPI(Resource):
         db.session.commit()
         return { 'user': marshal(user, user_fields) }, 201
 
-class UserAPI(Resource):
+class UserResource(Resource):
     """
     This class implements the get, edit and delete methods of a specific user
     """
@@ -60,7 +60,7 @@ class UserAPI(Resource):
         self.reqparse.add_argument('username', type = str, location = 'json')
         self.reqparse.add_argument('password', type = str, location = 'json')
         self.reqparse.add_argument('email', type = str , location = 'json')
-        super(UserAPI, self).__init__()
+        super(UserResource, self).__init__()
 
     def get(self, id):
         """

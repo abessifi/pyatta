@@ -1,4 +1,5 @@
-from main import app, db
+from api.base_setup import app, db
+import api.pyatta
 from flask.ext.webtest import TestApp
 
 def setup_module():
@@ -12,10 +13,11 @@ def test_ping_flask():
     """
     Check whether the application is responding correctly
     """
-    resp = application.get('/')
-    assert resp.status_int == 200
+    resp = application.get('/', expect_errors=True)
+    assert resp.status_int == 404
+    assert resp.json.get('error') == 'resource not found'
 
-def test_authentication_success():
+def authentication_success():
     """
     Test login action. Authentication must succeed.
     """
@@ -24,7 +26,7 @@ def test_authentication_success():
     assert resp.json.get('status') == 'success'
     assert len(resp.json.get('auth')['token']) > 0
 
-def test_authentication_failed():
+def authentication_failed():
     """
     Test login action. Authentication must fail.
     """
@@ -32,7 +34,7 @@ def test_authentication_failed():
     assert resp.status_int == 400
     assert resp.json.get('status') == 'error'
 
-def test_is_admin():
+def is_admin():
     """
     Check if logged user is admin
     """
@@ -40,32 +42,32 @@ def test_is_admin():
     assert resp.status_int == 200
     assert resp.session['su'] == True
 
-def test_get_users():
+def get_users():
     """
     """
     pass
 
-def test_get_user():
+def get_user():
     """
     """
     pass
 
-def test_post_user():
+def post_user():
     """
     """
     pass
 
-def test_delete_user():
+def delete_user():
     """
     """
     pass
 
-def test_update_user():
+def update_user():
     """
     """
     pass
 
-def test_valid_token():
+def valid_token():
     """
     """
     pass

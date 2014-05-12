@@ -1,5 +1,5 @@
 import pytest
-from api.base_setup import app, db, User, check_db_config, UserAttributeNotValide
+from api.base_setup import  db, User, UserAttributeNotValide
 
 def test_user_model_validation():
     """
