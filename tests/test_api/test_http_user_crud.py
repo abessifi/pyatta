@@ -15,22 +15,21 @@ def test_ping_flask():
     """
     resp = application.get('/', expect_errors=True)
     assert resp.status_int == 404
-    assert resp.json.get('error') == 'resource not found'
+    assert resp.json.get('error') == 'Resource not found'
 
-def authentication_success():
+def test_unauthorized_access():
     """
-    Test login action. Authentication must succeed.
+    Test authorization. Server must return 403.
     """
-    resp = application.post_json('/v1.0/auth', dict(username='itsme', password='changeme'))
-    assert resp.status_int == 200
-    assert resp.json.get('status') == 'success'
-    assert len(resp.json.get('auth')['token']) > 0
+    resp = application.get('/v1.0/token', expect_errors=True)
+    assert resp.status_int == 403
+    assert resp.json.get('error') == 'Unauthorized access !'
 
-def authentication_failed():
+def authentication():
     """
-    Test login action. Authentication must fail.
+    Test login action.
     """
-    resp = application.post_json('/v1.0/auth', dict(username='', password=''), expect_errors=True)
+    resp = application.post_json('/v1.0/auth', dict(username='itsme', password='changeme'), expect_errors=True)
     assert resp.status_int == 400
     assert resp.json.get('status') == 'error'
 

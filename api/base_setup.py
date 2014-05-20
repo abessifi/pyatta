@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import os
-from flask import Flask,jsonify,make_response,g
+from flask import Flask, jsonify, make_response, g
 from flask.ext.httpauth import HTTPBasicAuth
 from sqlalchemy.orm import validates
 from flask.ext.restful import Resource
@@ -26,8 +26,6 @@ app.config.update(
     DEBUG = bool(utils.get_config_params('api','debug')),
     SECRET_KEY = utils.get_config_params('api_auth','secret_key'),
 )
-
-
 
 # Logging api activities to a file instead of stdout (default)
 # to see the log messages emitted by Werkzeug.
@@ -126,36 +124,7 @@ class User(db.Model):
         user = User.query.get(data['id'])
         return user
 
-@auth.error_handler
-def unauthorized():
-    """
-    This method handles error returned with code 403
-    """
-    # return 403 instead of 401 to prevent browsers from displaying the default auth dialog
-    return make_response(jsonify( { 'error': 'unauthorized access!','reason':User.error_msg } ), 403)
-
-@auth.verify_password
-def verify_password(username_or_token, password):
-    """
-    This method is invoked when a request was sent and contains authentication elements
-    """
-    # first try to authenticate by token
-    if password=='unused':
-        user = User.verify_auth_token(username_or_token)
-        if not user:
-            User.error_msg="invalid token!"
-            return False
-        # try to authenticate with username/password
-    else:
-        user = User.query.filter_by(username=username_or_token).first()
-        if not user or not user.verify_password(password):
-            User.error_msg="username/password error!"
-            return False
-
-    g.user = user
-    return True
-
-class token_gen(Resource):
+class TokenResource(Resource):
     """
     This class allows temporary token generation
     """
@@ -166,6 +135,37 @@ class token_gen(Resource):
         token = g.user.generate_auth_token(60)    
         return {'token': token.decode('ascii'), 'duration': 60}, 201
 
+@auth.error_handler
+def unauthorized():
+    """
+    This method handles error returned with code 403
+    """
+    logger.error('Unauthorized access !')
+    # return 403 instead of 401 to prevent browsers from displaying the default auth dialog
+    return make_response(jsonify({'error':'Unauthorized access !', 'reason':User.error_msg }), 403)
+
+@auth.verify_password
+def verify_password(username_or_token, password):
+    """
+    This method is invoked when a request was sent and contains authentication elements
+    """
+    logger.info("======> Checking user cridentials...")
+    # first try to authenticate by token
+    if password == 'unused':
+        user = User.verify_auth_token(username_or_token)
+        if not user:
+            User.error_msg="invalid token!"
+            return False
+    # try to authenticate with username/password
+    else:
+        user = User.query.filter_by(username=username_or_token).first()
+        if not user or not user.verify_password(password):
+            User.error_msg="username/password error!"
+            return False
+
+    g.user = user
+    return True
+
 @app.errorhandler(404)
 def not_found(error):
-    return jsonify({'error':'resource not found'}), 404
+    return jsonify({'error':'Resource not found'}), 404

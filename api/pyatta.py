@@ -6,7 +6,7 @@ topdir = os.path.dirname(os.path.realpath(__file__)) + "../.."
 topdir = os.path.realpath(topdir)
 sys.path.insert(0, topdir)
 
-from base_setup import auth, app, token_gen, db, check_db_config, User
+from base_setup import auth, app, TokenResource, db, check_db_config, User
 #from session_handler import session_handler
 from user_handler import UsersResource, UserResource
 from vyos_session import utils
@@ -25,7 +25,7 @@ api = Api(app)
 #api.add_resource(session_handler,'/v1.0/session/<action>')
 #api.add_resource(dns_handler, '/v1.0/service/dns/forwarding')
 #api.add_resource(dns_option_handler,'/v1.0/service/dns/forwarding/<option>')
-api.add_resource(token_gen,'/v1.0/token')
+api.add_resource(TokenResource,'/v1.0/token')
 api.add_resource(UsersResource, '/v1.0/users')
 api.add_resource(UserResource, '/v1.0/users/<int:id>', endpoint = 'user')
 
