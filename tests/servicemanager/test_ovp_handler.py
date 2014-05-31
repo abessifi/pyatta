@@ -111,11 +111,11 @@ def test_encryption_algo():
     if algo not in algo_cipher:
         with pytest.raises(OV.CipherError) as e :
             vpn.encryption_algorithm('set','vtun0',algo)
-        assert e.value.message == "[ERROR] %s is not a valid ancryption algorithm!" %algo
+        assert e.value.message == "[ERROR] %s is not a valid encryption algorithm!" %algo
     
 def test_localport():
     assert vpn.local_port('set','vtun0','1234')==True
     with pytest.raises(OV.LocalportError) as e :
         vpn.local_port('set','vtun0','1234333')
         vpn.local_port('set','vtun0','1vfsd')
-    assert e.value.message == "[ERROR] port number expected is false, 1194 is recommanded"
+    assert e.value.message == "[ERROR] port number expected is false, 1194 is recommended"
